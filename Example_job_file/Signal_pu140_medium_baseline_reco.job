@@ -1,0 +1,15 @@
+START
+dataType  Signal
+studyGen    1
+dumpGenInfo 0
+studyOffline 1
+histFile  PU140/Signal_pu140_medium_baseline_reco.root
+logFile   PU140/Signal_pu140_medium_baseline_reco.out
+maxEvent -1
+verbosity 0
+applyTrackQuality 0
+trkSelCuts maxTrkEta=2.5 minTrkPt=2.0 maxTrkChi2=20 minTrkLayers=4 minTrkPSLayers=2
+phiSelCuts maxTrkPairDz=1.0 maxTrkPairDxy=1.0 massLow=1.00 massHigh=1.03
+bsSelCuts maxPhiPairDxy=1.0 maxPhiPairDz=1.0 minPhiPairDr=0.2 maxPhiPairDr=1.0 maxPhiTrkDr=0.12 massLow=5.29 massHigh=5.48
+inputFile  /afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_DPS_CMSSW9/140_PU_tree/Reco_tree/Signal_BsStudy_PU140_reco.root 
+END
