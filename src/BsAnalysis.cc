@@ -1115,7 +1115,7 @@ bool BsAnalysis::genFilter(double minPt) const {
     if (std::abs(kaon1.pdgId) != 321 || std::abs(kaon2.pdgId) != 321) continue;
     genKPtCheckH_->Fill(kaon1.pt);
     genKPtCheckH_->Fill(kaon2.pt);
-    //if( kaon1.pt < minPt || kaon2.pt < minPt) continue;
+    if( kaon1.pt < minPt || kaon2.pt < minPt) continue;
     list.push_back(genp);
   }
 
