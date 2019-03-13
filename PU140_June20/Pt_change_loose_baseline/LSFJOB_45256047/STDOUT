@@ -1,0 +1,13 @@
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/rbhattac/45256047> on <b6495f0395.cern.ch>
+
+/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_June20/PU140_June20/Pt_change_loose_baseline/submit_job_bkg_Pt_2.8.sh: line 2: cmsenv: command not found
+=== Start of Analysis === 
+Input File: PU140_June20/Pt_change_loose_baseline/bkg_pu140_loose_baseline_dz_2.8.job could not be opened!
+Failed to read the job card successfully, exiting ...!
+
+Job finished at Sat Jun 24 08:46:31 CEST 2017 on node 
+ under linux version Scientific Linux CERN SLC release 6.9 (Carbon)
+
+CERN statistics: This process used approximately : 0:00:03 KSI2K hours (3 KSI2K seconds)
+                 This process corresponds to     : 0:00:12 HS06  hours (12 HS06  seconds)

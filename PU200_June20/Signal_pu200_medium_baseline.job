@@ -1,0 +1,44 @@
+START
+dataType  Signal
+studyGen    1
+dumpGenInfo 0
+studyOffline  0
+histFile  PU200_June20/Signal_pu200_medium_baseline.root
+logFile   PU200_June20/Signal_pu200_medium_baseline.out
+maxEvent -1
+verbosity 0
+applyTrackQuality 0
+trkSelCuts maxTrkEta=2.5 minTrkPt=2.0 maxTrkChi2=20 minTrkLayers=4 minTrkPSLayers=2
+phiSelCuts maxTrkPairDz=1.0 maxTrkPairDxy=1.0 massLow=1.00 massHigh=1.03
+bsSelCuts maxPhiPairDxy=1.0 maxPhiPairDz=1.0 minPhiPairDr=0.2 maxPhiPairDr=1.0 maxPhiTrkDr=0.12 massLow=5.29 massHigh=5.48
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_10.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_11.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_12.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_13.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_14.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_15.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_16.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_17.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_18.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_19.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_1.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_20.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_21.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_22.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_23.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_24.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_25.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_26.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_27.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_28.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_29.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_2.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_30.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_3.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_4.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_5.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_6.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_7.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_8.root
+inputFile /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_9.root
+END

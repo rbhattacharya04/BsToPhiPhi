@@ -1,0 +1,69 @@
+  datatype = Signal
+   logFile = PU200_June20/dz_change_tight_baseline/Signal_pu200_tight_baseline_dz_0.8.out
+  histFile = PU200_June20/dz_change_tight_baseline/Signal_pu200_tight_baseline_dz_0.8.root
+ verbosity = 0
+  maxEvent = -1
+>>> INFO. nFiles: 30, Files to analyse:
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_10.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_11.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_12.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_13.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_14.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_15.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_16.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_17.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_18.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_19.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_1.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_20.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_21.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_22.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_23.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_24.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_25.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_26.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_27.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_28.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_29.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_2.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_30.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_3.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_4.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_5.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_6.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_7.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_8.root
+/eos/user/s/sarkar/BsStudy/Processing/920/signal/PU200/BsStudy_signal_PU200_9.root
+>>> bsSelCuts
+        massHigh:    5.48
+         massLow:    5.29
+    maxPhiPairDr:    1.00
+   maxPhiPairDxy:    0.50
+    maxPhiPairDz:    1.00
+     maxPhiTrkDr:    0.12
+    minPhiPairDr:    0.20
+>>> phiSelCuts
+        massHigh:    1.03
+         massLow:    1.00
+   maxTrkPairDxy:    0.50
+    maxTrkPairDz:    0.80
+>>> trkSelCuts
+      maxTrkChi2:   20.00
+       maxTrkEta:    2.50
+    minTrkLayers:    4.00
+  minTrkPSLayers:    2.00
+        minTrkPt:    2.00
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed     34288   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter      3195   0.09318     0.002   0.09318     0.002
+                                                    w/ ntrk >= 4      3195   0.09318     0.002   1.00000     0.000
+                                                     w/ >= 2 Phi      2298   0.06702     0.001   0.71925     0.008
+                                          w/ Phi distinct tracks      2273   0.06629     0.001   0.98912     0.002
+                                            w/ Phi dxy & dz2 cut      1494   0.04357     0.001   0.65728     0.010
+                                             w/ dR(Phi pair) cut      1068   0.03115     0.001   0.71486     0.012
+                                           w/ dR(Track pair) cut      1049   0.03059     0.001   0.98221     0.004
+                                               in Bs mass window       858   0.02502     0.001   0.81792     0.012
+                                                 final gen match       856   0.02497     0.001   0.99767     0.002
+Efficiency for Outer Tracker
+Efficiency = 26.79 Poisson Error = 1.03 Binomial error = 0.78

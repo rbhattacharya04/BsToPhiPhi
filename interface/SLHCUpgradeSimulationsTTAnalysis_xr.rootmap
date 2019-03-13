@@ -1,0 +1,23 @@
+{ decls }
+namespace std {  }
+namespace TTStudy {  }
+
+[  ]
+# List of selected classes
+class TTStudy::Electron
+class TTStudy::Event
+class TTStudy::GenParticle
+class TTStudy::L1Jet
+class TTStudy::L1Muon
+class TTStudy::SimTrack
+class TTStudy::Track
+class TTStudy::Tracklet
+class vector<TTStudy::Electron>
+class vector<TTStudy::GenParticle>
+class vector<TTStudy::L1Jet>
+class vector<TTStudy::L1Muon>
+class vector<TTStudy::SimTrack>
+class vector<TTStudy::Track>
+class vector<TTStudy::Tracklet>
+class vector<int>
+header AnalObjects.h

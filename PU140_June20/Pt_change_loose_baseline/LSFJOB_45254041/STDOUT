@@ -1,0 +1,73 @@
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/rbhattac/45254041> on <p06109780r92192.cern.ch>
+
+/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_June20/PU140_June20/Pt_change_loose_baseline/submit_job_Signal_Pt_2.1.sh: line 2: cmsenv: command not found
+=== Start of Analysis === 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_10.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_11.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_12.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_13.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_14.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_15.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_16.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_17.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_18.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_19.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_1.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_20.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_21.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_22.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_23.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_24.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_25.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_26.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_27.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_28.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_29.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_2.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_30.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_31.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_32.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_33.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_34.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_35.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_36.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_3.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_4.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_5.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_6.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_7.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_8.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_9.root to TChain 
+Start event loop now with 36 file(s)
+ >>> nEvents = 36344
+Offline Track Option = false
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_10.root <<< Run. -1 Event. 898523564 >>> Events proc.         0
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_15.root <<< Run. -1 Event.  83138081 >>> Events proc.      5000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_19.root <<< Run. -1 Event.  67954073 >>> Events proc.     10000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_22.root <<< Run. -1 Event. 571764625 >>> Events proc.     15000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_27.root <<< Run. -1 Event. 515401560 >>> Events proc.     20000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_31.root <<< Run. -1 Event. 713732784 >>> Events proc.     25000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_3.root <<< Run. -1 Event. 548486185 >>> Events proc.     30000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/signal/PU140/BsStudy_signal_PU140_8.root <<< Run. -1 Event. 167578003 >>> Events proc.     35000
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed     36344   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter      3309   0.09105     0.002   0.09105     0.002
+                                                    w/ ntrk >= 4      3309   0.09105     0.002   1.00000     0.000
+                                                     w/ >= 2 Phi      2404   0.06615     0.001   0.72650     0.008
+                                          w/ Phi distinct tracks      2372   0.06527     0.001   0.98669     0.002
+                                            w/ Phi dxy & dz2 cut      1677   0.04614     0.001   0.70700     0.009
+                                             w/ dR(Phi pair) cut      1266   0.03483     0.001   0.75492     0.011
+                                           w/ dR(Track pair) cut      1247   0.03431     0.001   0.98499     0.003
+                                               in Bs mass window      1061   0.02919     0.001   0.85084     0.010
+                                                 final gen match      1060   0.02917     0.001   0.99906     0.001
+Efficiency for Outer Tracker
+Efficiency = 32.03 Poisson Error = 1.13 Binomial error = 0.81
+Realtime/CpuTime = 67.36/63.23
+
+Job finished at Sat Jun 24 08:42:38 CEST 2017 on node 
+ under linux version Scientific Linux CERN SLC release 6.9 (Carbon)
+
+CERN statistics: This process used approximately : 0:04:39 KSI2K hours (279 KSI2K seconds)
+                 This process corresponds to     : 0:18:11 HS06  hours (1091 HS06  seconds)

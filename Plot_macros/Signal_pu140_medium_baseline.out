@@ -1,0 +1,57 @@
+  datatype = Signal
+   logFile = PU140/Signal_pu140_medium_baseline.out
+  histFile = PU140/Signal_pu140_medium_baseline.root
+ verbosity = 0
+  maxEvent = -1
+>>> INFO. nFiles: 18, Files to analyse:
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_18.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_7.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_1.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_3.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_11.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_13.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_17.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_4.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_8.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_14.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_2.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_10.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_9.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_6.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_16.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_12.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_15.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/signal/PU140/BsStudy_signal_PU140_5.root
+>>> bsSelCuts
+        massHigh:    5.48
+         massLow:    5.29
+    maxPhiPairDr:    1.00
+   maxPhiPairDxy:    1.00
+    maxPhiPairDz:    1.00
+     maxPhiTrkDr:    0.12
+    minPhiPairDr:    0.20
+>>> phiSelCuts
+        massHigh:    1.03
+         massLow:    1.00
+   maxTrkPairDxy:    1.00
+    maxTrkPairDz:    1.00
+>>> trkSelCuts
+      maxTrkChi2:   20.00
+       maxTrkEta:    2.50
+    minTrkLayers:    4.00
+  minTrkPSLayers:    2.00
+        minTrkPt:    2.00
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed     34210   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter      3109   0.09088     0.002   0.09088     0.002
+                                                    w/ ntrk >= 4      3109   0.09088     0.002   1.00000     0.000
+                                                     w/ >= 2 Phi      1768   0.05168     0.001   0.56867     0.009
+                                          w/ Phi distinct tracks      1734   0.05069     0.001   0.98077     0.003
+                                            w/ Phi dxy & dz2 cut      1140   0.03332     0.001   0.65744     0.011
+                                             w/ dR(Phi pair) cut       888   0.02596     0.001   0.77895     0.012
+                                           w/ dR(Track pair) cut       881   0.02575     0.001   0.99212     0.003
+                                               in Bs mass window       742   0.02169     0.001   0.84222     0.012
+                                                 final gen match       740   0.02163     0.001   0.99730     0.002
+Efficiency for Outer Tracker
+Efficiency = 23.80 Poisson Error = 0.97 Binomial error = 0.76

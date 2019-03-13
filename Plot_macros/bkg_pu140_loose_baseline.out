@@ -1,0 +1,172 @@
+  datatype = Bkg
+   logFile = bkg_pu140_loose_baseline.out
+  histFile = bkg_pu140_loose_baseline.root
+ verbosity = 0
+  maxEvent = 200000
+>>> INFO. nFiles: 134, Files to analyse:
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_1.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_10.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_100.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_101.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_102.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_103.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_104.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_105.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_106.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_107.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_108.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_109.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_11.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_110.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_111.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_112.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_113.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_114.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_115.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_116.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_117.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_118.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_119.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_12.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_120.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_121.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_122.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_123.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_124.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_125.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_126.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_127.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_128.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_129.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_13.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_130.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_131.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_132.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_133.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_134.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_135.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_136.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_137.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_138.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_139.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_14.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_140.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_141.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_142.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_143.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_144.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_145.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_146.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_147.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_148.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_149.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_15.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_150.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_151.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_152.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_153.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_154.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_155.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_156.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_157.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_158.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_159.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_16.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_160.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_161.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_162.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_163.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_164.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_165.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_166.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_167.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_168.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_169.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_17.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_170.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_171.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_172.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_173.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_174.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_175.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_176.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_177.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_178.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_179.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_18.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_180.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_181.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_182.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_183.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_184.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_185.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_186.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_187.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_188.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_189.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_19.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_190.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_191.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_192.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_193.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_194.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_195.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_196.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_197.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_198.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_199.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_2.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_20.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_200.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_201.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_202.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_203.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_204.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_205.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_206.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_207.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_208.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_209.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_21.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_210.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_211.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_212.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_213.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_214.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_215.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_216.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_217.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_218.root
+/eos/user/s/sarkar/BsStudy/Processing/90X/bkg/PU140/BsStudy_bkg_PU140_219.root
+>>> bsSelCuts
+        massHigh:    5.49
+         massLow:    5.27
+    maxPhiPairDr:    1.00
+   maxPhiPairDxy:    1.00
+    maxPhiPairDz:    1.00
+     maxPhiTrkDr:    0.12
+    minPhiPairDr:    0.20
+>>> phiSelCuts
+        massHigh:    1.04
+         massLow:    0.99
+   maxTrkPairDxy:    1.00
+    maxTrkPairDz:    1.00
+>>> trkSelCuts
+      maxTrkChi2:   20.00
+       maxTrkEta:    2.50
+    minTrkLayers:    4.00
+  minTrkPSLayers:    2.00
+        minTrkPt:    2.00
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed    201000   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter    201000   1.00000     0.000   1.00000     0.000
+                                                    w/ ntrk >= 4    201000   1.00000     0.000   1.00000     0.000
+                                                     w/ >= 2 Phi     53057   0.26397     0.001   0.26397     0.001
+                                          w/ Phi distinct tracks     49613   0.24683     0.001   0.93509     0.001
+                                            w/ Phi dxy & dz2 cut     16897   0.08406     0.001   0.34058     0.002
+                                             w/ dR(Phi pair) cut      2394   0.01191     0.000   0.14168     0.003
+                                           w/ dR(Track pair) cut      1987   0.00989     0.000   0.82999     0.008
+                                               in Bs mass window        86   0.00043     0.000   0.04328     0.005
+Rate for Outer Tracker
+Rate in kHz = 12.84 Poisson Error = 1.38 Binomial error = 1.38

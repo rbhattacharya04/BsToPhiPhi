@@ -1,0 +1,400 @@
+@(#)CERN job starter $Date: 2010/06/23 14:22:16 $
+Working directory is </pool/lsf/rbhattac/45258442> on <b6009b708f.cern.ch>
+
+/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_June20/PU140_June20/Pt_change_loose_baseline/submit_job_bkg_Pt_2.4.sh: line 2: cmsenv: command not found
+=== Start of Analysis === 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_100.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_101.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_102.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_103.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_104.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_105.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_106.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_107.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_108.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_109.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_10.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_110.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_111.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_112.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_113.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_114.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_115.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_116.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_117.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_118.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_119.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_11.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_120.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_121.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_122.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_123.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_124.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_125.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_126.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_127.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_128.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_129.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_12.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_130.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_131.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_132.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_133.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_134.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_135.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_136.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_137.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_138.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_139.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_13.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_140.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_141.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_142.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_143.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_144.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_145.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_146.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_147.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_148.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_149.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_14.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_150.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_151.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_153.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_154.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_155.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_156.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_157.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_158.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_159.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_15.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_160.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_161.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_163.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_164.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_166.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_16.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_170.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_171.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_174.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_176.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_178.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_179.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_17.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_182.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_183.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_184.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_185.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_188.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_189.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_18.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_190.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_191.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_192.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_193.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_194.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_195.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_197.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_198.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_199.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_19.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_1.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_200.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_201.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_202.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_203.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_205.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_206.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_208.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_209.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_20.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_210.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_211.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_212.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_214.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_217.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_218.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_219.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_21.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_220.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_222.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_223.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_224.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_225.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_226.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_227.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_228.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_229.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_22.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_230.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_231.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_232.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_233.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_234.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_235.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_236.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_237.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_238.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_239.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_23.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_240.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_241.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_242.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_243.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_247.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_24.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_250.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_251.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_252.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_253.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_254.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_255.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_256.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_257.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_258.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_25.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_260.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_261.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_262.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_263.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_265.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_266.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_268.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_269.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_26.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_270.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_271.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_272.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_274.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_276.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_277.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_27.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_280.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_281.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_282.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_283.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_284.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_285.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_286.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_28.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_290.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_296.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_297.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_299.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_29.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_2.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_300.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_301.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_302.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_303.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_304.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_305.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_307.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_308.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_309.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_30.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_310.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_313.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_314.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_315.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_317.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_318.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_319.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_31.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_320.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_322.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_323.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_324.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_325.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_326.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_327.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_328.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_32.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_330.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_331.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_332.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_333.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_334.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_33.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_34.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_35.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_36.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_37.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_38.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_39.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_3.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_40.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_41.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_42.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_43.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_44.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_45.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_46.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_47.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_48.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_49.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_4.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_50.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_51.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_52.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_53.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_54.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_55.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_56.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_57.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_58.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_59.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_5.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_60.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_61.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_62.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_63.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_64.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_65.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_66.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_67.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_68.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_69.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_6.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_70.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_71.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_72.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_73.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_74.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_75.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_76.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_77.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_78.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_79.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_7.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_80.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_81.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_82.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_83.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_84.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_85.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_86.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_87.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_88.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_89.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_8.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_90.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_91.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_92.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_93.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_94.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_95.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_96.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_97.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_98.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_99.root to TChain 
+>>> INFO. Adding input file /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_9.root to TChain 
+Start event loop now with 286 file(s)
+ >>> nEvents = 428000
+Offline Track Option = false
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_100.root <<< Run. -1 Event.     59702 >>> Events proc.         0
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_103.root <<< Run. -1 Event.    451437 >>> Events proc.      5000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_106.root <<< Run. -1 Event.    392538 >>> Events proc.     10000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_10.root <<< Run. -1 Event.    115804 >>> Events proc.     15000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_112.root <<< Run. -1 Event.    156053 >>> Events proc.     20000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_115.root <<< Run. -1 Event.    434087 >>> Events proc.     25000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_119.root <<< Run. -1 Event.    385990 >>> Events proc.     30000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_121.root <<< Run. -1 Event.    433287 >>> Events proc.     35000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_124.root <<< Run. -1 Event.    391340 >>> Events proc.     40000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_128.root <<< Run. -1 Event.    454990 >>> Events proc.     45000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_130.root <<< Run. -1 Event.    377337 >>> Events proc.     50000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_133.root <<< Run. -1 Event.    347539 >>> Events proc.     55000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_137.root <<< Run. -1 Event.    153453 >>> Events proc.     60000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_13.root <<< Run. -1 Event.    124702 >>> Events proc.     65000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_142.root <<< Run. -1 Event.    459588 >>> Events proc.     70000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_146.root <<< Run. -1 Event.    426187 >>> Events proc.     75000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_149.root <<< Run. -1 Event.    442888 >>> Events proc.     80000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_151.root <<< Run. -1 Event.    167803 >>> Events proc.     85000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_156.root <<< Run. -1 Event.    158402 >>> Events proc.     90000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_159.root <<< Run. -1 Event.    427737 >>> Events proc.     95000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_161.root <<< Run. -1 Event.    440388 >>> Events proc.    100000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_16.root <<< Run. -1 Event.    100203 >>> Events proc.    105000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_174.root <<< Run. -1 Event.    348840 >>> Events proc.    110000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_179.root <<< Run. -1 Event.    435137 >>> Events proc.    115000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_184.root <<< Run. -1 Event.    463988 >>> Events proc.    120000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_189.root <<< Run. -1 Event.    445289 >>> Events proc.    125000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_191.root <<< Run. -1 Event.    431839 >>> Events proc.    130000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_195.root <<< Run. -1 Event.    345339 >>> Events proc.    135000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_199.root <<< Run. -1 Event.    464787 >>> Events proc.    140000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_200.root <<< Run. -1 Event.    439790 >>> Events proc.    145000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_205.root <<< Run. -1 Event.    471938 >>> Events proc.    150000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_209.root <<< Run. -1 Event.    252596 >>> Events proc.    155000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_211.root <<< Run. -1 Event.    247244 >>> Events proc.    160000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_218.root <<< Run. -1 Event.    490840 >>> Events proc.    165000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_220.root <<< Run. -1 Event.    256644 >>> Events proc.    170000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_224.root <<< Run. -1 Event.    259246 >>> Events proc.    175000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_228.root <<< Run. -1 Event.    493540 >>> Events proc.    180000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_230.root <<< Run. -1 Event.    265047 >>> Events proc.    185000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_233.root <<< Run. -1 Event.    188297 >>> Events proc.    190000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_237.root <<< Run. -1 Event.    196895 >>> Events proc.    195000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_23.root <<< Run. -1 Event.    141201 >>> Events proc.    200000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_242.root <<< Run. -1 Event.    218597 >>> Events proc.    205000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_250.root <<< Run. -1 Event.    487539 >>> Events proc.    210000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_253.root <<< Run. -1 Event.    175944 >>> Events proc.    215000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_256.root <<< Run. -1 Event.    216796 >>> Events proc.    220000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_260.root <<< Run. -1 Event.    175446 >>> Events proc.    225000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_263.root <<< Run. -1 Event.    224997 >>> Events proc.    230000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_268.root <<< Run. -1 Event.    239294 >>> Events proc.    235000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_271.root <<< Run. -1 Event.    473440 >>> Events proc.    240000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_276.root <<< Run. -1 Event.    211195 >>> Events proc.    245000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_280.root <<< Run. -1 Event.    281746 >>> Events proc.    250000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_284.root <<< Run. -1 Event.    250447 >>> Events proc.    255000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_28.root <<< Run. -1 Event.    130702 >>> Events proc.    260000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_297.root <<< Run. -1 Event.    286094 >>> Events proc.    265000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_300.root <<< Run. -1 Event.    222845 >>> Events proc.    270000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_303.root <<< Run. -1 Event.    297597 >>> Events proc.    275000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_307.root <<< Run. -1 Event.    296894 >>> Events proc.    280000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_310.root <<< Run. -1 Event.    299944 >>> Events proc.    285000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_315.root <<< Run. -1 Event.    297446 >>> Events proc.    290000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_319.root <<< Run. -1 Event.    294645 >>> Events proc.    295000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_323.root <<< Run. -1 Event.    340745 >>> Events proc.    300000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_326.root <<< Run. -1 Event.    334347 >>> Events proc.    305000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_32.root <<< Run. -1 Event.      2052 >>> Events proc.    310000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_333.root <<< Run. -1 Event.    294245 >>> Events proc.    315000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_34.root <<< Run. -1 Event.     21502 >>> Events proc.    320000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_38.root <<< Run. -1 Event.     14654 >>> Events proc.    325000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_40.root <<< Run. -1 Event.    137104 >>> Events proc.    330000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_43.root <<< Run. -1 Event.    132054 >>> Events proc.    335000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_47.root <<< Run. -1 Event.    107803 >>> Events proc.    340000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_4.root <<< Run. -1 Event.     79051 >>> Events proc.    345000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_52.root <<< Run. -1 Event.     93202 >>> Events proc.    350000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_56.root <<< Run. -1 Event.     45701 >>> Events proc.    355000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_59.root <<< Run. -1 Event.     33004 >>> Events proc.    360000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_61.root <<< Run. -1 Event.     18051 >>> Events proc.    365000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_65.root <<< Run. -1 Event.     41503 >>> Events proc.    370000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_68.root <<< Run. -1 Event.     78194 >>> Events proc.    375000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_70.root <<< Run. -1 Event.     82895 >>> Events proc.    380000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_74.root <<< Run. -1 Event.    109789 >>> Events proc.    385000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_77.root <<< Run. -1 Event.      1694 >>> Events proc.    390000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_7.root <<< Run. -1 Event.     32043 >>> Events proc.    395000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_83.root <<< Run. -1 Event.    126595 >>> Events proc.    400000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_86.root <<< Run. -1 Event.     94994 >>> Events proc.    405000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_8.root <<< Run. -1 Event.    117452 >>> Events proc.    410000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_92.root <<< Run. -1 Event.      2453 >>> Events proc.    415000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_95.root <<< Run. -1 Event.    132254 >>> Events proc.    420000
+ ==> /eos/user/s/sarkar/BsStudy/Processing/920/bkg/PU140/BsStudy_bkg_PU140_99.root <<< Run. -1 Event.     30901 >>> Events proc.    425000
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed    428000   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter    428000   1.00000     0.000   1.00000     0.000
+                                                    w/ ntrk >= 4    428000   1.00000     0.000   1.00000     0.000
+                                                     w/ >= 2 Phi     51133   0.11947     0.000   0.11947     0.000
+                                          w/ Phi distinct tracks     44935   0.10499     0.000   0.87879     0.001
+                                            w/ Phi dxy & dz2 cut     14082   0.03290     0.000   0.31339     0.002
+                                             w/ dR(Phi pair) cut      1911   0.00446     0.000   0.13571     0.003
+                                           w/ dR(Track pair) cut      1840   0.00430     0.000   0.96285     0.004
+                                               in Bs mass window        87   0.00020     0.000   0.04728     0.005
+Rate for Outer Tracker
+Rate in kHz = 6.10 Poisson Error = 0.65 Binomial error = 0.65
+Realtime/CpuTime = 3139.11/1722.82
+
+Job finished at Sat Jun 24 09:47:17 CEST 2017 on node 
+ under linux version Scientific Linux CERN SLC release 6.9 (Carbon)
+
+CERN statistics: This process used approximately : 1:14:54 KSI2K hours (4494 KSI2K seconds)
+                 This process corresponds to     : 4:52:07 HS06  hours (17527 HS06  seconds)
