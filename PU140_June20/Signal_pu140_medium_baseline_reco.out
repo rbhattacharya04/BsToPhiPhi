@@ -1,0 +1,40 @@
+  datatype = Signal
+   logFile = PU140/Signal_pu140_medium_baseline_reco.out
+  histFile = PU140/Signal_pu140_medium_baseline_reco.root
+ verbosity = 0
+  maxEvent = -1
+>>> INFO. nFiles: 1, Files to analyse:
+/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_DPS_CMSSW9/140_PU_tree/Reco_tree/Signal_BsStudy_PU140_reco.root
+>>> bsSelCuts
+        massHigh:    5.48
+         massLow:    5.29
+    maxPhiPairDr:    1.00
+   maxPhiPairDxy:    1.00
+    maxPhiPairDz:    1.00
+     maxPhiTrkDr:    0.12
+    minPhiPairDr:    0.20
+>>> phiSelCuts
+        massHigh:    1.03
+         massLow:    1.00
+   maxTrkPairDxy:    1.00
+    maxTrkPairDz:    1.00
+>>> trkSelCuts
+      maxTrkChi2:   20.00
+       maxTrkEta:    2.50
+    minTrkLayers:    4.00
+  minTrkPSLayers:    2.00
+        minTrkPt:    2.00
+==> Results: 
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed     33819   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter      3069   0.09075     0.002   0.09075     0.002
+                                                    w/ ntrk >= 4      3069   0.09075     0.002   1.00000     0.000
+                                                     w/ >= 2 Phi      2596   0.07676     0.001   0.84588     0.007
+                                          w/ Phi distinct tracks      2594   0.07670     0.001   0.99923     0.001
+                                            w/ Phi dxy & dz2 cut      2105   0.06224     0.001   0.81149     0.008
+                                             w/ dR(Phi pair) cut      1744   0.05157     0.001   0.82850     0.008
+                                           w/ dR(Track pair) cut      1713   0.05065     0.001   0.98222     0.003
+                                               in Bs mass window      1590   0.04701     0.001   0.92820     0.006
+                                                 final gen match      1590   0.04701     0.001   1.00000     0.000
+Efficiency for Outer Tracker
+Efficiency = 51.81 Poisson Error = 1.60 Binomial error = 0.90
