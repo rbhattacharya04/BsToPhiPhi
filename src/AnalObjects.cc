@@ -5,9 +5,6 @@ TTStudy::Event::Event() :
   event(-1),
   run(-1),
   nPileUp(-1),
-  genParticleEt(-999.9),
-  genParticleEta(-999.9), 
-  genParticlePhi(-999.9),
   beamSpotX0(-999.9),
   beamSpotY0(-999.9),
   beamSpotZ0(-999.9),
@@ -19,24 +16,6 @@ TTStudy::Event::Event() :
   sumOffPV(-999.9)
 {}
 
-// Electron
-TTStudy::Electron::Electron() :
-  e(-999.9),
-  et(-999.9),
-  phi(-999.9),
-  eta(-999.9),
-  x(-999.9),
-  y(-999.9),
-  z(-999.9),
-  r(-999.9),
-  vx(-999.9),
-  vy(-999.9),
-  vz(-999.9),
-  simTkIndx(-1),
-  bStrength(-999.9)
-{
-  matchedTracklets.clear();
-}
 // Information about SimTracks
 TTStudy::SimTrack::SimTrack() :
   pt(-999.9),
@@ -70,25 +49,14 @@ TTStudy::Track::Track() :
   chiSquare_p4(-999.9),
   chiSquareRed_p4(-999.9),
 
+  pdgId(-1),
+  vertexId(-1),
   ptFromStub(-999.9),
   nStub(-1),
   nStub_PS(-1),
-  nStub_SS(-1),
-  pdgId(-1),
-  vertexId(-1),
-  matchedSimTrack(false),
-
-  d0(-999.9),
-  z0(-999.9),
-  d0Err(-999.9),
-  z0Err(-999.9),
-
-  d0PV(-999.9),
-  z0PV(-999.9),
-  d0ErrPV(-999.9),
-  z0ErrPV(-999.9)
+  nStub_SS(-1)
 {} 
-// Information about Tracklets 
+
 TTStudy::Tracklet::Tracklet() :
   layer1(-1),
   pt1(-999.9), 
@@ -150,11 +118,21 @@ TTStudy::L1Jet::L1Jet() :
   zvtx_tk(-999.9),
   nTk(-1) 
 {}
-TTStudy::L1Muon::L1Muon() :
+TTStudy::L1Object::L1Object() :
+  e(-999.9),
+  et(-999.9),
   pt(-999.9),
   eta(-999.9),
   phi(-999.9),
-  isMip(-1), 
+  label(9999),
+  hwQual(-999)
+{}
+TTStudy::L1TkObject::L1TkObject() :
+  e(-999.9),
+  et(-999.9),
+  pt(-999.9),
+  eta(-999.9),
+  phi(-999.9),
   isolation(-1),
   pt_tk(-999.9),
   eta_tk(-999.9),
@@ -169,5 +147,7 @@ TTStudy::L1Muon::L1Muon() :
   d0(-999.9),
   z0(-999.9),    
   d0Err(-999.9),
-  z0Err(-999.9)
+  z0Err(-999.9),
+  label(99),
+  hwQual(-99)
 {}

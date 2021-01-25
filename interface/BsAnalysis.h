@@ -45,6 +45,13 @@ struct BsInfo
 {
   PhiInfo phi1;
   PhiInfo phi2;
+  // sum of phi pair vectors
+  TLorentzVector bsv;
+
+  // average of phi vertices
+  double vertexX;
+  double vertexY;
+  double vertexZ;  
 };
 
 // Function objects - comparator 
@@ -90,7 +97,8 @@ class BsAnalysis {
   bool openFiles();
   void closeFiles();
   bool readJob(const std::string& jobFile, int& nFiles);
-  void printJob(std::ostream& os=std::cout) const; 
+  void printJob(std::ostream& os=std::cout) const;
+  void checkDecayMode(); 
   // ---------------------------------------
   // Get total number of events in the chain
   // --------------------------------------
@@ -98,14 +106,18 @@ class BsAnalysis {
   {
     return static_cast<int>(chain_->GetEntries());
   }
-  void findPhiCandidates(const std::map<std::string, double>& trkCutMap, 
-			 const std::map<std::string, double>& phiCutMap, 
-			 const std::vector<TTStudy::Track>* trackList, 
-			 std::vector<PhiInfo>& phiList, int indx=0);
-  bool selectEvent(const std::map<std::string, double>& trkCutMap, 
-		   const std::map<std::string, double>& phiCutMap, 
-		   const std::map<std::string, double>& bsCutMap, 
-		   const std::vector<TTStudy::Track>* trackList, int ishift, int indx=0);
+  bool branchFound(const std::string& b);
+  int getEntry(int lflag) const;
+
+  void findPhiCandidates(const std::vector<TTStudy::Track>* trackList, 
+			 std::vector<PhiInfo>& phiList, 
+			 int indx=0, 
+			 bool checkL1Offline=false);
+  bool selectEvent(const std::vector<TTStudy::Track>* trackList, 
+		   std::vector<BsInfo>& bsList, 
+		   int ishift, 
+		   int indx=0, 
+		   bool checkL1Offline=false);
   void readGenParticle();
   void plotGen(const std::vector<TTStudy::Track>* tracksBr);
   void clearEvent();
@@ -114,14 +126,17 @@ class BsAnalysis {
   void getKaonList(const std::vector<TTStudy::Track>* trackList, const BsInfo& info, std::vector<TLorentzVector>& kaonList);
   void fillKaonInfo(const std::vector<TLorentzVector>& kaonList);
   void fillKaonTrackInfo(const std::vector<TTStudy::Track>* tracksBr, const BsInfo& info);
-  void computeIsolation(const std::vector<TTStudy::Track>* tracksBr, const BsInfo& info, double cone=0.3);
+  void computeIsolation(const std::vector<TTStudy::Track>* trackList, const BsInfo& info, std::vector<std::pair<double,double>>& iso_vector);
+  double computeIsolation_v2(const std::vector<TTStudy::Track>* trackList, 
+			     size_t ref_track_index, 
+			     const std::vector<size_t> tracks_to_exclude);
   void fillGenInfo();
 
   void checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, const std::vector<TTStudy::Track>* tracksBr);
   void checkMatchingPhi(int ntrk) const;
   void printTrackProperties(const std::vector<TTStudy::Track>* tracksBr) const;
   void checkConsistency(const std::vector<TTStudy::Track>* tracksBr, int ntrk) const;
-  bool genFilter(double minPt=2.0) const;
+  bool genFilter(double minPt=2.0, double maxEta=2.5) const;
   void printTrk(const std::vector<TTStudy::Track>* tracksBr, size_t i) const;
   void printGenParticle(size_t i) const;
    int doTrkGenMatch(const std::vector<TLorentzVector>& kaonList);
@@ -130,9 +145,15 @@ class BsAnalysis {
   void getLV(const std::vector<TTStudy::Track>* tracksBr, unsigned int indx, TLorentzVector& lv) const;
   void plotSignalProperties(const std::vector<TTStudy::Track>* tracksBr);
   void plotGenVertex();
+  bool showEfficiency(TH1D* h, 
+		      const std::vector<std::string>& slist, 
+		      const std::string& header, 
+		      std::ostream& os=std::cout) const;
 
   static void calculateDeltaPos(const TTStudy::Track& trki, const TTStudy::Track& trkj, double& dxy, double& dz);
   static void calculateDeltaPos(const PhiInfo& infoi, const PhiInfo& infoj, double& dxy, double& dz);
+  static void calculateDeltaPos(const TTStudy::Track& trki, const PhiInfo& infoj, double& dxy, double& dz);
+  static void calculateDeltaPos(const TTStudy::Track& trki, const BsInfo& bsInfoj, double& dxy, double& dz);
   static double calculateDeltaR(const TTStudy::Track& trki, const TTStudy::Track& trkj);
   static double calculateDeltaR(const TTStudy::GenParticle& gpi, const TTStudy::GenParticle& gpj);
   static void scaleHistogram(TH1F* th, double fac);
@@ -141,130 +162,241 @@ class BsAnalysis {
   static double getPoissonError(double k, double N);
   static double getBinomailError(double k, double N);
 
-  TChain* chain_;
-  TFile* outputFile_;
-  std::string dataType_;
-  bool isSignal_;
-  bool studyGen_;
-  bool dumpGenInfo_;
-  bool studyOffline_;
+  const std::map<std::string, double>& trkCutMap() const {return AnaUtil::cutMap(hmap_, "trkSelCuts");}
+  const std::map<std::string, double>& phiCutMap() const {return AnaUtil::cutMap(hmap_, "phiSelCuts");}
+  const std::map<std::string, double>& bsCutMap() const {return AnaUtil::cutMap(hmap_, "bsSelCuts");}
+  const std::map<std::string, double>& isoCutMap() const {return AnaUtil::cutMap(hmap_, "isoCuts");}
+
+  std::unique_ptr<TChain> chain_;      // chain contains a list of root files containing the same tree
+  std::unique_ptr<TFile> histf_;       // The output file with histograms
+
+  std::string dataType_ {"signal"};
+  bool isSignal_ {true};
+  bool studyGen_ {false};
+  bool dumpGenInfo_ {false};
+  bool studyOffline_ {false};
+  bool checkL1Offline_  {false};
+  bool applyIso_  {true};
   std::string histFile_;
   std::string logFile_;
-  int maxEvent_;
-  int verbosity_;
-  bool applyTrkQuality_;
-  int maxEvt_;
+  int verbosity_ {0};
+  bool applyTrkQuality_ {false};
+  long int maxEvt_;
+  long int count0;
+  long int count1;
+  long int count2;
   std::vector<std::string> fileList_;
 
-  std::map<std::string, double> trkSelCutMap_;
-  std::map<std::string, double> phiSelCutMap_;
-  std::map<std::string, double> bsSelCutMap_;
+  std::map<std::string, std::map<std::string, double>> hmap_;
 
   // Branches
-  TTStudy::Event* eventBr_;
-  std::vector<TTStudy::SimTrack>* simTracksBr_;  
-  std::vector<TTStudy::Track>* tracksBr_;
-  std::vector<TTStudy::GenParticle>* genParticleBr_;
+  TTStudy::Event* eventBr_ {nullptr};
+  std::vector<TTStudy::Track>* tracksBr_ {nullptr};
+  std::vector<TTStudy::Track>* offlineTracksBr_ {nullptr};
+  std::vector<TTStudy::GenParticle>* genParticleBr_ {nullptr};
 
   // other lists
   std::vector<TTStudy::GenParticle> genKaonList_;  
   std::vector<std::vector<TLorentzVector> > phiCandList_;
   std::vector<TTStudy::GenParticle> genPhiCandList_;
   std::vector<BsInfo> bsList_;
+  std::vector<BsInfo> bsOfflineList_;
+
+  std::vector<std::string> brList_;
 
   long nEntries_;
   bool bookedHistograms_; 
   double scaleFactor_;
-  int nEvents_;
+  long int nEvents_;
   std::ofstream fLog_;   
 
-  TH1F* evcountH_;
+  TH1D* nDaughtersH_;
+  TH1D* BsDecayModesH_; 
+  TH1D* evcountH_;
+  TH1D* evcountOfflineH_;
+  TH1D* evcount2H_;
+  TH1D* evcount2OfflineH_;
+  TH1D* trkcountH_;
+  TH1D* trkcountOfflineH_;
+  TH1D* phicountH_;
+  TH1D* phicountOfflineH_;
+  TH1D* phicount2H_;
+  TH1D* phicount2OfflineH_;
   TH1F* centralH_;
   TH1F* fwdH_;
   TH1F* nH_;
   TH1F* ptDiffH_;
 
   TH1F* ntrkH_;
+  TH1F* ntrk_p_before_acceptanceH_;
+  TH1F* ntrk_n_before_acceptanceH_;
+  TH1F* ntrk_p_after_acceptanceH_;
+  TH1F* ntrk_n_after_acceptanceH_;
+  TH1F* ntrk_p_goodH_;
+  TH1F* ntrk_n_goodH_;
+  TH1F* ntrkOfflineH_;
   TH1F* trkVertexZH_;
+  TH1F* trkVertexZOfflineH_;
   TH1F* trkVertexXYH_;
+  TH1F* trkVertexXYOfflineH_;
   TH1F* trkPtH_;
-  TH1F* trkChi2H_;
+  TH1F* trkPtOfflineH_;
+  TH1F* trkChi2RedH_;
+  TH1F* trkChi2RedOfflineH_;
+  TH1F* trkNStubH_;
+  TH1F* trkNStubOfflineH_;
+  TH1F* trkNStub_PSH_;
+  TH1F* trkNStub_PSOfflineH_;
 
   TH1F* dzTrackPairH_;
+  TH1F* dzTrackPairOfflineH_;
   TH1F* dzTrackPair2H_;
+  TH1F* dzTrackPair2OfflineH_;
+  TH1F* dzTrackPair3H_;
+  TH1F* dzTrackPair3OfflineH_;
+  TH1F* dzTrackPair4H_;
+  TH1F* dzTrackPair4OfflineH_;
   TH1F* dxyTrackPairH_;
+  TH1F* dxyTrackPairOfflineH_;
   TH1F* dxyTrackPair2H_;
+  TH1F* dxyTrackPair3H_;
+  TH1F* dxyTrackPair4H_;
+  TH1F* dxyTrackPair2OfflineH_;
+  TH2F* dRvsdZ1H_;
+  TH2F* dRvsdZ2H_;
+  TH2F* dRvsdZ1OfflineH_;
+  TH2F* dRvsdZ2OfflineH_;
 
   TH1F* drTrackPairH_;
+  TH1F* drTrackPairOfflineH_;
 
   TH1F* phiCandPtH_;
+  TH1F* phiCandPtOfflineH_;
   TH1F* phimass0H_;
+  TH1F* phimass0OfflineH_;
   TH1F* phimassH_;
+  TH1F* phimassOfflineH_;
   TH1F* nPhiCandH_;
+  TH1F* nPhiCandOfflineH_;
 
   TH1F* dxyPhiPairH_;
+  TH1F* dxyPhiPairOfflineH_;
   TH1F* dzPhiPairH_;
+  TH1F* dzPhiPairOfflineH_;
   TH1F* drPhiPairH_;
+  TH1F* drPhiPairOfflineH_;
 
   TH1F* drPhi1TrackPairH_;
+  TH1F* drPhi1TrackPairOfflineH_;
   TH1F* drPhi2TrackPairH_;
+  TH1F* drPhi2TrackPairOfflineH_;
 
   TH1F* bsmass0H_;
+  TH1F* bsPtH_;
+  TH1F* bsmass0OfflineH_;
   TH1F* bsmassH_;
+  TH1F* bsmassOfflineH_;
 
   TH1F* phi1PtH_;
+  TH1F* phi1PtOfflineH_;
   TH1F* phi2PtH_;
+  TH1F* phi2PtOfflineH_;
   TH2D* phiPtH_;
+  TH2D* phiPtOfflineH_;
   
   TH1F* dxyPhi1TrackPairH_;
+  TH1F* dxyPhi1TrackPairOfflineH_;
   TH1F* dzPhi1TrackPairH_;
+  TH1F* dzPhi1TrackPairOfflineH_;
 
   TH1F* dxyPhi2TrackPairH_;
+  TH1F* dxyPhi2TrackPairOfflineH_;
   TH1F* dzPhi2TrackPairH_;
-  // end selectEvent
+  TH1F* dzPhi2TrackPairOfflineH_;
 
   TH1F* trk1PtH_;
+  TH1F* trk1PtOfflineH_;
   TH1F* trk2PtH_;
+  TH1F* trk2PtOfflineH_;
   TH1F* trk3PtH_;
+  TH1F* trk3PtOfflineH_;
   TH1F* trk4PtH_;
+  TH1F* trk4PtOfflineH_;
+  TH1F* trkPtSumH_;
 
   TH1F* trk1EtaH_;
+  TH1F* trk1EtaOfflineH_;
   TH1F* trk2EtaH_;
+  TH1F* trk2EtaOfflineH_;
   TH1F* trk3EtaH_;
+  TH1F* trk3EtaOfflineH_;
   TH1F* trk4EtaH_;
+  TH1F* trk4EtaOfflineH_;
 
   TH1F* trk1PhiH_;
+  TH1F* trk1PhiOfflineH_;
   TH1F* trk2PhiH_;
+  TH1F* trk2PhiOfflineH_;
   TH1F* trk3PhiH_;
+  TH1F* trk3PhiOfflineH_;
   TH1F* trk4PhiH_;
+  TH1F* trk4PhiOfflineH_;
 
   TH1F* trk1Chi2H_;
+  TH1F* trk1Chi2OfflineH_;
   TH1F* trk2Chi2H_;
+  TH1F* trk2Chi2OfflineH_;
   TH1F* trk3Chi2H_;
+  TH1F* trk3Chi2OfflineH_;
   TH1F* trk4Chi2H_;
+  TH1F* trk4Chi2OfflineH_;
 
   TH1F* trk1Chi2RedH_;
+  TH1F* trk1Chi2RedOfflineH_;
   TH1F* trk2Chi2RedH_;
+  TH1F* trk2Chi2RedOfflineH_;
   TH1F* trk3Chi2RedH_;
+  TH1F* trk3Chi2RedOfflineH_;
   TH1F* trk4Chi2RedH_;
+  TH1F* trk4Chi2RedOfflineH_;
 
   TH1F* trk1nStubH_;
+  TH1F* trk1nStubOfflineH_;
   TH1F* trk2nStubH_;
+  TH1F* trk2nStubOfflineH_;
   TH1F* trk3nStubH_;
+  TH1F* trk3nStubOfflineH_;
   TH1F* trk4nStubH_;
+  TH1F* trk4nStubOfflineH_;
 
   TH1F* trk1nStubPSH_;
+  TH1F* trk1nStubPSOfflineH_;
   TH1F* trk2nStubPSH_;
+  TH1F* trk2nStubPSOfflineH_;
   TH1F* trk3nStubPSH_;
+  TH1F* trk3nStubPSOfflineH_;
   TH1F* trk4nStubPSH_;
+  TH1F* trk4nStubPSOfflineH_;
   
   TH1F* drKaonPairH_;
+  TH1F* drKaonPairOfflineH_;
   TH1F* isol1H_;
+  TH1F* isol1OfflineH_;
   TH1F* isol2H_;
+  TH1F* isol2OfflineH_;
   TH1F* isol3H_;
+  TH1F* isol3OfflineH_;
   TH1F* isol4H_;
+  TH1F* isol4OfflineH_;
+  TH1F* isol_phi1H_;
+  TH1F* isol_phi2H_;
+  TH1F* isol_phi1OfflineH_;
+  TH1F* isol_phi2OfflineH_;
+  TH1F* isol_BsH_;
+  TH1F* isol_BsOfflineH_;
 
   TH1F* bsCandListH_;
+  TH1F* bsCandListOfflineH_;
   TH1F* anglePlanesH_;
 
   TH1F* genKPt1H_;
@@ -301,8 +433,16 @@ class BsAnalysis {
 
   TH1F* phiVXYH_;
   TH1F* phiVZH_;
+  TH1F* phiVH_;
+  TH3F* phiV3DH_;
   TH1F* BsVXYH_;
   TH1F* BsVZH_;
+  TH1F* BsVH_;
+  TH3F* BsV3DH_;
+  TH1F* KaonVXYH_;
+  TH1F* KaonVZH_;
+  TH1F* KaonVH_;
+  TH3F* KaonV3DH_;
 
   TH1F* mDr_K;
   TH1F* mDpt_K;
@@ -339,5 +479,19 @@ class BsAnalysis {
   TH1F* allDZH_;
 
   TProfile* drVsMatchedTrkH_;
+  TH2D* Iso_Pt1H_;
+  TH2D* Iso_Pt2H_;
+  TH2D* Iso_Pt3H_;
+  TH2D* Iso_Pt4H_;
+  TH2D* Iso_Pt1OfflineH_;
+  TH2D* Iso_Pt2OfflineH_;
+  TH2D* Iso_Pt3OfflineH_;
+  TH2D* Iso_Pt4OfflineH_;
+  TH2D* Iso_Pt_Phi1H_;
+  TH2D* Iso_Pt_Phi2H_;
+  TH2D* Iso_Pt_Phi1OfflineH_;
+  TH2D* Iso_Pt_Phi2OfflineH_;
+  TH2D* Iso_Pt_BsH_;
+  TH2D* Iso_Pt_BsOfflineH_;
 };
 #endif

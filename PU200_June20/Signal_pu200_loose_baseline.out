@@ -67,3 +67,29 @@
                                                  final gen match      1030   0.03004     0.001   0.98943     0.003
 Efficiency for Outer Tracker
 Efficiency = 32.24 Poisson Error = 1.16 Binomial error = 0.83
+Track Cutflow
+                                                         CutFlow    Tracks    AbsEff     Error    RelEff     Error
+                                                nTracks at start    536726   1.00000     0.000   1.00000      -nan
+                                                   after eta cut    536215   0.99905     0.000   0.99905     0.000
+                                                    after pt cut    522798   0.97405     0.000   0.97498     0.000
+                                           after trk quality cut    522798   0.97405     0.000   1.00000     0.000
+Phi Cutflow
+                                                         CutFlow      Phis    AbsEff     Error    RelEff     Error
+                                                   nPhi at start  44007831   1.00000     0.000   1.00000      -nan
+                                             after curvature cut  22014167   0.50023     0.000   0.50023     0.000
+                                                    after dz cut   2974951   0.06760     0.000   0.13514     0.000
+                                                   after dxy cut   2961031   0.06728     0.000   0.99532     0.000
+                                                  after mass cut     11018   0.00025     0.000   0.00372     0.000
+Phi Cutflow 2
+                                                         CutFlow      Phis    AbsEff     Error    RelEff     Error
+                                                   nPhi at start     18953   1.00000     0.000   1.00000      -nan
+                                                after unique cut     18336   0.96745     0.001   0.96745     0.001
+Event Cutflow with phi cuts
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                 nEvent at start      3195   1.00000     0.000   1.00000      -nan
+                                                   2 good tracks      3195   1.00000     0.000   1.00000     0.000
+                                             after curvature cut      3195   1.00000     0.000   1.00000     0.000
+                                                    after dz cut      3195   1.00000     0.000   1.00000     0.000
+                                                   after dxy cut      3195   1.00000     0.000   1.00000     0.000
+                                                  after mass cut      3124   0.97778     0.003   0.97778     0.003
+                                                 after 2 phi cut      2784   0.87136     0.006   0.89117     0.006

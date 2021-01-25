@@ -38,6 +38,7 @@ namespace std {} using namespace std;
 
 // Header files passed as explicit arguments
 #include "interface/AnalObjects.h"
+#include "AnalObjects.h"
 
 // Header files passed via #pragma extra_include
 
@@ -70,7 +71,7 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::Event*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Event*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Event*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
@@ -86,7 +87,7 @@ namespace ROOT {
       ::TTStudy::Tracklet *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::Tracklet >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::Tracklet", ::TTStudy::Tracklet::Class_Version(), "AnalObjects.h", 38,
+         instance("TTStudy::Tracklet", ::TTStudy::Tracklet::Class_Version(), "AnalObjects.h", 35,
                   typeid(::TTStudy::Tracklet), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::TTStudy::Tracklet::Dictionary, isa_proxy, 4,
                   sizeof(::TTStudy::Tracklet) );
@@ -102,39 +103,7 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::Tracklet*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Tracklet*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-} // end of namespace ROOT
-
-namespace ROOT {
-   static void *new_TTStudycLcLElectron(void *p = 0);
-   static void *newArray_TTStudycLcLElectron(Long_t size, void *p);
-   static void delete_TTStudycLcLElectron(void *p);
-   static void deleteArray_TTStudycLcLElectron(void *p);
-   static void destruct_TTStudycLcLElectron(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TTStudy::Electron*)
-   {
-      ::TTStudy::Electron *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::Electron >(0);
-      static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::Electron", ::TTStudy::Electron::Class_Version(), "AnalObjects.h", 79,
-                  typeid(::TTStudy::Electron), ::ROOT::Internal::DefineBehavior(ptr, ptr),
-                  &::TTStudy::Electron::Dictionary, isa_proxy, 4,
-                  sizeof(::TTStudy::Electron) );
-      instance.SetNew(&new_TTStudycLcLElectron);
-      instance.SetNewArray(&newArray_TTStudycLcLElectron);
-      instance.SetDelete(&delete_TTStudycLcLElectron);
-      instance.SetDeleteArray(&deleteArray_TTStudycLcLElectron);
-      instance.SetDestructor(&destruct_TTStudycLcLElectron);
-      return &instance;
-   }
-   TGenericClassInfo *GenerateInitInstance(const ::TTStudy::Electron*)
-   {
-      return GenerateInitInstanceLocal((::TTStudy::Electron*)0);
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Electron*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Tracklet*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
@@ -150,7 +119,7 @@ namespace ROOT {
       ::TTStudy::SimTrack *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::SimTrack >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::SimTrack", ::TTStudy::SimTrack::Class_Version(), "AnalObjects.h", 104,
+         instance("TTStudy::SimTrack", ::TTStudy::SimTrack::Class_Version(), "AnalObjects.h", 77,
                   typeid(::TTStudy::SimTrack), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::TTStudy::SimTrack::Dictionary, isa_proxy, 4,
                   sizeof(::TTStudy::SimTrack) );
@@ -166,7 +135,7 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::SimTrack*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::SimTrack*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::SimTrack*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
@@ -182,7 +151,7 @@ namespace ROOT {
       ::TTStudy::Track *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::Track >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::Track", ::TTStudy::Track::Class_Version(), "AnalObjects.h", 122,
+         instance("TTStudy::Track", ::TTStudy::Track::Class_Version(), "AnalObjects.h", 95,
                   typeid(::TTStudy::Track), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::TTStudy::Track::Dictionary, isa_proxy, 4,
                   sizeof(::TTStudy::Track) );
@@ -198,7 +167,7 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::Track*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Track*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::Track*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
@@ -214,7 +183,7 @@ namespace ROOT {
       ::TTStudy::GenParticle *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::GenParticle >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::GenParticle", ::TTStudy::GenParticle::Class_Version(), "AnalObjects.h", 169,
+         instance("TTStudy::GenParticle", ::TTStudy::GenParticle::Class_Version(), "AnalObjects.h", 131,
                   typeid(::TTStudy::GenParticle), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::TTStudy::GenParticle::Dictionary, isa_proxy, 4,
                   sizeof(::TTStudy::GenParticle) );
@@ -230,7 +199,7 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::GenParticle*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::GenParticle*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::GenParticle*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
@@ -246,7 +215,7 @@ namespace ROOT {
       ::TTStudy::L1Jet *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::L1Jet >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::L1Jet", ::TTStudy::L1Jet::Class_Version(), "AnalObjects.h", 194,
+         instance("TTStudy::L1Jet", ::TTStudy::L1Jet::Class_Version(), "AnalObjects.h", 156,
                   typeid(::TTStudy::L1Jet), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &::TTStudy::L1Jet::Dictionary, isa_proxy, 4,
                   sizeof(::TTStudy::L1Jet) );
@@ -262,39 +231,71 @@ namespace ROOT {
       return GenerateInitInstanceLocal((::TTStudy::L1Jet*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::L1Jet*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::L1Jet*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace ROOT {
-   static void *new_TTStudycLcLL1Muon(void *p = 0);
-   static void *newArray_TTStudycLcLL1Muon(Long_t size, void *p);
-   static void delete_TTStudycLcLL1Muon(void *p);
-   static void deleteArray_TTStudycLcLL1Muon(void *p);
-   static void destruct_TTStudycLcLL1Muon(void *p);
+   static void *new_TTStudycLcLL1Object(void *p = 0);
+   static void *newArray_TTStudycLcLL1Object(Long_t size, void *p);
+   static void delete_TTStudycLcLL1Object(void *p);
+   static void deleteArray_TTStudycLcLL1Object(void *p);
+   static void destruct_TTStudycLcLL1Object(void *p);
 
    // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TTStudy::L1Muon*)
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TTStudy::L1Object*)
    {
-      ::TTStudy::L1Muon *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::L1Muon >(0);
+      ::TTStudy::L1Object *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::L1Object >(0);
       static ::ROOT::TGenericClassInfo 
-         instance("TTStudy::L1Muon", ::TTStudy::L1Muon::Class_Version(), "AnalObjects.h", 209,
-                  typeid(::TTStudy::L1Muon), ::ROOT::Internal::DefineBehavior(ptr, ptr),
-                  &::TTStudy::L1Muon::Dictionary, isa_proxy, 4,
-                  sizeof(::TTStudy::L1Muon) );
-      instance.SetNew(&new_TTStudycLcLL1Muon);
-      instance.SetNewArray(&newArray_TTStudycLcLL1Muon);
-      instance.SetDelete(&delete_TTStudycLcLL1Muon);
-      instance.SetDeleteArray(&deleteArray_TTStudycLcLL1Muon);
-      instance.SetDestructor(&destruct_TTStudycLcLL1Muon);
+         instance("TTStudy::L1Object", ::TTStudy::L1Object::Class_Version(), "AnalObjects.h", 172,
+                  typeid(::TTStudy::L1Object), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TTStudy::L1Object::Dictionary, isa_proxy, 4,
+                  sizeof(::TTStudy::L1Object) );
+      instance.SetNew(&new_TTStudycLcLL1Object);
+      instance.SetNewArray(&newArray_TTStudycLcLL1Object);
+      instance.SetDelete(&delete_TTStudycLcLL1Object);
+      instance.SetDeleteArray(&deleteArray_TTStudycLcLL1Object);
+      instance.SetDestructor(&destruct_TTStudycLcLL1Object);
       return &instance;
    }
-   TGenericClassInfo *GenerateInitInstance(const ::TTStudy::L1Muon*)
+   TGenericClassInfo *GenerateInitInstance(const ::TTStudy::L1Object*)
    {
-      return GenerateInitInstanceLocal((::TTStudy::L1Muon*)0);
+      return GenerateInitInstanceLocal((::TTStudy::L1Object*)0);
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const ::TTStudy::L1Muon*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::L1Object*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TTStudycLcLL1TkObject(void *p = 0);
+   static void *newArray_TTStudycLcLL1TkObject(Long_t size, void *p);
+   static void delete_TTStudycLcLL1TkObject(void *p);
+   static void deleteArray_TTStudycLcLL1TkObject(void *p);
+   static void destruct_TTStudycLcLL1TkObject(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TTStudy::L1TkObject*)
+   {
+      ::TTStudy::L1TkObject *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTStudy::L1TkObject >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TTStudy::L1TkObject", ::TTStudy::L1TkObject::Class_Version(), "AnalObjects.h", 188,
+                  typeid(::TTStudy::L1TkObject), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TTStudy::L1TkObject::Dictionary, isa_proxy, 4,
+                  sizeof(::TTStudy::L1TkObject) );
+      instance.SetNew(&new_TTStudycLcLL1TkObject);
+      instance.SetNewArray(&newArray_TTStudycLcLL1TkObject);
+      instance.SetDelete(&delete_TTStudycLcLL1TkObject);
+      instance.SetDeleteArray(&deleteArray_TTStudycLcLL1TkObject);
+      instance.SetDestructor(&destruct_TTStudycLcLL1TkObject);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TTStudy::L1TkObject*)
+   {
+      return GenerateInitInstanceLocal((::TTStudy::L1TkObject*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTStudy::L1TkObject*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 } // end of namespace ROOT
 
 namespace TTStudy {
@@ -329,7 +330,7 @@ TClass *Event::Dictionary()
 //______________________________________________________________________________
 TClass *Event::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Event*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Event*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -366,44 +367,7 @@ TClass *Tracklet::Dictionary()
 //______________________________________________________________________________
 TClass *Tracklet::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Tracklet*)0x0)->GetClass(); }
-   return fgIsA;
-}
-
-} // namespace TTStudy
-namespace TTStudy {
-//______________________________________________________________________________
-atomic_TClass_ptr Electron::fgIsA(0);  // static to hold class pointer
-
-//______________________________________________________________________________
-const char *Electron::Class_Name()
-{
-   return "TTStudy::Electron";
-}
-
-//______________________________________________________________________________
-const char *Electron::ImplFileName()
-{
-   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Electron*)0x0)->GetImplFileName();
-}
-
-//______________________________________________________________________________
-int Electron::ImplFileLine()
-{
-   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Electron*)0x0)->GetImplFileLine();
-}
-
-//______________________________________________________________________________
-TClass *Electron::Dictionary()
-{
-   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Electron*)0x0)->GetClass();
-   return fgIsA;
-}
-
-//______________________________________________________________________________
-TClass *Electron::Class()
-{
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Electron*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Tracklet*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -440,7 +404,7 @@ TClass *SimTrack::Dictionary()
 //______________________________________________________________________________
 TClass *SimTrack::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::SimTrack*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::SimTrack*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -477,7 +441,7 @@ TClass *Track::Dictionary()
 //______________________________________________________________________________
 TClass *Track::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Track*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::Track*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -514,7 +478,7 @@ TClass *GenParticle::Dictionary()
 //______________________________________________________________________________
 TClass *GenParticle::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::GenParticle*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::GenParticle*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -551,44 +515,81 @@ TClass *L1Jet::Dictionary()
 //______________________________________________________________________________
 TClass *L1Jet::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Jet*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Jet*)0x0)->GetClass(); }
    return fgIsA;
 }
 
 } // namespace TTStudy
 namespace TTStudy {
 //______________________________________________________________________________
-atomic_TClass_ptr L1Muon::fgIsA(0);  // static to hold class pointer
+atomic_TClass_ptr L1Object::fgIsA(0);  // static to hold class pointer
 
 //______________________________________________________________________________
-const char *L1Muon::Class_Name()
+const char *L1Object::Class_Name()
 {
-   return "TTStudy::L1Muon";
+   return "TTStudy::L1Object";
 }
 
 //______________________________________________________________________________
-const char *L1Muon::ImplFileName()
+const char *L1Object::ImplFileName()
 {
-   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Muon*)0x0)->GetImplFileName();
+   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Object*)0x0)->GetImplFileName();
 }
 
 //______________________________________________________________________________
-int L1Muon::ImplFileLine()
+int L1Object::ImplFileLine()
 {
-   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Muon*)0x0)->GetImplFileLine();
+   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Object*)0x0)->GetImplFileLine();
 }
 
 //______________________________________________________________________________
-TClass *L1Muon::Dictionary()
+TClass *L1Object::Dictionary()
 {
-   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Muon*)0x0)->GetClass();
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Object*)0x0)->GetClass();
    return fgIsA;
 }
 
 //______________________________________________________________________________
-TClass *L1Muon::Class()
+TClass *L1Object::Class()
 {
-   if (!fgIsA.load()) { R__LOCKGUARD2(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Muon*)0x0)->GetClass(); }
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1Object*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+} // namespace TTStudy
+namespace TTStudy {
+//______________________________________________________________________________
+atomic_TClass_ptr L1TkObject::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *L1TkObject::Class_Name()
+{
+   return "TTStudy::L1TkObject";
+}
+
+//______________________________________________________________________________
+const char *L1TkObject::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1TkObject*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int L1TkObject::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1TkObject*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *L1TkObject::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1TkObject*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *L1TkObject::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::TTStudy::L1TkObject*)0x0)->GetClass(); }
    return fgIsA;
 }
 
@@ -662,41 +663,6 @@ namespace ROOT {
       ((current_t*)p)->~current_t();
    }
 } // end of namespace ROOT for class ::TTStudy::Tracklet
-
-namespace TTStudy {
-//______________________________________________________________________________
-void Electron::Streamer(TBuffer &R__b)
-{
-   // Stream an object of class TTStudy::Electron.
-
-   if (R__b.IsReading()) {
-      R__b.ReadClassBuffer(TTStudy::Electron::Class(),this);
-   } else {
-      R__b.WriteClassBuffer(TTStudy::Electron::Class(),this);
-   }
-}
-
-} // namespace TTStudy
-namespace ROOT {
-   // Wrappers around operator new
-   static void *new_TTStudycLcLElectron(void *p) {
-      return  p ? new(p) ::TTStudy::Electron : new ::TTStudy::Electron;
-   }
-   static void *newArray_TTStudycLcLElectron(Long_t nElements, void *p) {
-      return p ? new(p) ::TTStudy::Electron[nElements] : new ::TTStudy::Electron[nElements];
-   }
-   // Wrapper around operator delete
-   static void delete_TTStudycLcLElectron(void *p) {
-      delete ((::TTStudy::Electron*)p);
-   }
-   static void deleteArray_TTStudycLcLElectron(void *p) {
-      delete [] ((::TTStudy::Electron*)p);
-   }
-   static void destruct_TTStudycLcLElectron(void *p) {
-      typedef ::TTStudy::Electron current_t;
-      ((current_t*)p)->~current_t();
-   }
-} // end of namespace ROOT for class ::TTStudy::Electron
 
 namespace TTStudy {
 //______________________________________________________________________________
@@ -840,38 +806,73 @@ namespace ROOT {
 
 namespace TTStudy {
 //______________________________________________________________________________
-void L1Muon::Streamer(TBuffer &R__b)
+void L1Object::Streamer(TBuffer &R__b)
 {
-   // Stream an object of class TTStudy::L1Muon.
+   // Stream an object of class TTStudy::L1Object.
 
    if (R__b.IsReading()) {
-      R__b.ReadClassBuffer(TTStudy::L1Muon::Class(),this);
+      R__b.ReadClassBuffer(TTStudy::L1Object::Class(),this);
    } else {
-      R__b.WriteClassBuffer(TTStudy::L1Muon::Class(),this);
+      R__b.WriteClassBuffer(TTStudy::L1Object::Class(),this);
    }
 }
 
 } // namespace TTStudy
 namespace ROOT {
    // Wrappers around operator new
-   static void *new_TTStudycLcLL1Muon(void *p) {
-      return  p ? new(p) ::TTStudy::L1Muon : new ::TTStudy::L1Muon;
+   static void *new_TTStudycLcLL1Object(void *p) {
+      return  p ? new(p) ::TTStudy::L1Object : new ::TTStudy::L1Object;
    }
-   static void *newArray_TTStudycLcLL1Muon(Long_t nElements, void *p) {
-      return p ? new(p) ::TTStudy::L1Muon[nElements] : new ::TTStudy::L1Muon[nElements];
+   static void *newArray_TTStudycLcLL1Object(Long_t nElements, void *p) {
+      return p ? new(p) ::TTStudy::L1Object[nElements] : new ::TTStudy::L1Object[nElements];
    }
    // Wrapper around operator delete
-   static void delete_TTStudycLcLL1Muon(void *p) {
-      delete ((::TTStudy::L1Muon*)p);
+   static void delete_TTStudycLcLL1Object(void *p) {
+      delete ((::TTStudy::L1Object*)p);
    }
-   static void deleteArray_TTStudycLcLL1Muon(void *p) {
-      delete [] ((::TTStudy::L1Muon*)p);
+   static void deleteArray_TTStudycLcLL1Object(void *p) {
+      delete [] ((::TTStudy::L1Object*)p);
    }
-   static void destruct_TTStudycLcLL1Muon(void *p) {
-      typedef ::TTStudy::L1Muon current_t;
+   static void destruct_TTStudycLcLL1Object(void *p) {
+      typedef ::TTStudy::L1Object current_t;
       ((current_t*)p)->~current_t();
    }
-} // end of namespace ROOT for class ::TTStudy::L1Muon
+} // end of namespace ROOT for class ::TTStudy::L1Object
+
+namespace TTStudy {
+//______________________________________________________________________________
+void L1TkObject::Streamer(TBuffer &R__b)
+{
+   // Stream an object of class TTStudy::L1TkObject.
+
+   if (R__b.IsReading()) {
+      R__b.ReadClassBuffer(TTStudy::L1TkObject::Class(),this);
+   } else {
+      R__b.WriteClassBuffer(TTStudy::L1TkObject::Class(),this);
+   }
+}
+
+} // namespace TTStudy
+namespace ROOT {
+   // Wrappers around operator new
+   static void *new_TTStudycLcLL1TkObject(void *p) {
+      return  p ? new(p) ::TTStudy::L1TkObject : new ::TTStudy::L1TkObject;
+   }
+   static void *newArray_TTStudycLcLL1TkObject(Long_t nElements, void *p) {
+      return p ? new(p) ::TTStudy::L1TkObject[nElements] : new ::TTStudy::L1TkObject[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_TTStudycLcLL1TkObject(void *p) {
+      delete ((::TTStudy::L1TkObject*)p);
+   }
+   static void deleteArray_TTStudycLcLL1TkObject(void *p) {
+      delete [] ((::TTStudy::L1TkObject*)p);
+   }
+   static void destruct_TTStudycLcLL1TkObject(void *p) {
+      typedef ::TTStudy::L1TkObject current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class ::TTStudy::L1TkObject
 
 namespace ROOT {
    static TClass *vectorlEintgR_Dictionary();
@@ -888,7 +889,7 @@ namespace ROOT {
       vector<int> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<int>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<int>", -2, "vector", 214,
+         instance("vector<int>", -2, "vector", 216,
                   typeid(vector<int>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlEintgR_Dictionary, isa_proxy, 4,
                   sizeof(vector<int>) );
@@ -901,7 +902,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<int>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<int>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlEintgR_Dictionary() {
@@ -951,7 +952,7 @@ namespace ROOT {
       vector<TTStudy::Tracklet> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::Tracklet>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::Tracklet>", -2, "vector", 214,
+         instance("vector<TTStudy::Tracklet>", -2, "vector", 216,
                   typeid(vector<TTStudy::Tracklet>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlETTStudycLcLTrackletgR_Dictionary, isa_proxy, 4,
                   sizeof(vector<TTStudy::Tracklet>) );
@@ -964,7 +965,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::Tracklet>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::Tracklet>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlETTStudycLcLTrackletgR_Dictionary() {
@@ -1014,7 +1015,7 @@ namespace ROOT {
       vector<TTStudy::Track> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::Track>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::Track>", -2, "vector", 214,
+         instance("vector<TTStudy::Track>", -2, "vector", 216,
                   typeid(vector<TTStudy::Track>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlETTStudycLcLTrackgR_Dictionary, isa_proxy, 4,
                   sizeof(vector<TTStudy::Track>) );
@@ -1027,7 +1028,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::Track>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::Track>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlETTStudycLcLTrackgR_Dictionary() {
@@ -1077,7 +1078,7 @@ namespace ROOT {
       vector<TTStudy::SimTrack> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::SimTrack>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::SimTrack>", -2, "vector", 214,
+         instance("vector<TTStudy::SimTrack>", -2, "vector", 216,
                   typeid(vector<TTStudy::SimTrack>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlETTStudycLcLSimTrackgR_Dictionary, isa_proxy, 4,
                   sizeof(vector<TTStudy::SimTrack>) );
@@ -1090,7 +1091,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::SimTrack>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::SimTrack>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlETTStudycLcLSimTrackgR_Dictionary() {
@@ -1126,67 +1127,130 @@ namespace ROOT {
 } // end of namespace ROOT for class vector<TTStudy::SimTrack>
 
 namespace ROOT {
-   static TClass *vectorlETTStudycLcLL1MuongR_Dictionary();
-   static void vectorlETTStudycLcLL1MuongR_TClassManip(TClass*);
-   static void *new_vectorlETTStudycLcLL1MuongR(void *p = 0);
-   static void *newArray_vectorlETTStudycLcLL1MuongR(Long_t size, void *p);
-   static void delete_vectorlETTStudycLcLL1MuongR(void *p);
-   static void deleteArray_vectorlETTStudycLcLL1MuongR(void *p);
-   static void destruct_vectorlETTStudycLcLL1MuongR(void *p);
+   static TClass *vectorlETTStudycLcLL1TkObjectgR_Dictionary();
+   static void vectorlETTStudycLcLL1TkObjectgR_TClassManip(TClass*);
+   static void *new_vectorlETTStudycLcLL1TkObjectgR(void *p = 0);
+   static void *newArray_vectorlETTStudycLcLL1TkObjectgR(Long_t size, void *p);
+   static void delete_vectorlETTStudycLcLL1TkObjectgR(void *p);
+   static void deleteArray_vectorlETTStudycLcLL1TkObjectgR(void *p);
+   static void destruct_vectorlETTStudycLcLL1TkObjectgR(void *p);
 
    // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const vector<TTStudy::L1Muon>*)
+   static TGenericClassInfo *GenerateInitInstanceLocal(const vector<TTStudy::L1TkObject>*)
    {
-      vector<TTStudy::L1Muon> *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::L1Muon>));
+      vector<TTStudy::L1TkObject> *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::L1TkObject>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::L1Muon>", -2, "vector", 214,
-                  typeid(vector<TTStudy::L1Muon>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
-                  &vectorlETTStudycLcLL1MuongR_Dictionary, isa_proxy, 4,
-                  sizeof(vector<TTStudy::L1Muon>) );
-      instance.SetNew(&new_vectorlETTStudycLcLL1MuongR);
-      instance.SetNewArray(&newArray_vectorlETTStudycLcLL1MuongR);
-      instance.SetDelete(&delete_vectorlETTStudycLcLL1MuongR);
-      instance.SetDeleteArray(&deleteArray_vectorlETTStudycLcLL1MuongR);
-      instance.SetDestructor(&destruct_vectorlETTStudycLcLL1MuongR);
-      instance.AdoptCollectionProxyInfo(TCollectionProxyInfo::Generate(TCollectionProxyInfo::Pushback< vector<TTStudy::L1Muon> >()));
+         instance("vector<TTStudy::L1TkObject>", -2, "vector", 216,
+                  typeid(vector<TTStudy::L1TkObject>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &vectorlETTStudycLcLL1TkObjectgR_Dictionary, isa_proxy, 4,
+                  sizeof(vector<TTStudy::L1TkObject>) );
+      instance.SetNew(&new_vectorlETTStudycLcLL1TkObjectgR);
+      instance.SetNewArray(&newArray_vectorlETTStudycLcLL1TkObjectgR);
+      instance.SetDelete(&delete_vectorlETTStudycLcLL1TkObjectgR);
+      instance.SetDeleteArray(&deleteArray_vectorlETTStudycLcLL1TkObjectgR);
+      instance.SetDestructor(&destruct_vectorlETTStudycLcLL1TkObjectgR);
+      instance.AdoptCollectionProxyInfo(TCollectionProxyInfo::Generate(TCollectionProxyInfo::Pushback< vector<TTStudy::L1TkObject> >()));
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::L1Muon>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::L1TkObject>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
-   static TClass *vectorlETTStudycLcLL1MuongR_Dictionary() {
-      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const vector<TTStudy::L1Muon>*)0x0)->GetClass();
-      vectorlETTStudycLcLL1MuongR_TClassManip(theClass);
+   static TClass *vectorlETTStudycLcLL1TkObjectgR_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const vector<TTStudy::L1TkObject>*)0x0)->GetClass();
+      vectorlETTStudycLcLL1TkObjectgR_TClassManip(theClass);
    return theClass;
    }
 
-   static void vectorlETTStudycLcLL1MuongR_TClassManip(TClass* ){
+   static void vectorlETTStudycLcLL1TkObjectgR_TClassManip(TClass* ){
    }
 
 } // end of namespace ROOT
 
 namespace ROOT {
    // Wrappers around operator new
-   static void *new_vectorlETTStudycLcLL1MuongR(void *p) {
-      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1Muon> : new vector<TTStudy::L1Muon>;
+   static void *new_vectorlETTStudycLcLL1TkObjectgR(void *p) {
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1TkObject> : new vector<TTStudy::L1TkObject>;
    }
-   static void *newArray_vectorlETTStudycLcLL1MuongR(Long_t nElements, void *p) {
-      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1Muon>[nElements] : new vector<TTStudy::L1Muon>[nElements];
+   static void *newArray_vectorlETTStudycLcLL1TkObjectgR(Long_t nElements, void *p) {
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1TkObject>[nElements] : new vector<TTStudy::L1TkObject>[nElements];
    }
    // Wrapper around operator delete
-   static void delete_vectorlETTStudycLcLL1MuongR(void *p) {
-      delete ((vector<TTStudy::L1Muon>*)p);
+   static void delete_vectorlETTStudycLcLL1TkObjectgR(void *p) {
+      delete ((vector<TTStudy::L1TkObject>*)p);
    }
-   static void deleteArray_vectorlETTStudycLcLL1MuongR(void *p) {
-      delete [] ((vector<TTStudy::L1Muon>*)p);
+   static void deleteArray_vectorlETTStudycLcLL1TkObjectgR(void *p) {
+      delete [] ((vector<TTStudy::L1TkObject>*)p);
    }
-   static void destruct_vectorlETTStudycLcLL1MuongR(void *p) {
-      typedef vector<TTStudy::L1Muon> current_t;
+   static void destruct_vectorlETTStudycLcLL1TkObjectgR(void *p) {
+      typedef vector<TTStudy::L1TkObject> current_t;
       ((current_t*)p)->~current_t();
    }
-} // end of namespace ROOT for class vector<TTStudy::L1Muon>
+} // end of namespace ROOT for class vector<TTStudy::L1TkObject>
+
+namespace ROOT {
+   static TClass *vectorlETTStudycLcLL1ObjectgR_Dictionary();
+   static void vectorlETTStudycLcLL1ObjectgR_TClassManip(TClass*);
+   static void *new_vectorlETTStudycLcLL1ObjectgR(void *p = 0);
+   static void *newArray_vectorlETTStudycLcLL1ObjectgR(Long_t size, void *p);
+   static void delete_vectorlETTStudycLcLL1ObjectgR(void *p);
+   static void deleteArray_vectorlETTStudycLcLL1ObjectgR(void *p);
+   static void destruct_vectorlETTStudycLcLL1ObjectgR(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const vector<TTStudy::L1Object>*)
+   {
+      vector<TTStudy::L1Object> *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::L1Object>));
+      static ::ROOT::TGenericClassInfo 
+         instance("vector<TTStudy::L1Object>", -2, "vector", 216,
+                  typeid(vector<TTStudy::L1Object>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &vectorlETTStudycLcLL1ObjectgR_Dictionary, isa_proxy, 4,
+                  sizeof(vector<TTStudy::L1Object>) );
+      instance.SetNew(&new_vectorlETTStudycLcLL1ObjectgR);
+      instance.SetNewArray(&newArray_vectorlETTStudycLcLL1ObjectgR);
+      instance.SetDelete(&delete_vectorlETTStudycLcLL1ObjectgR);
+      instance.SetDeleteArray(&deleteArray_vectorlETTStudycLcLL1ObjectgR);
+      instance.SetDestructor(&destruct_vectorlETTStudycLcLL1ObjectgR);
+      instance.AdoptCollectionProxyInfo(TCollectionProxyInfo::Generate(TCollectionProxyInfo::Pushback< vector<TTStudy::L1Object> >()));
+      return &instance;
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::L1Object>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *vectorlETTStudycLcLL1ObjectgR_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const vector<TTStudy::L1Object>*)0x0)->GetClass();
+      vectorlETTStudycLcLL1ObjectgR_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void vectorlETTStudycLcLL1ObjectgR_TClassManip(TClass* ){
+   }
+
+} // end of namespace ROOT
+
+namespace ROOT {
+   // Wrappers around operator new
+   static void *new_vectorlETTStudycLcLL1ObjectgR(void *p) {
+      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1Object> : new vector<TTStudy::L1Object>;
+   }
+   static void *newArray_vectorlETTStudycLcLL1ObjectgR(Long_t nElements, void *p) {
+      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::L1Object>[nElements] : new vector<TTStudy::L1Object>[nElements];
+   }
+   // Wrapper around operator delete
+   static void delete_vectorlETTStudycLcLL1ObjectgR(void *p) {
+      delete ((vector<TTStudy::L1Object>*)p);
+   }
+   static void deleteArray_vectorlETTStudycLcLL1ObjectgR(void *p) {
+      delete [] ((vector<TTStudy::L1Object>*)p);
+   }
+   static void destruct_vectorlETTStudycLcLL1ObjectgR(void *p) {
+      typedef vector<TTStudy::L1Object> current_t;
+      ((current_t*)p)->~current_t();
+   }
+} // end of namespace ROOT for class vector<TTStudy::L1Object>
 
 namespace ROOT {
    static TClass *vectorlETTStudycLcLL1JetgR_Dictionary();
@@ -1203,7 +1267,7 @@ namespace ROOT {
       vector<TTStudy::L1Jet> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::L1Jet>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::L1Jet>", -2, "vector", 214,
+         instance("vector<TTStudy::L1Jet>", -2, "vector", 216,
                   typeid(vector<TTStudy::L1Jet>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlETTStudycLcLL1JetgR_Dictionary, isa_proxy, 4,
                   sizeof(vector<TTStudy::L1Jet>) );
@@ -1216,7 +1280,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::L1Jet>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::L1Jet>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlETTStudycLcLL1JetgR_Dictionary() {
@@ -1266,7 +1330,7 @@ namespace ROOT {
       vector<TTStudy::GenParticle> *ptr = 0;
       static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::GenParticle>));
       static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::GenParticle>", -2, "vector", 214,
+         instance("vector<TTStudy::GenParticle>", -2, "vector", 216,
                   typeid(vector<TTStudy::GenParticle>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
                   &vectorlETTStudycLcLGenParticlegR_Dictionary, isa_proxy, 4,
                   sizeof(vector<TTStudy::GenParticle>) );
@@ -1279,7 +1343,7 @@ namespace ROOT {
       return &instance;
    }
    // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::GenParticle>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::GenParticle>*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
 
    // Dictionary for non-ClassDef classes
    static TClass *vectorlETTStudycLcLGenParticlegR_Dictionary() {
@@ -1314,69 +1378,6 @@ namespace ROOT {
    }
 } // end of namespace ROOT for class vector<TTStudy::GenParticle>
 
-namespace ROOT {
-   static TClass *vectorlETTStudycLcLElectrongR_Dictionary();
-   static void vectorlETTStudycLcLElectrongR_TClassManip(TClass*);
-   static void *new_vectorlETTStudycLcLElectrongR(void *p = 0);
-   static void *newArray_vectorlETTStudycLcLElectrongR(Long_t size, void *p);
-   static void delete_vectorlETTStudycLcLElectrongR(void *p);
-   static void deleteArray_vectorlETTStudycLcLElectrongR(void *p);
-   static void destruct_vectorlETTStudycLcLElectrongR(void *p);
-
-   // Function generating the singleton type initializer
-   static TGenericClassInfo *GenerateInitInstanceLocal(const vector<TTStudy::Electron>*)
-   {
-      vector<TTStudy::Electron> *ptr = 0;
-      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(vector<TTStudy::Electron>));
-      static ::ROOT::TGenericClassInfo 
-         instance("vector<TTStudy::Electron>", -2, "vector", 214,
-                  typeid(vector<TTStudy::Electron>), ::ROOT::Internal::DefineBehavior(ptr, ptr),
-                  &vectorlETTStudycLcLElectrongR_Dictionary, isa_proxy, 4,
-                  sizeof(vector<TTStudy::Electron>) );
-      instance.SetNew(&new_vectorlETTStudycLcLElectrongR);
-      instance.SetNewArray(&newArray_vectorlETTStudycLcLElectrongR);
-      instance.SetDelete(&delete_vectorlETTStudycLcLElectrongR);
-      instance.SetDeleteArray(&deleteArray_vectorlETTStudycLcLElectrongR);
-      instance.SetDestructor(&destruct_vectorlETTStudycLcLElectrongR);
-      instance.AdoptCollectionProxyInfo(TCollectionProxyInfo::Generate(TCollectionProxyInfo::Pushback< vector<TTStudy::Electron> >()));
-      return &instance;
-   }
-   // Static variable to force the class initialization
-   static ::ROOT::TGenericClassInfo *_R__UNIQUE_(Init) = GenerateInitInstanceLocal((const vector<TTStudy::Electron>*)0x0); R__UseDummy(_R__UNIQUE_(Init));
-
-   // Dictionary for non-ClassDef classes
-   static TClass *vectorlETTStudycLcLElectrongR_Dictionary() {
-      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const vector<TTStudy::Electron>*)0x0)->GetClass();
-      vectorlETTStudycLcLElectrongR_TClassManip(theClass);
-   return theClass;
-   }
-
-   static void vectorlETTStudycLcLElectrongR_TClassManip(TClass* ){
-   }
-
-} // end of namespace ROOT
-
-namespace ROOT {
-   // Wrappers around operator new
-   static void *new_vectorlETTStudycLcLElectrongR(void *p) {
-      return  p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::Electron> : new vector<TTStudy::Electron>;
-   }
-   static void *newArray_vectorlETTStudycLcLElectrongR(Long_t nElements, void *p) {
-      return p ? ::new((::ROOT::Internal::TOperatorNewHelper*)p) vector<TTStudy::Electron>[nElements] : new vector<TTStudy::Electron>[nElements];
-   }
-   // Wrapper around operator delete
-   static void delete_vectorlETTStudycLcLElectrongR(void *p) {
-      delete ((vector<TTStudy::Electron>*)p);
-   }
-   static void deleteArray_vectorlETTStudycLcLElectrongR(void *p) {
-      delete [] ((vector<TTStudy::Electron>*)p);
-   }
-   static void destruct_vectorlETTStudycLcLElectrongR(void *p) {
-      typedef vector<TTStudy::Electron> current_t;
-      ((current_t*)p)->~current_t();
-   }
-} // end of namespace ROOT for class vector<TTStudy::Electron>
-
 namespace {
   void TriggerDictionaryInitialization_Dict_Impl() {
     static const char* headers[] = {
@@ -1386,8 +1387,8 @@ namespace {
     static const char* includePaths[] = {
 "./interface",
 "./",
-"/cvmfs/cms.cern.ch/slc6_amd64_gcc630/lcg/root/6.08.04-oenich/include",
-"/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_code_June20/",
+"/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-pafccj3/include",
+"/afs/cern.ch/work/r/rbhattac/public/BsAnalysis_dev_02_07_2019/",
 0
     };
     static const char* fwdDeclCode = R"DICTFWDDCLS(
@@ -1396,15 +1397,15 @@ namespace {
 #pragma clang diagnostic ignored "-Wignored-attributes"
 #pragma clang diagnostic ignored "-Wreturn-type-c-linkage"
 extern int __Cling_Autoloading_Map;
-namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  Tracklet;}
 namespace std{template <typename _Tp> class __attribute__((annotate("$clingAutoload$bits/allocator.h")))  __attribute__((annotate("$clingAutoload$string")))  allocator;
 }
-namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  L1Muon;}
-namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  L1Jet;}
-namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  GenParticle;}
+namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  Tracklet;}
 namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  Track;}
 namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  SimTrack;}
-namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  Electron;}
+namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  L1TkObject;}
+namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  L1Object;}
+namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  L1Jet;}
+namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  GenParticle;}
 namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h")))  Event;}
 )DICTFWDDCLS";
     static const char* payloadCode = R"DICTPAYLOAD(
@@ -1416,15 +1417,42 @@ namespace TTStudy{class __attribute__((annotate("$clingAutoload$AnalObjects.h"))
 
 #define _BACKWARD_BACKWARD_WARNING_H
 #include "interface/AnalObjects.h"
+#include "AnalObjects.h"
+
+#ifdef __CINT__
+
+#include <vector>
+#pragma link off all globals;
+#pragma link off all classes;
+#pragma link off all functions;
+#pragma link C++ nestedclass;
+#pragma link C++ nestedtypedef;
+#pragma link C++ class TTStudy::Event+;
+#pragma link C++ class TTStudy::GenParticle+;
+#pragma link C++ class TTStudy::L1Jet+;
+#pragma link C++ class TTStudy::L1Object+;
+#pragma link C++ class TTStudy::L1TkObject+;
+#pragma link C++ class TTStudy::SimTrack+;
+#pragma link C++ class TTStudy::Track+;
+#pragma link C++ class TTStudy::Tracklet+;
+#pragma link C++ class std::vector<int>+;
+#pragma link C++ class std::vector<TTStudy::GenParticle>+;
+#pragma link C++ class std::vector<TTStudy::L1Jet>+;
+#pragma link C++ class std::vector<TTStudy::L1Object>+;
+#pragma link C++ class std::vector<TTStudy::L1TkObject>+;
+#pragma link C++ class std::vector<TTStudy::SimTrack>+;
+#pragma link C++ class std::vector<TTStudy::Track>+;
+#pragma link C++ class std::vector<TTStudy::Tracklet>+;
+#endif
 
 #undef  _BACKWARD_BACKWARD_WARNING_H
 )DICTPAYLOAD";
     static const char* classesHeaders[]={
-"TTStudy::Electron", payloadCode, "@",
 "TTStudy::Event", payloadCode, "@",
 "TTStudy::GenParticle", payloadCode, "@",
 "TTStudy::L1Jet", payloadCode, "@",
-"TTStudy::L1Muon", payloadCode, "@",
+"TTStudy::L1Object", payloadCode, "@",
+"TTStudy::L1TkObject", payloadCode, "@",
 "TTStudy::SimTrack", payloadCode, "@",
 "TTStudy::Track", payloadCode, "@",
 "TTStudy::Tracklet", payloadCode, "@",

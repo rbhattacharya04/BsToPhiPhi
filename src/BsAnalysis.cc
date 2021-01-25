@@ -4,6 +4,7 @@
 #include <cassert>
 #include <algorithm>
 #include <cmath>
+#include <chrono>
 
 #include "TROOT.h"
 #include "TSystem.h"
@@ -33,38 +34,33 @@
 using namespace std;
 
 BsAnalysis::BsAnalysis()
-  : chain_(new TChain("bsStudy/ElectronTriggerInfo")),
-    outputFile_(nullptr),
-    dataType_("signal"),
-    isSignal_(true),
-    studyGen_(false),
-    dumpGenInfo_(false),
-    studyOffline_(false),
-    verbosity_(0),
-    applyTrkQuality_(false),
+#ifdef TRUE_CPP14
+  : chain_(make_unique<TChain>("ttAnalysis/Phase2TriggerInfo")),
+#else
+  : chain_(unique_ptr<TChain>(new TChain("ttAnalysis/Phase2TriggerInfo"))),
+#endif
     eventBr_(new TTStudy::Event()),
-    simTracksBr_(new std::vector<TTStudy::SimTrack>()),
-    tracksBr_(new std::vector<TTStudy::Track>()),
-    genParticleBr_(nullptr),
+    tracksBr_(new vector<TTStudy::Track>()),
     bookedHistograms_(false)
 {
-  cout << "=== Start of Analysis === " << endl;
   fileList_.clear();
+  brList_.clear();
 }
 bool BsAnalysis::beginJob()
 {
-  outputFile_ = TFile::Open(histFile_.c_str(), "RECREATE");
-
   // create vectors to hold branches
-  if (studyGen_) genParticleBr_ = new std::vector<TTStudy::GenParticle>();
-  nEvents_ = static_cast<int>(chain_->GetEntries()); 
+  if (studyGen_) genParticleBr_ = new vector<TTStudy::GenParticle>();
+  if (checkL1Offline_) offlineTracksBr_ = new vector<TTStudy::Track>();
+  nEvents_ = static_cast<long int>(chain_->GetEntriesFast()); 
   if (nEvents_ <= 0) {
     cerr << "******* nEvents = " << nEvents_ << ", returning!" << endl;
     return false;
   }
-  if (maxEvt_ > 0) nEvents_ = std::min(nEvents_, maxEvt_);
-  cout << " >>> nEvents = " << nEvents_ << endl;
+  cout << " >>> Total events available, nEvents = " << nEvents_ << endl;
+  if (maxEvt_ > 0) nEvents_ = min(nEvents_, maxEvt_);
+  cout << " >>> Total events to analyze, min(nEvents, maxEvt) = " << nEvents_ << endl;
 
+  // open output files [log and histograms]
   openFiles();
   printJob(fLog_);
   
@@ -72,20 +68,14 @@ bool BsAnalysis::beginJob()
   setTreeBranches();
 
   scaleFactor_ = 30000; // 30MHz, used for rate calculation
-  std::cout << std::setiosflags(std::ios::fixed);
-  std::cout << std::setprecision(2);
+  cout << setiosflags(ios::fixed);
+  cout << setprecision(2);
 
   return true;
 }
 void BsAnalysis::endJob() {
   printResults();
   printResults(fLog_);
-
-  // close text files
-  closeFiles();
-
-  // and finally 
-  saveHistograms();
 }
 bool BsAnalysis::openFiles() 
 {
@@ -95,6 +85,10 @@ bool BsAnalysis::openFiles()
     return false;
   }
   fLog_ << setiosflags(ios::fixed);
+
+  // Open the output ROOT file
+  TFile* f = TFile::Open(histFile_.c_str(), "RECREATE");
+  histf_.reset(move(f));
 
   return true;
 }
@@ -107,28 +101,51 @@ void BsAnalysis::closeFiles()
     fLog_ << resetiosflags(ios::fixed); 
     fLog_.close();
   }
+
+  // and finally 
+  saveHistograms();
 }
 BsAnalysis::~BsAnalysis() {
   if (eventBr_) delete eventBr_;
-  if (simTracksBr_) delete simTracksBr_;
   if (tracksBr_) delete tracksBr_;
   if (studyGen_ && genParticleBr_) delete genParticleBr_;
+  if (offlineTracksBr_) delete offlineTracksBr_;
 }
 void BsAnalysis::bookHistograms() {
+  histf_->cd();
+  histf_->mkdir("Main");
+  histf_->cd("Main");
 
-  outputFile_->cd();
-  evcountH_ = new TH1F("evcount", "event selection counter", 10, -0.5, 9.5);
+  evcountH_      = new TH1D("evcount", "event selection counter", 13, -0.5, 12.5);
+  evcount2H_      = new TH1D("evcount2", "event selection counter", 5, -0.5, 4.5);
+
+  nDaughtersH_   = new TH1D("nDaughters"," no of daughters of Bs",10,-0.5,9.5);
+  BsDecayModesH_ = new TH1D("BsDecayModes", "various decay modes of Bs",10,-0.5,9.5);
 
   // Outer Track
-  ntrkH_             = new TH1F("ntrk", "No of tracks before any selection", 400, 0, 1000);
+  ntrkH_             = new TH1F("ntrk", "No of tracks before any selection", 400, 0, 400);
+  ntrk_p_before_acceptanceH_  = new TH1F("ntrk_p_before_acceptance", "No of positive tracks before track quality cut", 400, 0, 400);
+  ntrk_n_before_acceptanceH_  = new TH1F("ntrk_n_before_acceptance", "No of negative tracks before track quality cut", 400, 0, 400);
+  ntrk_p_after_acceptanceH_  = new TH1F("ntrk_p_after_acceptance", "No of positive tracks before track quality cut", 400, 0, 400);
+  ntrk_n_after_acceptanceH_  = new TH1F("ntrk_n_after_acceptance", "No of negative tracks before track quality cut", 400, 0, 400);
+  ntrk_p_goodH_      = new TH1F("ntrk_p_good", "No of positive tracks after track quality cut", 400, 0, 400);
+  ntrk_n_goodH_      = new TH1F("ntrk_n_good", "No of negative tracks after track quality cut", 400, 0, 400);
   trkVertexZH_       = new TH1F("trkvertexZ","vertex Z of the tracks", 1000, -2, 2);
   trkVertexXYH_      = new TH1F("trkvertexXY","vertex XY of the tracks", 1000, 0, 1);
   trkPtH_            = new TH1F("trkPt","Track Pt", 100, 0, 100);
-  trkChi2H_          = new TH1F("trkChi2", "Track Chi Square", 200, 0, 20);  
+  trkChi2RedH_       = new TH1F("trkChi2", "Track Chi Square (Reduced)", 200, 0, 20);  
+  trkNStubH_         = new TH1F("trkNStub", "Track nStub",11,-0.5,10.5);
+  trkNStub_PSH_      = new TH1F("trkNStub_PS"," Track nStub PS", 11,-0.5,10.5);
   dzTrackPairH_      = new TH1F("dzTrackPair", "dz between a pair of tracks", 100, -1, 1);
-  dzTrackPair2H_     = new TH1F("dzTrackPair2", "dz between a pair of tracks", 100, -0.2, 0.2);
+  dzTrackPair2H_     = new TH1F("dzTrackPair2", "dz between a pair of tracks", 400, -20, 20);
+  dzTrackPair3H_     = new TH1F("dzTrackPair3", "dz between a pair of tracks", 400, -20, 20);
+  dzTrackPair4H_     = new TH1F("dzTrackPair4", "dz between a pair of tracks", 400, -20, 20);
+  dRvsdZ1H_          = new TH2F("dRvsdZ1H","dR vs dZ",400,-20,20,50,0,5) ;
+  dRvsdZ2H_          = new TH2F("dRvsdZ2H","dR vs dZ",400,-20,20,50,0,5) ;
   dxyTrackPairH_     = new TH1F("dxyTrackPair", "dxy between a pair of tracks", 100, 0, 1);
-  dxyTrackPair2H_    = new TH1F("dxyTrackPair2", "dxy between a pair of tracks", 100, 0, 0.2);
+  dxyTrackPair2H_    = new TH1F("dxyTrackPair2", "dxy between a pair of tracks", 500, 0, 5);
+  dxyTrackPair3H_    = new TH1F("dxyTrackPair3", "dxy between a pair of tracks", 500, 0, 5);
+  dxyTrackPair4H_    = new TH1F("dxyTrackPair4", "dxy between a pair of tracks", 500, 0, 5);
   phimass0H_         = new TH1F("phimass0", "Phi candidate mass (all)", 200, 0, 10);
   phimassH_          = new TH1F("phimass", "Phi candidate mass (all)", 100, 0.98, 1.1);
   drTrackPairH_      = new TH1F("drTrackPair", "dr between a pair of tracks", 100, 0, 0.2);
@@ -141,6 +158,7 @@ void BsAnalysis::bookHistograms() {
   drPhi2TrackPairH_  = new TH1F("drPhi2TrackPair", "dr between a pair of tracks after Phi pair found", 100, 0, 0.2);
   bsmass0H_          = new TH1F("bsmass0", "B_s mass after all other selection", 100, 0, 10);
   bsmassH_           = new TH1F("bsmass", "B_s mass after all other selection", 100, 5, 5.8);
+  bsPtH_             = new TH1F("bsPt","B_s pT after all other selections",200,0,50);
   bsCandListH_       = new TH1F("bsCandList", "B_s candidates found", 4, -.5, 3.5);
   phi1PtH_           = new TH1F("phi1Pt", "First selected Phi pT after all but mass window cut", 100, 3, 23);
   phi2PtH_           = new TH1F("phi2Pt", "Second selected Phi pT after all but mass window cut", 100, 3, 23);
@@ -154,6 +172,7 @@ void BsAnalysis::bookHistograms() {
   trk2PtH_           = new TH1F("trk2Pt", "Second highest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
   trk3PtH_           = new TH1F("trk3Pt", "Third highest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
   trk4PtH_           = new TH1F("trk4Pt", "Lowest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
+  trkPtSumH_         = new TH1F("trkPtSum","Sum of pTs of the 4 tracks consisting a Bs candidate",200,0,50);
 
   trk1EtaH_          = new TH1F("trk1Eta", "Highest pT kaon eta of the 1st Bs candidate", 100, -3, 3);
   trk2EtaH_          = new TH1F("trk2Eta", "Second highest pT kaon eta of the 1st Bs candidate", 100, -3, 3);
@@ -186,11 +205,24 @@ void BsAnalysis::bookHistograms() {
   trk4nStubPSH_      = new TH1F("trk4nStubPS", "Lowest pT kaon PS nStub of the 1st Bs candidate", 8, -0.5, 7.5);
  
   drKaonPairH_       = new TH1F("drKaonPair","delta R between the selected kaons", 100, 0, 0.5);
-  isol1H_            = new TH1F("isol1", "Isolation of the first selected track", 100, 0, 0.5); 
-  isol2H_            = new TH1F("isol2", "Isolation of the second selected track", 100, 0, 0.5); 
-  isol3H_            = new TH1F("isol3", "Isolation of the third selected track", 100, 0, 0.5); 
-  isol4H_            = new TH1F("isol4", "Isolation of the fourth selected track", 100, 0, 0.5); 
+  isol1H_            = new TH1F("isol1", "Isolation of the first selected track", 1000, 0, 5); 
+  isol2H_            = new TH1F("isol2", "Isolation of the second selected track", 1000, 0, 5); 
+  isol3H_            = new TH1F("isol3", "Isolation of the third selected track", 1000, 0, 5); 
+  isol4H_            = new TH1F("isol4", "Isolation of the fourth selected track", 1000, 0, 5);
 
+  Iso_Pt1H_          = new TH2D("Iso_Pt1","Iso vs Pt",100,0,20,100,0,5); 
+  Iso_Pt2H_          = new TH2D("Iso_Pt2","Iso vs Pt",100,0,20,100,0,5); 
+  Iso_Pt3H_          = new TH2D("Iso_Pt3","Iso vs Pt",100,0,20,100,0,5); 
+  Iso_Pt4H_          = new TH2D("Iso_Pt4","Iso vs Pt",100,0,20,100,0,5); 
+
+  isol_phi1H_        = new TH1F("isol_phi1", "Isolation of the first selected track", 1000, 0, 5); 
+  isol_phi2H_        = new TH1F("isol_phi2", "Isolation of the second selected track", 1000, 0, 5); 
+
+  Iso_Pt_Phi1H_      = new TH2D("Iso_Pt_Phi1", "Iso vs Pt", 100, 3, 23,100,0,5);
+  Iso_Pt_Phi2H_      = new TH2D("Iso_Pt_Phi2", "Iso vs Pt", 100, 3, 23,100,0,5);
+  
+  isol_BsH_          = new TH1F("isol_Bs", "Isolation of the second selected track", 1000, 0, 5); 
+  Iso_Pt_BsH_        = new TH2D("Isol_Pt_Bs", "Iso vs Pt", 100, 8, 28,100,0,5);
   // The rest
   centralH_ = new TH1F("c_ntrk","No of tracks in central region", 100, 0, 400);
   fwdH_     = new TH1F("f_ntrk","No of tracks in forward region", 100, 0, 400);
@@ -236,9 +268,17 @@ void BsAnalysis::bookHistograms() {
     genBsPhiH_     = new TH1F("genBsPhi","Gen Bs phi",100,-4, 4);
     
     phiVXYH_   = new TH1F("phiVXY","VertexXY for the Gen Level Phis",200, 0, 2);
-    phiVZH_    = new TH1F("phiVZ","VertexZ for the Gen Level Phis", 200, -10, 10);
+    phiVZH_    = new TH1F("phiVZ","VertexZ for the Gen Level Phis", 400, -20, 20);
+    phiVH_    = new TH1F("phiV","Vertex for the Gen Level Phis", 400, -20, 20);
+    phiV3DH_    = new TH3F("phiV3D","Vertex for the Gen Level Phis", 200, 0, 20,200,0,20,200,0,20);
     BsVXYH_    = new TH1F("BsVXY","VertexXY for the Gen level Bs", 200, 0, 2);
-    BsVZH_     = new TH1F("BsVZ","VertexZ for the Gen Level Bs", 200, -10, 10);
+    BsVZH_     = new TH1F("BsVZ","VertexZ for the Gen Level Bs", 400, -20, 20);
+    BsVH_    = new TH1F("BsV","Vertex for the Gen Level Bs", 400, -20, 20);
+    BsV3DH_    = new TH3F("BsV3D","Vertex for the Gen Level Bs", 200, 0, 20,200,0,20,200,0,20);
+    KaonVXYH_   = new TH1F("KaonVXY","VertexXY for the Gen Level Phis",200, 0, 2);
+    KaonVZH_    = new TH1F("KaonVZ","VertexZ for the Gen Level Phis", 400, -20, 20);
+    KaonVH_    = new TH1F("KaonV","Vertex for the Gen Level Kaons", 400, -20, 20);
+    KaonV3DH_    = new TH3F("KaonV3D","Vertex for the Gen Level Kaons", 200, 0, 20,200,0,20,200,0,20);
     
     mDr_phi   = new TH1F("mDr_phi", "Dr between phis", 100, 0, 0.5);
     mDpt_phi  = new TH1F("mDpt_phi", "Dpt between phis", 100, 0, 5);
@@ -271,31 +311,156 @@ void BsAnalysis::bookHistograms() {
     signalDXYH_   = new TH1F("signalDXYH", "dxy of signal tracks beam spot", 200, 0, 0.2);
     signalDZH_    = new TH1F("signalDZH", "dz of signal tracks from beam spot", 200, -2., 2.);
   }
+  if (checkL1Offline_) {
+    histf_->cd();
+    histf_->mkdir("Offline");
+    histf_->cd("Offline");
+  
+    evcountOfflineH_ = new TH1D("evcountOffline", "event selection counter", 10, -0.5, 9.5);
+    //nDaughtersOfflineH_ = new TH1D("nDaughtersOffline"," no of daughters of Bs",10,-0.5,9.5);
+    //BsDecayModesOfflineH_ = new TH1D("BsDecayModesOffline", "various decay modes of Bs",10,-0.5,9.5);
+
+    // Outer Track
+    ntrkOfflineH_             = new TH1F("ntrkOffline", "No of tracks before any selection", 400, 0, 1000);
+    trkVertexZOfflineH_       = new TH1F("trkvertexZOffline","vertex Z of the tracks", 1000, -2, 2);
+    trkVertexXYOfflineH_      = new TH1F("trkvertexXYOffline","vertex XY of the tracks", 1000, 0, 1);
+    trkPtOfflineH_            = new TH1F("trkPtOffline","Track Pt", 100, 0, 100);
+    trkChi2RedOfflineH_       = new TH1F("trkChi2Offline", "Track Chi Square (Reduced)", 200, 0, 20);  
+    trkNStubOfflineH_         = new TH1F("trkNStubOffline", "Track nStub",11,-0.5,10.5);
+    trkNStub_PSOfflineH_      = new TH1F("trkNStub_PSOffline"," Track nStub PS", 11,-0.5,10.5);
+    dzTrackPairOfflineH_      = new TH1F("dzTrackPairOffline", "dz between a pair of tracks", 100, -1, 1);
+    dzTrackPair2OfflineH_     = new TH1F("dzTrackPair2Offline", "dz between a pair of tracks", 100, -0.2, 0.2);
+    dzTrackPair3OfflineH_     = new TH1F("dzTrackPair3Offline", "dz between a pair of tracks", 100, -5, 5);
+    dzTrackPair4OfflineH_     = new TH1F("dzTrackPair4Offline", "dz between a pair of tracks", 100, -5, 5);
+    dRvsdZ1OfflineH_          = new TH2F("dRvsdZ1OfflineH","dR vs dZ",400,-20,20,50,0,5) ;
+    dRvsdZ2OfflineH_          = new TH2F("dRvsdZ2OfflineH","dR vs dZ",400,-20,20,50,0,5) ;
+    dxyTrackPairOfflineH_     = new TH1F("dxyTrackPairOffline", "dxy between a pair of tracks", 100, 0, 1);
+    dxyTrackPair2OfflineH_    = new TH1F("dxyTrackPair2Offline", "dxy between a pair of tracks", 100, 0, 0.2);
+    phimass0OfflineH_         = new TH1F("phimass0Offline", "Phi candidate mass (all)", 200, 0, 10);
+    phimassOfflineH_          = new TH1F("phimassOffline", "Phi candidate mass (all)", 100, 0.98, 1.1);
+    drTrackPairOfflineH_      = new TH1F("drTrackPairOffline", "dr between a pair of tracks", 100, 0, 0.2);
+    phiCandPtOfflineH_        = new TH1F("phiCandPtOffline", "Phi Candidate Pt", 100, 3, 23);
+    nPhiCandOfflineH_         = new TH1F("nPhiCandOffline", "No of Phi candidates after candidate selection", 20, -0.5, 19.5);
+    dxyPhiPairOfflineH_       = new TH1F("dxyPhiPairOffline", "dxy between a pair of Phis after Phi pair found", 100, 0, 0.5);
+    dzPhiPairOfflineH_        = new TH1F("dzPhiPairOffline", "dz between a pair of Phis after Phi pair found", 100, -1, 1);
+    drPhiPairOfflineH_        = new TH1F("drPhiPairOffline", "dr between a pair of Phis after Phi pair found", 100, 0, 3);
+    drPhi1TrackPairOfflineH_  = new TH1F("drPhi1TrackPairOffline", "dr between a pair of tracks after Phi pair found", 100, 0, 0.2);
+    drPhi2TrackPairOfflineH_  = new TH1F("drPhi2TrackPairOffline", "dr between a pair of tracks after Phi pair found", 100, 0, 0.2);
+    bsmass0OfflineH_          = new TH1F("bsmass0Offline", "B_s mass after all other selection", 100, 0, 10);
+    bsmassOfflineH_           = new TH1F("bsmassOffline", "B_s mass after all other selection", 100, 5, 5.8);
+    bsCandListOfflineH_       = new TH1F("bsCandListOffline", "B_s candidates found", 4, -.5, 3.5);
+    phi1PtOfflineH_           = new TH1F("phi1PtOffline", "First selected Phi pT after all but mass window cut", 100, 3, 23);
+    phi2PtOfflineH_           = new TH1F("phi2PtOffline", "Second selected Phi pT after all but mass window cut", 100, 3, 23);
+    phiPtOfflineH_            = new TH2D("phiPtOffline", "Phi Pt", 100, 3, 23, 100, 3, 23);
+    dxyPhi1TrackPairOfflineH_ = new TH1F("dxyPhi1TrackPairOffline", "dxy between a pair of tracks after Phi pair found", 100, 0, 1);
+    dzPhi1TrackPairOfflineH_  = new TH1F("dzPhi1TrackPairOffline", "dz between a pair of tracks after Phi pair found", 100, -1, 1);
+    dxyPhi2TrackPairOfflineH_ = new TH1F("dxyPhi2TrackPairOffline", "dxy between a pair of tracks after Phi pair found", 100, 0, 1);
+    dzPhi2TrackPairOfflineH_  = new TH1F("dzPhi2TrackPairOffline", "dz between a pair of tracks after Phi pair found", 100, -1, 1);
+
+    trk1PtOfflineH_           = new TH1F("trk1PtOffline", "Highest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
+    trk2PtOfflineH_           = new TH1F("trk2PtOffline", "Second highest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
+    trk3PtOfflineH_           = new TH1F("trk3PtOffline", "Third highest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
+    trk4PtOfflineH_           = new TH1F("trk4PtOffline", "Lowest pT kaon pt of the 1st Bs candidate", 100, 0, 20);
+
+    trk1EtaOfflineH_          = new TH1F("trk1EtaOffline", "Highest pT kaon eta of the 1st Bs candidate", 100, -3, 3);
+    trk2EtaOfflineH_          = new TH1F("trk2EtaOffline", "Second highest pT kaon eta of the 1st Bs candidate", 100, -3, 3);
+    trk3EtaOfflineH_          = new TH1F("trk3EtaOffline", "Third highest pT kaon eta of the 1st Bs candidate", 100, -3, 3);
+    trk4EtaOfflineH_          = new TH1F("trk4EtaOffline", "Lowest pT kaon eta of the 1st Bs Candidate", 100, -3, 3);
+
+    trk1PhiOfflineH_          = new TH1F("trk1PhiOffline", "Highest pT kaon phi of the 1st Bs candidate", 100, -4, 4);
+    trk2PhiOfflineH_          = new TH1F("trk2PhiOffline", "Second highest pT kaon phi of the 1st Bs candidate", 100, -4, 4);
+    trk3PhiOfflineH_          = new TH1F("trk3PhiOffline", "Third highest pT kaon phi of the 1st Bs candidate", 100, -4, 4);
+    trk4PhiOfflineH_          = new TH1F("trk4PhiOffline", "Lowest pT kaon phi of the 1st Bs Candidate", 100, -4, 4);
+
+    trk1Chi2OfflineH_         = new TH1F("trk1Chi2Offline", "Highest pT kaon Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk2Chi2OfflineH_         = new TH1F("trk2Chi2Offline", "Second highest pT kaon Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk3Chi2OfflineH_         = new TH1F("trk3Chi2Offline", "Third highest pT kaon Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk4Chi2OfflineH_         = new TH1F("trk4Chi2Offline", "Lowest pT kaon Chi2 of the 1st Bs candidate", 100, 0, 100);
+
+    trk1Chi2RedOfflineH_      = new TH1F("trk1Chi2RedOffline", "Highest pT kaon reduced Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk2Chi2RedOfflineH_      = new TH1F("trk2Chi2RedOffline", "Second highest pT kaon reduced Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk3Chi2RedOfflineH_      = new TH1F("trk3Chi2RedOffline", "Third highest pT kaon reduced Chi2 of the 1st Bs candidate", 100, 0, 100);
+    trk4Chi2RedOfflineH_      = new TH1F("trk4Chi2RedOffline", "Lowest pT kaon reduced Chi2 of the 1st Bs candidate", 100, 0, 100);
+
+    trk1nStubOfflineH_        = new TH1F("trk1nStubOffline", "Highest pT kaon nStub of the 1st Bs candidate", 11, -0.5, 10.5);
+    trk2nStubOfflineH_        = new TH1F("trk2nStubOffline", "Second highest pT kaon nStub of the 1st Bs candidate", 11, -0.5, 10.5);
+    trk3nStubOfflineH_        = new TH1F("trk3nStubOffline", "Third highest pT kaon nStub of the 1st Bs candidate", 11, -0.5, 10.5);
+    trk4nStubOfflineH_        = new TH1F("trk4nStubOffline", "Lowest pT kaon nStub of the 1st Bs candidate", 11, -0.5, 10.5);
+
+    trk1nStubPSOfflineH_      = new TH1F("trk1nStubPSOffline", "Highest pT kaon PS nStub of the 1st Bs candidate", 8, -0.5, 7.5);
+    trk2nStubPSOfflineH_      = new TH1F("trk2nStubPSOffline", "Second highest pT kaon PS nStub of the 1st Bs candidate", 8, -0.5, 7.5);
+    trk3nStubPSOfflineH_      = new TH1F("trk3nStubPSOffline", "Third highest pT kaon Ps nStub of the 1st Bs candidate", 8, -0.5, 7.5);
+    trk4nStubPSOfflineH_      = new TH1F("trk4nStubPSOffline", "Lowest pT kaon PS nStub of the 1st Bs candidate", 8, -0.5, 7.5);
+
+    drKaonPairOfflineH_       = new TH1F("drKaonPairOffline","delta R between the selected kaons", 100, 0, 0.5);
+    isol1OfflineH_            = new TH1F("isol1Offline", "Isolation of the first selected track", 1000, 0, 5); 
+    isol2OfflineH_            = new TH1F("isol2Offline", "Isolation of the second selected track", 1000, 0, 5); 
+    isol3OfflineH_            = new TH1F("isol3Offline", "Isolation of the third selected track", 1000, 0, 5); 
+    isol4OfflineH_            = new TH1F("isol4Offline", "Isolation of the fourth selected track", 1000, 0, 5); 
+    isol_phi1OfflineH_        = new TH1F("isol_phi1Offline", "Isolation of the first selected track", 1000, 0, 5); 
+    isol_phi2OfflineH_        = new TH1F("isol_phi2Offline", "Isolation of the second selected track", 1000, 0, 5); 
+    isol_BsOfflineH_          = new TH1F("isol_BsOffline", "Isolation of the second selected track", 1000, 0, 5); 
+  
+
+    Iso_Pt1OfflineH_          = new TH2D("Iso_Pt1_Offline","Iso vs Pt",100,0,20,100,0,5); 
+    Iso_Pt2OfflineH_          = new TH2D("Iso_Pt2_Offline","Iso vs Pt",100,0,20,100,0,5); 
+    Iso_Pt3OfflineH_          = new TH2D("Iso_Pt3_Offline","Iso vs Pt",100,0,20,100,0,5); 
+    Iso_Pt4OfflineH_          = new TH2D("Iso_Pt4_Offline","Iso vs Pt",100,0,20,100,0,5); 
+  
+    Iso_Pt_Phi1OfflineH_      = new TH2D("Isol_Pt_Phi1_Offline", "Iso vs Pt", 100, 3, 23,100,0,5);
+    Iso_Pt_Phi2OfflineH_      = new TH2D("Isol_Pt_Phi2_Offline", "Iso vs Pt", 100, 3, 23,100,0,5);
+  
+    Iso_Pt_BsOfflineH_        = new TH2D("Isol_Pt_Bs_Offline", "Iso vs Pt", 100, 8, 28,100,0,5);
+  }
+  histf_->cd();
+
   bookedHistograms_ = true;
 }
 void BsAnalysis::setTreeBranches() {
-  chain_->SetBranchAddress("Event", &eventBr_);
-  chain_->SetBranchAddress("SimTrack", &simTracksBr_);
-
-  if (studyGen_) chain_->SetBranchAddress("GenParticle", &genParticleBr_);
-
-  std::cout << "Offline Track Option = " << std::boolalpha << studyOffline_ << std::endl;
-  if (studyOffline_)
-    chain_->SetBranchAddress("RecoTrack", &tracksBr_);
-  else
-    chain_->SetBranchAddress("L1Track", &tracksBr_);
-
-  nEntries_ = chain_->GetEntriesFast();
-  if (nEntries_ > 0) scaleFactor_ = scaleFactor_/(nEntries_*1.0);
+  if (branchFound("Event")) chain_->SetBranchAddress("Event", &eventBr_);
+  if (studyGen_ && branchFound("GenParticle")) chain_->SetBranchAddress("GenParticle", &genParticleBr_);
+  if (studyOffline_) {
+    if (branchFound("OfflineTrack")) chain_->SetBranchAddress("OfflineTrack", &tracksBr_);
+  }
+  else {
+    if (branchFound("L1Track")) chain_->SetBranchAddress("L1Track", &tracksBr_);
+    if (checkL1Offline_ && branchFound("OfflineTrack"))
+      chain_->SetBranchAddress("OfflineTrack", &offlineTracksBr_);
+  }
+}
+bool BsAnalysis::branchFound(const string& b)
+{
+  const TBranch* branch = chain_->GetBranch(b.c_str());  // Get branch pointer                                                                             
+  if (branch == nullptr) {
+    cout << ">>> SetBranchAddress: <" << b << "> not found!" << endl;
+    return false;
+  }
+  cout << ">>> SetBranchAddress: <" << b << "> found!" << endl;
+  brList_.push_back(b);
+  return true;
+}
+int BsAnalysis::getEntry(int lflag) const
+{
+  int nbytes {0};
+  for (const auto& v: brList_) {
+    TBranch* branch = chain_->GetBranch(v.c_str());
+    if (branch == nullptr) {
+      cout << ">>> Branch: " << v << " not found!" << endl;
+      continue;
+    }
+    nbytes += branch->GetEntry(lflag);
+  }
+  return nbytes;
 }
 void BsAnalysis::clearEvent() {
-  simTracksBr_->clear();
   tracksBr_->clear();
+  if (offlineTracksBr_) offlineTracksBr_->clear();
   if (studyGen_ && genParticleBr_) genParticleBr_->clear();
 }
 void BsAnalysis::clearLists() {
   phiCandList_.clear();
   bsList_.clear();
+  bsOfflineList_.clear();
 }
 void BsAnalysis::clearGenLists() {
   genKaonList_.clear();
@@ -303,252 +468,565 @@ void BsAnalysis::clearGenLists() {
 }
 void BsAnalysis::eventLoop() {
   double minGenPt = 2.0;
-  int nPrint = std::max(5000L, nEntries_/5000);
-
+  int nPrint = max(5000L, nEvents_/5000);
+  string lastFile;
   ulong nbytes = 0;
-  for (long jentry = 0; jentry < nEntries_; ++jentry) {
+  for (long c_entry = 0; c_entry < nEvents_; ++c_entry) {
     // reset
     clearEvent(); // vectors for branches
     clearGenLists(); // other global lists related to Generator level
 
-    long ientry = chain_->LoadTree(jentry);
-    if (ientry < 0) break;
-    ulong nb = chain_->GetEntry(jentry); 
-    nbytes += nb;
-    
-    // Show the status 
-    if (jentry%nPrint == 0)
-    std::cout << " ==> " << chain_->GetCurrentFile()->GetName() 
-		<< " <<< Run. " << eventBr_->run 
-		<< " Event. " << std::setw(9) << eventBr_->event 
-		<< " >>> Events proc. " << std::setw(9) << jentry
-		<< std::endl;
+    long t_entry = chain_->LoadTree(c_entry);
+    if (t_entry < 0) break;
 
-    if (verbosity_ > 2) {
-      std::cout << "Entry#: " << jentry 
+#if 0
+    auto start = chrono::steady_clock::now();
+#endif
+    ulong nb = getEntry(t_entry); 
+    nbytes += nb;
+#if 0
+    auto end = chrono::steady_clock::now();
+    auto diff = end - start;
+    cout << "GetEntry: " << chrono::duration <double, milli> (diff).count() << " ms" << endl;
+#endif
+
+    // Show the status 
+    string currentFile(gSystem->BaseName(chain_->GetCurrentFile()->GetName()));
+
+    if (verbosity_ > 2)
+      cout << "Entry#: (" << c_entry << ", " << t_entry << ")"
 		<< ", # of GenParticles: " << genParticleBr_->size()
 		<< ", # of tracks:" << tracksBr_->size() 
-		<< std::endl;
-    }
-    evcountH_->Fill(0);
-   
+		<< endl;
+    if (currentFile != lastFile)
+      cout << "Tree# " << setw(4) << chain_->GetTreeNumber()
+           << " ==> " << chain_->GetCurrentFile()->GetName()
+           << " <<< Run# " << setw(8) << eventBr_->run
+           << " Event# " << setw(11) << eventBr_->event << " >>>"
+           << " Events proc. " << setw(9) << c_entry << "(of " << setw(9) << nEvents_ - 1 << ")"
+           << endl;
+    lastFile = currentFile;
+    
+    // Show the status
+    if (c_entry%nPrint == 0)
+      cout << "Tree# " << setw(4) << chain_->GetTreeNumber()
+           << " ==> " << currentFile
+           << " <<< Run# " << setw(8) << eventBr_->run
+           << " Event# " << setw(11) << eventBr_->event << " >>>"
+           << " Events proc. " << setw(8) << c_entry
+           << endl;
+
+    histf_->cd();
+    histf_->cd("Main");
+
+    evcountH_->Fill(0);  
+    evcount2H_->Fill(0);
+
+    //if(studyGen_) checkDecayMode(); 
     // Add a genfilter to select signal events with 2 phi (Kaon pt >= 2GeV)
     if (studyGen_ && !genFilter(minGenPt)) continue;
     evcountH_->Fill(1);
+    evcount2H_->Fill(1);
  
     if (studyGen_) {
       readGenParticle();
       fillGenInfo();
-      plotGen(tracksBr_); 
+      plotGen(tracksBr_);
+      plotGenVertex(); 
     }
     
     ntrkH_->Fill(tracksBr_->size());
     if (tracksBr_->size() < 4) continue;
     evcountH_->Fill(2);
+    evcount2H_->Fill(2);
+   
+    // loop over tracks
+    int ngood=0;
+    int ngoodmatched=0;
+    for(size_t it = 0; it < tracksBr_->size(); ++it){
+      const TTStudy::Track& trk = tracksBr_->at(it);
+      if (fabs(trk.eta) > AnaUtil::cutValue(trkCutMap(), "maxTrkEta")) continue;
+      if (trk.pt < AnaUtil::cutValue(trkCutMap(), "minTrkPt")) continue;
+      if (applyTrkQuality_ && (trk.chiSquareRed > AnaUtil::cutValue(trkCutMap(), "maxTrkChi2") || 
+	    trk.nStub        < AnaUtil::cutValue(trkCutMap(), "minTrkLayers") ||
+	    trk.nStub_PS     < AnaUtil::cutValue(trkCutMap(), "minTrkPSLayers"))) continue;
+      ngood++;
+      TLorentzVector trkv;  
+      trkv.SetPtEtaPhiM(trk.pt, trk.eta, trk.phi, ::kmass);
+      double pt_diff;
+      if(studyGen_) {bool isMatched = isGenKaonMatched(trkv,pt_diff);
+	if(isMatched) ngoodmatched++;}
+    } 
     
+
+    if(ngood < 4) continue;
+    evcountH_->Fill(3);
+    evcount2H_->Fill(3);
+    if(ngoodmatched >= 4) evcount2H_->Fill(4);
     if (verbosity_ > 1) printTrackProperties(tracksBr_);
 
     // Outer tracks
     clearLists(); // other global lists related to detector level
-    bool selection_status = selectEvent(trkSelCutMap_, phiSelCutMap_, bsSelCutMap_, tracksBr_, 2, 0);
+    bool selection_status = selectEvent(tracksBr_, bsList_, 3, 0, false);
+
     bsCandListH_->Fill(bsList_.size());
     if (selection_status) {
-      std::vector<TLorentzVector> kaonList;
+      vector<TLorentzVector> kaonList;
       getKaonList(tracksBr_, bsList_[0], kaonList);
       fillKaonInfo(kaonList);
       fillKaonTrackInfo(tracksBr_, bsList_[0]);
-      computeIsolation(tracksBr_, bsList_[0]);
+      if(verbosity_ > 1){
+	std::cout<<" L1 selected tracks"<<std::endl;
+	cout << "index       pT      eta      phi       vx       vy      vz" << endl;
+	cout << setprecision(3);
+	printTrk(tracksBr_,bsList_[0].phi1.indx1);
+	printTrk(tracksBr_,bsList_[0].phi1.indx2);
+	printTrk(tracksBr_,bsList_[0].phi2.indx1);
+	printTrk(tracksBr_,bsList_[0].phi2.indx2);
+      }
+      //if(studyGen_) plotGenVertex();
+
+
+      if (checkL1Offline_) {
+	histf_->cd();
+	histf_->cd("Offline");
+
+	evcountOfflineH_->Fill(0); 
+	if (offlineTracksBr_->size() < 4) continue;
+	if(verbosity_ > 1){
+	  std::cout<<" Offline tracks"<<std::endl;
+	  printTrackProperties(offlineTracksBr_);
+	}
+	evcountOfflineH_->Fill(1);
+	bool selected = selectEvent(offlineTracksBr_, bsOfflineList_, 1, 0, checkL1Offline_);
+	//if (selected) {
+	  /*vector<size_t> tracks_to_exclude_offline;
+	  tracks_to_exclude_offline.push_back(bsOfflineList_[0].phi1.indx1);
+	  tracks_to_exclude_offline.push_back(bsOfflineList_[0].phi1.indx2);
+	  tracks_to_exclude_offline.push_back(bsOfflineList_[0].phi2.indx1);
+	  tracks_to_exclude_offline.push_back(bsOfflineList_[0].phi2.indx2);
+	  double isol = computeIsolation_v2(offlineTracksBr_, bsOfflineList_[0].phi1.indx1, tracks_to_exclude_offline);  
+	  isol1OfflineH_->Fill(isol); 
+
+	  isol = computeIsolation_v2(offlineTracksBr_, bsOfflineList_[0].phi1.indx2, tracks_to_exclude_offline);  
+	  isol2OfflineH_->Fill(isol); 
+
+	  isol = computeIsolation_v2(offlineTracksBr_, bsOfflineList_[0].phi2.indx1, tracks_to_exclude_offline);  
+	  isol3OfflineH_->Fill(isol); 
+
+	  isol = computeIsolation_v2(offlineTracksBr_, bsOfflineList_[0].phi2.indx2, tracks_to_exclude_offline);  
+	  isol4OfflineH_->Fill(isol);*/ 
+	//}
+      }
     }
   }
 }
-bool BsAnalysis::selectEvent(const std::map<std::string, double>& trkCutMap,
-			     const std::map<std::string, double>& phiCutMap, 
-			     const std::map<std::string, double>& bsCutMap, 
-			     const std::vector<TTStudy::Track>* trackList, int ishift, int indx) {
+bool BsAnalysis::selectEvent(const vector<TTStudy::Track>* trackList, 
+			     vector<BsInfo>& bsList, 			     
+			     int ishift, 
+			     int indx, 
+			     bool checkL1Offline) 
+{
+  vector<PhiInfo> phiList;
+  findPhiCandidates(trackList, phiList, indx, checkL1Offline);
+  ((checkL1Offline) ? nPhiCandOfflineH_->Fill(phiList.size()) : nPhiCandH_->Fill(phiList.size()));
+  
   bool event_status = false;
-  std::vector<PhiInfo> phiList;
-  findPhiCandidates(trkCutMap, phiCutMap, trackList, phiList, indx);
-  nPhiCandH_->Fill(phiList.size());
-
   if (phiList.size() < 2) return event_status;
+  
+  ((checkL1Offline) ? evcountOfflineH_->Fill(ishift + 1) : evcountH_->Fill(ishift + 1));
 
-  evcountH_->Fill(ishift + 1);
-  int ecounters[] = {0, 0, 0, 0, 0, 0};
+  int ecounters[] = {0, 0, 0, 0, 0, 0, 0, 0};
   for (size_t it = 0; it < phiList.size(); ++it) {
     const PhiInfo& info_i = phiList[it];
     double drTrkPhi1 = info_i.dr;
     for (size_t jt = it+1; jt < phiList.size(); ++jt) {
       const PhiInfo& info_j = phiList[jt];
-      
+
       // The same track should not end up in both the Phi's under consideration
       if (info_i.indx1 == info_j.indx1 ||
 	  info_i.indx1 == info_j.indx2 ||    
 	  info_i.indx2 == info_j.indx1 || 
 	  info_i.indx2 == info_j.indx2) continue;
       ++ecounters[0];
-      
-      const TLorentzVector& phiv1 = info_i.v;
-      const TLorentzVector& phiv2 = info_j.v;
-      TLorentzVector bsv = phiv1 + phiv2;
-      double bsmass = bsv.M();
-      
+
       // The pair of Phi's must come from the same vertex
       double dxy, dz;
       BsAnalysis::calculateDeltaPos(info_i, info_j, dxy, dz);
-      dxyPhiPairH_->Fill(dxy);
-      dzPhiPairH_->Fill(dz);
-      
-      if (dxy > AnaUtil::cutValue(bsCutMap, "maxPhiPairDxy") || 
-	  std::fabs(dz) >AnaUtil::cutValue(bsCutMap, "maxPhiPairDz")) continue;
+      if (checkL1Offline) {
+	dxyPhiPairOfflineH_->Fill(dxy);
+	dzPhiPairOfflineH_->Fill(dz);
+      }
+      else {
+	dxyPhiPairH_->Fill(dxy);
+	dzPhiPairH_->Fill(dz);
+      }
+
+      if (dxy > AnaUtil::cutValue(bsCutMap(), "maxPhiPairDxy") || 
+	  fabs(dz) > AnaUtil::cutValue(bsCutMap(), "maxPhiPairDz")) continue;
       ++ecounters[1];
-      
+
+      const TLorentzVector& phiv1 = info_i.v;
+      const TLorentzVector& phiv2 = info_j.v;
+
       double dr = phiv1.DeltaR(phiv2);
-      drPhiPairH_->Fill(dr);
-      if (dr < AnaUtil::cutValue(bsCutMap, "minPhiPairDr") || dr > AnaUtil::cutValue(bsCutMap, "maxPhiPairDr")) continue;
+      ((checkL1Offline) ? drPhiPairOfflineH_->Fill(dr) : drPhiPairH_->Fill(dr));
+
+      if (dr < AnaUtil::cutValue(bsCutMap(), "minPhiPairDr") || dr > AnaUtil::cutValue(bsCutMap(), "maxPhiPairDr")) continue;
       ++ecounters[2];
-      
+
       double drTrkPhi2 = info_j.dr;
-      drPhi1TrackPairH_->Fill(drTrkPhi1);
-      drPhi2TrackPairH_->Fill(drTrkPhi2);
-      if (drTrkPhi1 > AnaUtil::cutValue(bsCutMap, "maxPhiTrkDr") || drTrkPhi2 > AnaUtil::cutValue(bsCutMap, "maxPhiTrkDr")) continue;
+      if (checkL1Offline) {
+	drPhi1TrackPairOfflineH_->Fill(drTrkPhi1);
+	drPhi2TrackPairOfflineH_->Fill(drTrkPhi2);
+      }
+      else {
+	drPhi1TrackPairH_->Fill(drTrkPhi1);
+	drPhi2TrackPairH_->Fill(drTrkPhi2);
+      }
+      if (drTrkPhi1 > AnaUtil::cutValue(bsCutMap(), "maxPhiTrkDr") || drTrkPhi2 > AnaUtil::cutValue(bsCutMap(), "maxPhiTrkDr")) continue;
       ++ecounters[3];
-      
-      bsmass0H_->Fill(bsmass);
-      bsmassH_->Fill(bsmass);
-      if (bsmass < AnaUtil::cutValue(bsCutMap, "massLow") || bsmass > AnaUtil::cutValue(bsCutMap, "massHigh")) continue;
+
+      TLorentzVector bsv = phiv1 + phiv2;
+      double bsmass = bsv.M();
+      if (checkL1Offline) {
+	bsmass0OfflineH_->Fill(bsmass);
+	bsmassOfflineH_->Fill(bsmass);
+      }
+      else {
+	bsmass0H_->Fill(bsmass);
+	bsmassH_->Fill(bsmass);
+      }
+      if (bsmass < AnaUtil::cutValue(bsCutMap(), "massLow") || bsmass > AnaUtil::cutValue(bsCutMap(), "massHigh")) continue;
       ++ecounters[4];
-      
+
+
       BsInfo bsInfo;
       bsInfo.phi1 = info_i;
       bsInfo.phi2 = info_j;
-      bsList_.push_back(bsInfo);
+      bsInfo.bsv = bsv;
+      bsInfo.vertexX = 0.5 * (info_i.vertexX + info_j.vertexX);
+      bsInfo.vertexY = 0.5 * (info_i.vertexY + info_j.vertexY);
+      bsInfo.vertexZ = 0.5 * (info_i.vertexZ + info_j.vertexZ);
+
+
+      if(!checkL1Offline)  bsPtH_->Fill(bsv.Pt());
+      if(bsv.Pt() < 12) continue;
+      ++ecounters[5];
+      bsList.push_back(bsInfo);
       
+      vector<TLorentzVector> kaonList;
+      getKaonList(trackList, bsInfo, kaonList);
+      double trkPtSum = kaonList[0].Pt()+kaonList[1].Pt()+kaonList[2].Pt()+kaonList[3].Pt();
+      trkPtSumH_->Fill(trkPtSum);
+      //if(trkPtSum < 12) continue;
+      //++ecounters[5];
+      
+
+      if (checkL1Offline) {
+	dzTrackPair4OfflineH_->Fill(info_i.dz);
+	dzTrackPair4OfflineH_->Fill(info_j.dz);
+	dRvsdZ2OfflineH_->Fill(info_i.dz,info_i.dr);
+	dRvsdZ2OfflineH_->Fill(info_j.dz,info_j.dr);
+      }
+      else {
+	dzTrackPair4H_->Fill(info_i.dz);
+	dzTrackPair4H_->Fill(info_j.dz);
+	dxyTrackPair4H_->Fill(info_i.dxy);
+	dxyTrackPair4H_->Fill(info_j.dxy);
+	dRvsdZ2H_->Fill(info_i.dz,info_i.dr);
+	dRvsdZ2H_->Fill(info_j.dz,info_j.dr);
+      }
       // Selected Phi pT
-      phi1PtH_->Fill(phiv1.Pt());
-      phi2PtH_->Fill(phiv2.Pt());
-      phiPtH_->Fill(phiv1.Pt(), phiv2.Pt());
-      
+      if (checkL1Offline) {
+	phi1PtOfflineH_->Fill(phiv1.Pt());
+	phi2PtOfflineH_->Fill(phiv2.Pt());
+	phiPtOfflineH_->Fill(phiv1.Pt(), phiv2.Pt());
+      }
+      else {
+	phi1PtH_->Fill(phiv1.Pt());
+	phi2PtH_->Fill(phiv2.Pt());
+	phiPtH_->Fill(phiv1.Pt(), phiv2.Pt());
+      }
+
       // Track pair for each Phi
-      dxyPhi1TrackPairH_->Fill(info_i.dxy);
-      dzPhi1TrackPairH_->Fill(info_i.dz);
+      if (checkL1Offline) {
+	dxyPhi1TrackPairOfflineH_->Fill(info_i.dxy);
+	dzPhi1TrackPairOfflineH_->Fill(info_i.dz);
+
+	dxyPhi2TrackPairOfflineH_->Fill(info_j.dxy);
+	dzPhi2TrackPairOfflineH_->Fill(info_j.dz);
+      }
+      else {
+	dxyPhi1TrackPairH_->Fill(info_i.dxy);
+	dzPhi1TrackPairH_->Fill(info_i.dz);
+
+	dxyPhi2TrackPairH_->Fill(info_j.dxy);
+	dzPhi2TrackPairH_->Fill(info_j.dz);
+      }
+     
+      //Calculate Isolation
+ 
+      /*vector<size_t> tracks_to_exclude;
+      tracks_to_exclude.push_back(bsInfo.phi1.indx1);
+      tracks_to_exclude.push_back(bsInfo.phi1.indx2);
+      tracks_to_exclude.push_back(bsInfo.phi2.indx1);
+      tracks_to_exclude.push_back(bsInfo.phi2.indx2);
+
+      double isol = computeIsolation_v2(tracksBr_, bsInfo.phi1.indx1, tracks_to_exclude);  
+      if(checkL1Offline) isol1OfflineH_->Fill(isol); 
+      else isol1H_->Fill(isol);
+
+      isol = computeIsolation_v2(tracksBr_, bsInfo.phi1.indx2, tracks_to_exclude);  
+      if(checkL1Offline) isol2OfflineH_->Fill(isol); 
+      else isol2H_->Fill(isol);
+
+      isol = computeIsolation_v2(tracksBr_, bsInfo.phi2.indx1, tracks_to_exclude);  
+      if(checkL1Offline) isol3OfflineH_->Fill(isol); 
+      else isol3H_->Fill(isol); 
+
+      isol = computeIsolation_v2(tracksBr_, bsInfo.phi2.indx2, tracks_to_exclude);  
+      if(checkL1Offline) isol4OfflineH_->Fill(isol); 
+      else isol4H_->Fill(isol);*/
+
+      vector<pair<double,double>> iso_vector;
+      computeIsolation(trackList, bsInfo, iso_vector);
       
-      dxyPhi2TrackPairH_->Fill(info_j.dxy);
-      dzPhi2TrackPairH_->Fill(info_j.dz);
+      if(checkL1Offline){
+	isol1OfflineH_->Fill(iso_vector.at(0).first);
+        Iso_Pt1OfflineH_->Fill(iso_vector.at(0).second,iso_vector.at(0).first);
+      } 
+      else{ 
+	isol1H_->Fill(iso_vector.at(0).first);
+        Iso_Pt1H_->Fill(iso_vector.at(0).second,iso_vector.at(0).first);
+      }
+
       
+      if(checkL1Offline){
+	isol2OfflineH_->Fill(iso_vector.at(1).first); 
+        Iso_Pt2OfflineH_->Fill(iso_vector.at(1).second,iso_vector.at(1).first);
+      }
+      else{
+	isol2H_->Fill(iso_vector.at(1).first);
+        Iso_Pt2H_->Fill(iso_vector.at(1).second,iso_vector.at(1).first);
+      }
+      
+      if(checkL1Offline){ 
+	isol3OfflineH_->Fill(iso_vector.at(2).first); 
+	Iso_Pt3OfflineH_->Fill(iso_vector.at(2).second,iso_vector.at(2).first);
+      }
+      else{
+	isol3H_->Fill(iso_vector.at(2).first);
+	Iso_Pt3H_->Fill(iso_vector.at(2).second,iso_vector.at(2).first);
+      }
+      
+      if(checkL1Offline){
+	isol4OfflineH_->Fill(iso_vector.at(3).first); 
+	Iso_Pt4OfflineH_->Fill(iso_vector.at(3).second,iso_vector.at(3).first);
+      }
+      else{
+	isol4H_->Fill(iso_vector.at(3).first);
+	Iso_Pt4H_->Fill(iso_vector.at(3).second,iso_vector.at(3).first);
+      }
+            
+      if(checkL1Offline){
+	isol_phi1OfflineH_->Fill(iso_vector.at(4).first);
+        Iso_Pt_Phi1OfflineH_->Fill(iso_vector.at(4).second,iso_vector.at(4).first);
+      } 
+      else{
+	isol_phi1H_->Fill(iso_vector.at(4).first);
+ 	Iso_Pt_Phi1H_->Fill(iso_vector.at(4).second,iso_vector.at(4).first);
+      }
+      
+      if(checkL1Offline){
+	isol_phi2OfflineH_->Fill(iso_vector.at(5).first);
+	Iso_Pt_Phi2OfflineH_->Fill(iso_vector.at(5).second,iso_vector.at(5).first); 
+      }      
+      else{
+	isol_phi2H_->Fill(iso_vector.at(5).first);
+	Iso_Pt_Phi2H_->Fill(iso_vector.at(5).second,iso_vector.at(5).first);     
+      }
+      
+      if(checkL1Offline){
+	isol_BsOfflineH_->Fill(iso_vector.at(6).first);
+	Iso_Pt_BsOfflineH_->Fill(iso_vector.at(6).second,iso_vector.at(6).first);
+      } 
+      else{
+	isol_BsH_->Fill(iso_vector.at(6).first);
+	Iso_Pt_BsH_->Fill(iso_vector.at(6).second,iso_vector.at(6).first);
+      }      
+      //Isolation Cut on Bs candidate
+      //if(iso_vector.at(3).first > AnaUtil::cutValue(isoCutMap(), "maxIso") ) continue;
+      if(applyIso_ && iso_vector.at(3).first > AnaUtil::cutValue(isoCutMap(), "maxIso") ) continue;
+      ++ecounters[6];
+
       // Final Gen Match
       if (studyGen_) {
 	if (verbosity_) 
-	  std::cout << ">>> B_s # " << bsList_.size() << ", mass: " << bsmass << " GeV" << std::endl;
-	
-	std::vector<TLorentzVector> kaonList;
-	getKaonList(trackList, bsInfo, kaonList);
+	  cout << ">>> B_s # " << bsList.size() << ", mass: " << bsmass << " GeV" << endl;
+
 	int n_match = doTrkGenMatch(kaonList);
-	if (n_match == 4) ++ecounters[5];
+	if (n_match == 4){
+	  //bsmassH_->Fill(bsmass);
+	  ++ecounters[7];
+      
+	}
       }
     }
   }
-  for (size_t i = 0; i < NEL(ecounters); ++i)
-      if (ecounters[i] > 0) evcountH_->Fill(ishift + 2 + i);
-
-  return (ecounters[4] > 0);
+  for (size_t i = 0; i < NEL(ecounters); ++i) {
+    if (ecounters[i] > 0) {
+      ((checkL1Offline) ? evcountOfflineH_->Fill(ishift + 2 + i) : evcountH_->Fill(ishift + 2 + i));
+    }
+  }
+  return (ecounters[5] > 0);
 }
-void BsAnalysis::findPhiCandidates(const std::map<std::string, double>& trkCutMap, 
-				   const std::map<std::string, double>& phiCutMap, 
-				   const std::vector<TTStudy::Track>* trackList, 
-				   std::vector<PhiInfo>& phiList, int indx) 
+void BsAnalysis::findPhiCandidates(const vector<TTStudy::Track>* trackList, 
+				   vector<PhiInfo>& phiList, int indx, bool checkL1Offline) 
 {  
   // Loop over tracks
+  vector<size_t> p_tracks;
+  vector<size_t> n_tracks;
+  
+  vector<size_t> p_tracks_not_good;
+  vector<size_t> n_tracks_not_good;
+
+  vector<size_t> p_tracks_before_acceptance;
+  vector<size_t> n_tracks_before_acceptance;
+
   for (size_t it = 0; it < trackList->size(); ++it) {
-    const TTStudy::Track& trk1 = trackList->at(it);
-
-    double vertexXY = std::sqrt(std::pow(trk1.vertexX, 2) + std::pow(trk1.vertexY, 2));
-    trkVertexXYH_->Fill(vertexXY);
-    trkVertexZH_->Fill(trk1.vertexZ);
-    trkPtH_->Fill(trk1.pt);
-    trkChi2H_->Fill(trk1.chiSquare);
+    const TTStudy::Track& trk = trackList->at(it);
+    (signbit(trk.curvature) ? n_tracks_before_acceptance.push_back(it) : p_tracks_before_acceptance.push_back(it));
+    // Apply acceptance cuts
+    if (fabs(trk.eta) > AnaUtil::cutValue(trkCutMap(), "maxTrkEta")) continue;
+    if (trk.pt < AnaUtil::cutValue(trkCutMap(), "minTrkPt")) continue;
     
-    if (0) std::cout << "pT: "      << trk1.eta << "/" << AnaUtil::cutValue(trkCutMap, "maxTrkEta") << std::endl
-                     << "pT: "      << trk1.pt << "/" << AnaUtil::cutValue(trkCutMap, "minTrkPt") << std::endl
-		     << "chi2: "    << trk1.chiSquareRed << "/" << AnaUtil::cutValue(trkCutMap, "maxTrkChi2") << std::endl
-		     << "nStub: "   << trk1.nStub << "/" << AnaUtil::cutValue(trkCutMap, "minTrkLayers") << std::endl
-		     << "nStubPS: " << trk1.nStub_PS << "/" << AnaUtil::cutValue(trkCutMap, "minTrkPSLayers") << std::endl;
+    (signbit(trk.curvature) ? n_tracks_not_good.push_back(it) : p_tracks_not_good.push_back(it));
 
-    // pseudo-rapidity cut
-    if (std::fabs(trk1.eta) > AnaUtil::cutValue(trkCutMap, "maxTrkEta")) continue;
-    if (trk1.pt < AnaUtil::cutValue(trkCutMap, "minTrkPt")) continue;
-    if (applyTrkQuality_ && (trk1.chiSquareRed > AnaUtil::cutValue(trkCutMap, "maxTrkChi2") || 
-   			     trk1.nStub < AnaUtil::cutValue(trkCutMap, "minTrkLayers") ||
-   			     trk1.nStub_PS < AnaUtil::cutValue(trkCutMap, "minTrkPSLayers"))) continue;
+   if(checkL1Offline){
+    trkChi2RedOfflineH_->Fill(trk.chiSquareRed);
+    trkNStubOfflineH_->Fill(trk.nStub);
+    trkNStub_PSOfflineH_->Fill(trk.nStub_PS); 
+   }
+   else{
+    trkChi2RedH_->Fill(trk.chiSquareRed);
+    trkNStubH_->Fill(trk.nStub);
+    trkNStub_PSH_->Fill(trk.nStub_PS); 
+   }
+
+    // Optionally select tracks
+    if ((applyTrkQuality_ &&!checkL1Offline) && (trk.chiSquareRed > AnaUtil::cutValue(trkCutMap(), "maxTrkChi2") || 
+			     trk.nStub        < AnaUtil::cutValue(trkCutMap(), "minTrkLayers") ||
+			     trk.nStub_PS     < AnaUtil::cutValue(trkCutMap(), "minTrkPSLayers"))) continue;
+
+    // store track index depending on the charge
+    (signbit(trk.curvature) ? n_tracks.push_back(it) : p_tracks.push_back(it));
+  }
+
+  ntrk_p_after_acceptanceH_->Fill(p_tracks_not_good.size());
+  ntrk_n_after_acceptanceH_->Fill(n_tracks_not_good.size());
+  ntrk_p_goodH_->Fill(p_tracks.size());
+  ntrk_n_goodH_->Fill(n_tracks.size());
+  ntrk_p_before_acceptanceH_->Fill(p_tracks_before_acceptance.size());
+  ntrk_n_before_acceptanceH_->Fill(n_tracks_before_acceptance.size());
+  
+
+  // Now find phi candidates
+  for (auto it: p_tracks) {
+    const TTStudy::Track& trk1 = trackList->at(it);
 
     TLorentzVector trkv1;  
     trkv1.SetPtEtaPhiM(trk1.pt, trk1.eta, trk1.phi, ::kmass);
 
-    for (size_t jt = it+1; jt < trackList->size(); ++jt) {
+    for (auto jt: n_tracks) {
       const TTStudy::Track& trk2 = trackList->at(jt);
-      
-      // pseudo-rapidity cut
-      if (std::fabs(trk2.eta) > AnaUtil::cutValue(trkCutMap, "maxTrkEta")) continue;
-      if (trk2.pt < AnaUtil::cutValue(trkCutMap, "minTrkPt")) continue;
-      if (applyTrkQuality_ && (trk2.chiSquareRed > AnaUtil::cutValue(trkCutMap, "maxTrkChi2") || 
-      			       trk2.nStub < AnaUtil::cutValue(trkCutMap, "minTrkLayers") ||
-      			       trk2.nStub_PS < AnaUtil::cutValue(trkCutMap, "minTrkPSLayers"))) continue;
-      
-      // opposite charge
-      if (std::signbit(trk1.curvature) == std::signbit(trk2.curvature)) continue;
-      
+
       // the track pair must come from the same vertex
       double dxy, dz;
       BsAnalysis::calculateDeltaPos(trk1, trk2, dxy, dz);
-      
-      dzTrackPairH_->Fill(dz);
-      dzTrackPair2H_->Fill(dz);
+
+      if (checkL1Offline) {
+	dzTrackPairOfflineH_->Fill(dz);
+	dzTrackPair2OfflineH_->Fill(dz);
+      }
+      else {
+	dzTrackPairH_->Fill(dz);
+	dzTrackPair2H_->Fill(dz);
+      }
       // First apply |dz|(track-pair) cut
-      if (std::fabs(dz) > AnaUtil::cutValue(phiCutMap, "maxTrkPairDz")) continue;
-      
-      dxyTrackPairH_->Fill(dxy);
-      dxyTrackPair2H_->Fill(dxy);
+      count0++;
+      if (fabs(dz) > AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz")) continue;
+
+      if (checkL1Offline) {
+	dxyTrackPairOfflineH_->Fill(dxy);
+	dxyTrackPair2OfflineH_->Fill(dxy);
+      }
+      else {
+	dxyTrackPairH_->Fill(dxy);
+	dxyTrackPair2H_->Fill(dxy);
+      }
       // Then apply dxy(track-pair) cut
-      if (dxy > AnaUtil::cutValue(phiCutMap, "maxTrkPairDxy")) continue;
-      
+      count1++;
+      if (dxy > AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy")) continue;
+
       TLorentzVector trkv2;
       trkv2.SetPtEtaPhiM(trk2.pt, trk2.eta, trk2.phi, ::kmass);
-   
-      // select mass window
+
+      // Select mass window
       TLorentzVector phiLV = trkv1 + trkv2;
       double mass = phiLV.M();
-      phimass0H_->Fill(mass);
-      phimassH_->Fill(mass);
-      
-      if (AnaUtil::cutValue(phiCutMap, "massLow") <= mass && mass <= AnaUtil::cutValue(phiCutMap, "massHigh")) {
-        // keep track of each phi candidate
-        std::vector<TLorentzVector> list;
-        list.push_back(trkv1);
-        list.push_back(trkv2);
-        phiCandList_.push_back(list);
-        double dr = trkv1.DeltaR(trkv2);
-        drTrackPairH_->Fill(dr);
-	phiCandPtH_->Fill(phiLV.Pt());
-	
-        // Fill PhiInfo
-        PhiInfo info;
-        info.indx1 = it;
-        info.indx2 = jt;
-        info.dmass = std::fabs(::phi_polemass - mass);
-	
-        info.dxy = dxy;
-        info.dz = dz;
-        info.dr = dr;
-        info.v = phiLV;
-        info.vertexX = 0.5 * (trk1.vertexX + trk2.vertexX);
-        info.vertexY = 0.5 * (trk1.vertexY + trk2.vertexY);
-        info.vertexZ = 0.5 * (trk1.vertexZ + trk2.vertexZ);
-	
-        phiList.push_back(info);
+      if (checkL1Offline) {
+	phimass0OfflineH_->Fill(mass);
+	phimassOfflineH_->Fill(mass);
       }
+      else {
+	phimass0H_->Fill(mass);
+	phimassH_->Fill(mass);
+      }
+
+      count2++;
+
+      //if (mass > AnaUtil::cutValue(phiCutMap(), "massLow") && mass < AnaUtil::cutValue(phiCutMap(), "massHigh")) {
+      if (mass < AnaUtil::cutValue(phiCutMap(), "massLow") || mass > AnaUtil::cutValue(phiCutMap(), "massHigh")) continue;
+      vector<TLorentzVector> list;
+      list.push_back(trkv1);
+      list.push_back(trkv2);
+      phiCandList_.push_back(list);
+      double dr = trkv1.DeltaR(trkv2);
+      if (checkL1Offline) {
+	drTrackPairOfflineH_->Fill(dr);
+	phiCandPtOfflineH_->Fill(phiLV.Pt());
+	dzTrackPair3OfflineH_->Fill(dz);
+	dRvsdZ1OfflineH_->Fill(dz,dr);
+      }
+      else {
+	drTrackPairH_->Fill(dr);
+	phiCandPtH_->Fill(phiLV.Pt());
+	dzTrackPair3H_->Fill(dz);
+	dxyTrackPair3H_->Fill(dxy);
+	dRvsdZ1H_->Fill(dz,dr);
+      }
+
+	// Fill PhiInfo
+      PhiInfo info;
+      info.indx1 = it;
+      info.indx2 = jt;
+      info.dmass = fabs(::phi_polemass - mass);
+
+      info.dxy = dxy;
+      info.dz = dz;
+      info.dr = dr;
+      info.v = phiLV;
+      info.vertexX = 0.5 * (trk1.vertexX + trk2.vertexX);
+      info.vertexY = 0.5 * (trk1.vertexY + trk2.vertexY);
+      info.vertexZ = 0.5 * (trk1.vertexZ + trk2.vertexZ);
+
+      phiList.push_back(info);
+     // }
     }
   }
 }
-void BsAnalysis::checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, const std::vector<TTStudy::Track>* trackList) {
+void BsAnalysis::checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, const vector<TTStudy::Track>* trackList) {
   if (studyGen_) {
     // Checking Matched Phis
     double min_dr_phi1 = 999.;
@@ -561,16 +1039,16 @@ void BsAnalysis::checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, co
       double dr_1 = info_i.v.DeltaR(philv);
       double dr_2 = info_j.v.DeltaR(philv);
       if (dr_1 < min_dr_phi1) {
-        min_dr_phi1 = dr_1;
-        dpt_phi1  = std::fabs(info_i.v.Pt() - philv.Pt());
-        deta_phi1 = std::fabs(info_i.v.Eta() - philv.Eta());
-        dphi_phi1 = info_i.v.DeltaPhi(philv);
+	min_dr_phi1 = dr_1;
+	dpt_phi1  = fabs(info_i.v.Pt() - philv.Pt());
+	deta_phi1 = fabs(info_i.v.Eta() - philv.Eta());
+	dphi_phi1 = info_i.v.DeltaPhi(philv);
       }
       if (dr_2 < min_dr_phi2) {
-        min_dr_phi2 = dr_2;
-        dpt_phi2  = std::fabs(info_j.v.Pt() - philv.Pt());
-        deta_phi2 = std::fabs(info_j.v.Eta() - philv.Eta());
-        dphi_phi2 = info_j.v.DeltaPhi(philv);
+	min_dr_phi2 = dr_2;
+	dpt_phi2  = fabs(info_j.v.Pt() - philv.Pt());
+	deta_phi2 = fabs(info_j.v.Eta() - philv.Eta());
+	dphi_phi2 = info_j.v.DeltaPhi(philv);
       }
     }
     mDr_phi->Fill(min_dr_phi1);
@@ -603,37 +1081,37 @@ void BsAnalysis::checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, co
     for (size_t i = 0; i < genPhiCandList_.size(); ++i) {       
       const TTStudy::GenParticle& genphi = genPhiCandList_[i];
       for (size_t j = 0; j < genphi.daughterIndices.size(); ++j) {
-        const TTStudy::GenParticle& kaon = genParticleBr_->at(genphi.daughterIndices.at(j));
-        TLorentzVector kaonlv;
-        kaonlv.SetPtEtaPhiE(kaon.pt, kaon.eta, kaon.phi, kaon.energy);
-        double dr_1 = kaon1.DeltaR(kaonlv);
-        double dr_2 = kaon2.DeltaR(kaonlv);
-        double dr_3 = kaon3.DeltaR(kaonlv);
-        double dr_4 = kaon4.DeltaR(kaonlv);
-        if (dr_1 < min_dr_kaon1) {
-          min_dr_kaon1 = dr_1;
-          dpt1  = std::fabs(kaon1.Pt() - kaonlv.Pt());
-          deta1 = std::fabs(kaon1.Eta() - kaonlv.Eta());
-          dphi1 = kaon1.DeltaPhi(kaonlv);
-        }
-        if (dr_2 < min_dr_kaon2) {
-          min_dr_kaon2 = dr_2;
-          dpt2  = std::fabs(kaon2.Pt() - kaonlv.Pt());
-          deta2 = std::fabs(kaon2.Eta() - kaonlv.Eta());
-          dphi2 = kaon2.DeltaPhi(kaonlv);
-        }
-        if (dr_3 < min_dr_kaon3) {
-          min_dr_kaon3 = dr_3;
-          dpt3  = std::fabs(kaon3.Pt() - kaonlv.Pt());
-          deta3 = std::fabs(kaon3.Eta() - kaonlv.Eta());
-          dphi3 = kaon3.DeltaPhi(kaonlv);
-        }
-        if (dr_4 < min_dr_kaon4) {
-          min_dr_kaon4 = dr_4;
-          dpt4  = std::fabs(kaon4.Pt() - kaonlv.Pt());
-          deta4 = std::fabs(kaon4.Eta() - kaonlv.Eta());
-          dphi4 = kaon4.DeltaPhi(kaonlv);
-        }
+	const TTStudy::GenParticle& kaon = genParticleBr_->at(genphi.daughterIndices.at(j));
+	TLorentzVector kaonlv;
+	kaonlv.SetPtEtaPhiE(kaon.pt, kaon.eta, kaon.phi, kaon.energy);
+	double dr_1 = kaon1.DeltaR(kaonlv);
+	double dr_2 = kaon2.DeltaR(kaonlv);
+	double dr_3 = kaon3.DeltaR(kaonlv);
+	double dr_4 = kaon4.DeltaR(kaonlv);
+	if (dr_1 < min_dr_kaon1) {
+	  min_dr_kaon1 = dr_1;
+	  dpt1  = fabs(kaon1.Pt() - kaonlv.Pt());
+	  deta1 = fabs(kaon1.Eta() - kaonlv.Eta());
+	  dphi1 = kaon1.DeltaPhi(kaonlv);
+	}
+	if (dr_2 < min_dr_kaon2) {
+	  min_dr_kaon2 = dr_2;
+	  dpt2  = fabs(kaon2.Pt() - kaonlv.Pt());
+	  deta2 = fabs(kaon2.Eta() - kaonlv.Eta());
+	  dphi2 = kaon2.DeltaPhi(kaonlv);
+	}
+	if (dr_3 < min_dr_kaon3) {
+	  min_dr_kaon3 = dr_3;
+	  dpt3  = fabs(kaon3.Pt() - kaonlv.Pt());
+	  deta3 = fabs(kaon3.Eta() - kaonlv.Eta());
+	  dphi3 = kaon3.DeltaPhi(kaonlv);
+	}
+	if (dr_4 < min_dr_kaon4) {
+	  min_dr_kaon4 = dr_4;
+	  dpt4  = fabs(kaon4.Pt() - kaonlv.Pt());
+	  deta4 = fabs(kaon4.Eta() - kaonlv.Eta());
+	  dphi4 = kaon4.DeltaPhi(kaonlv);
+	}
       }
     }
     mDr_K->Fill(min_dr_kaon1);
@@ -657,23 +1135,23 @@ void BsAnalysis::checkPhiKaonBs(const PhiInfo& info_i, const PhiInfo& info_j, co
     mDeta_K->Fill(dphi4);
   }    
 }
-void BsAnalysis::getKaonList(const std::vector<TTStudy::Track>* trackList, const BsInfo& bsinfo, std::vector<TLorentzVector>& kaonList) {
+void BsAnalysis::getKaonList(const vector<TTStudy::Track>* trackList, const BsInfo& bsinfo, vector<TLorentzVector>& kaonList) {
   TLorentzVector lv;
   getLV(trackList, bsinfo.phi1.indx1, lv);
   kaonList.push_back(lv);
-  
+
   getLV(trackList, bsinfo.phi1.indx2, lv);
   kaonList.push_back(lv);
-  
+
   getLV(trackList, bsinfo.phi2.indx1, lv);
   kaonList.push_back(lv);
-  
+
   getLV(trackList, bsinfo.phi2.indx2, lv);
   kaonList.push_back(lv);
 
-  std::sort(kaonList.begin(), kaonList.end(), LVPtComparator());
+  sort(kaonList.begin(), kaonList.end(), LVPtComparator());
 }
-void BsAnalysis::fillKaonTrackInfo(const std::vector<TTStudy::Track>* tracksBr, const BsInfo& bsinfo) {
+void BsAnalysis::fillKaonTrackInfo(const vector<TTStudy::Track>* tracksBr, const BsInfo& bsinfo) {
   const TTStudy::Track& trk1 = tracksBr->at(bsinfo.phi1.indx1);    
   trk1Chi2H_->Fill(trk1.chiSquare);
   trk1Chi2RedH_->Fill(trk1.chiSquareRed);
@@ -699,76 +1177,191 @@ void BsAnalysis::fillKaonTrackInfo(const std::vector<TTStudy::Track>* tracksBr, 
   trk4nStubPSH_->Fill(trk4.nStub_PS);
 
   if (verbosity_ > 1) {
-    std::cout << "Track 1 - chi2, nstub: " << trk1.chiSquare << ", " << trk1.nStub << std::endl
-              << "Track 2 - chi2, nstub: " << trk2.chiSquare << ", " << trk2.nStub << std::endl
-              << "Track 3 - chi2, nstub: " << trk3.chiSquare << ", " << trk3.nStub << std::endl
-              << "Track 4 - chi2, nstub: " << trk4.chiSquare << ", " << trk4.nStub << std::endl;
+    cout << "Track 1 - chi2, nstub: " << trk1.chiSquare << ", " << trk1.nStub << endl
+      << "Track 2 - chi2, nstub: " << trk2.chiSquare << ", " << trk2.nStub << endl
+      << "Track 3 - chi2, nstub: " << trk3.chiSquare << ", " << trk3.nStub << endl
+      << "Track 4 - chi2, nstub: " << trk4.chiSquare << ", " << trk4.nStub << endl;
   }
 }
-void BsAnalysis::computeIsolation(const std::vector<TTStudy::Track>* tracksBr, const BsInfo& bsinfo, double cone) {
-  const TTStudy::Track& trk1 = tracksBr->at(bsinfo.phi1.indx1);    
+double BsAnalysis::computeIsolation_v2(const vector<TTStudy::Track>* trackList, 
+				       size_t ref_track_index, 
+				       const vector<size_t> tracks_to_exclude) 
+{
+  const TTStudy::Track& ref_trk = trackList->at(ref_track_index);
+  TLorentzVector ref_trk_lv;
+  ref_trk_lv.SetPtEtaPhiM(ref_trk.pt, ref_trk.eta, ref_trk.phi, ::kmass);
+  
+  double sum_pt = 0;  
+  for (size_t indx = 0; indx < trackList->size(); ++indx) {
+    if (indx == ref_track_index) continue;
+    
+    auto it = find (tracks_to_exclude.begin(), tracks_to_exclude.end(), indx); 
+    if (it != tracks_to_exclude.end()) continue;
+
+    const TTStudy::Track& trk = trackList->at(indx);
+    if (fabs(trk.eta) > AnaUtil::cutValue(trkCutMap(), "maxTrkEta")) continue;
+    if (trk.pt < AnaUtil::cutValue(trkCutMap(), "minTrkPt")) continue;
+    if (applyTrkQuality_ && (trk.chiSquareRed > AnaUtil::cutValue(trkCutMap(), "maxTrkChi2") || 
+			     trk.nStub < AnaUtil::cutValue(trkCutMap(), "minTrkLayers") ||
+			     trk.nStub_PS < AnaUtil::cutValue(trkCutMap(), "minTrkPSLayers"))) continue;
+    
+    double dxy, dz;
+    BsAnalysis::calculateDeltaPos(ref_trk, trk, dxy, dz);
+    
+    if (fabs(dz) > AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz")) continue;
+    if (dxy > AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy")) continue;
+    
+    TLorentzVector trk_lv;
+    trk_lv.SetPtEtaPhiM(trk.pt, trk.eta, trk.phi, ::kmass);
+    
+    double dR = trk_lv.DeltaR(ref_trk_lv);
+    if (dR < AnaUtil::cutValue(isoCutMap(), "isoCone")) sum_pt += trk.pt;
+  }   
+  return sum_pt/ref_trk.pt;
+}
+void BsAnalysis::computeIsolation(const vector<TTStudy::Track>* trackList, const BsInfo& bsinfo, vector<pair<double,double>>& iso_vector) {
+  const TTStudy::Track& trk1 = trackList->at(bsinfo.phi1.indx1);    
   TLorentzVector trk1_lv;
   trk1_lv.SetPtEtaPhiM(trk1.pt, trk1.eta, trk1.phi, ::kmass);
 
-  const TTStudy::Track& trk2 = tracksBr->at(bsinfo.phi1.indx2);    
+  const TTStudy::Track& trk2 = trackList->at(bsinfo.phi1.indx2);    
   TLorentzVector trk2_lv;
   trk2_lv.SetPtEtaPhiM(trk2.pt, trk2.eta, trk2.phi, ::kmass);
 
-  const TTStudy::Track& trk3 = tracksBr->at(bsinfo.phi2.indx1);    
+  const TTStudy::Track& trk3 = trackList->at(bsinfo.phi2.indx1);    
   TLorentzVector trk3_lv;
   trk3_lv.SetPtEtaPhiM(trk3.pt, trk3.eta, trk3.phi, ::kmass);
 
-  const TTStudy::Track& trk4 = tracksBr->at(bsinfo.phi2.indx2);    
+  const TTStudy::Track& trk4 = trackList->at(bsinfo.phi2.indx2);    
   TLorentzVector trk4_lv;
   trk4_lv.SetPtEtaPhiM(trk4.pt, trk4.eta, trk4.phi, ::kmass);
 
+  const PhiInfo& phi1 = bsinfo.phi1;
+  const PhiInfo& phi2 = bsinfo.phi2;
+  
+
   double isol1 = 0.0,
-    isol2 = 0.0,
-    isol3 = 0.0,
-    isol4 = 0.0;
-  for (size_t it = 0; it < tracksBr->size(); ++it) {
-    const TTStudy::Track& trk = tracksBr->at(it);
+	 isol2 = 0.0,
+	 isol3 = 0.0,
+	 isol4 = 0.0,
+         isol_phi1 = 0.0,
+         isol_phi2 = 0.0,
+         isol_Bs = 0.0;
+  
+  for (size_t it = 0; it < trackList->size(); ++it) {
+    const TTStudy::Track& trk = trackList->at(it);
     TLorentzVector trk_lv;
     trk_lv.SetPtEtaPhiM(trk.pt, trk.eta, trk.phi, ::kmass); 
     if ( AnaUtil::sameObject(trk_lv, trk1_lv) || 
-	 AnaUtil::sameObject(trk_lv, trk2_lv) || 
-	 AnaUtil::sameObject(trk_lv, trk3_lv) || 
-	 AnaUtil::sameObject(trk_lv, trk4_lv) ) continue;
-  
+	AnaUtil::sameObject(trk_lv, trk2_lv) || 
+	AnaUtil::sameObject(trk_lv, trk3_lv) || 
+	AnaUtil::sameObject(trk_lv, trk4_lv) ) continue;
+    
+
+    if (fabs(trk.eta) > AnaUtil::cutValue(trkCutMap(), "maxTrkEta")) continue;
+    if (trk.pt < AnaUtil::cutValue(trkCutMap(), "minTrkPt")) continue;
+    if (applyTrkQuality_ && (trk.chiSquareRed > AnaUtil::cutValue(trkCutMap(), "maxTrkChi2") || 
+			     trk.nStub < AnaUtil::cutValue(trkCutMap(), "minTrkLayers") ||
+			     trk.nStub_PS < AnaUtil::cutValue(trkCutMap(), "minTrkPSLayers"))) continue;
+
+    double dxy1, dz1;
+    BsAnalysis::calculateDeltaPos(trk1, trk, dxy1, dz1);
+    
+    double dxy2, dz2;
+    BsAnalysis::calculateDeltaPos(trk2, trk, dxy2, dz2);
+    
+    double dxy3, dz3;
+    BsAnalysis::calculateDeltaPos(trk3, trk, dxy3, dz3);
+    
+    double dxy4, dz4;
+    BsAnalysis::calculateDeltaPos(trk4, trk, dxy4, dz4);
+    
     double dR_1 = trk_lv.DeltaR(trk1_lv);
     double dR_2 = trk_lv.DeltaR(trk2_lv);
     double dR_3 = trk_lv.DeltaR(trk3_lv);
     double dR_4 = trk_lv.DeltaR(trk4_lv);
 
-    if (dR_1 < cone) isol1 += trk.pt;
-    if (dR_2 < cone) isol2 += trk.pt;
-    if (dR_3 < cone) isol3 += trk.pt;
-    if (dR_4 < cone) isol4 += trk.pt;
+    if (dR_1 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_1 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+      if (fabs(dz1) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy1 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+	isol1 += trk.pt;
+    }
+    if (dR_2 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_2 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){  
+      if (fabs(dz2) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy2 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+	isol2 += trk.pt;
+    }
+    if (dR_3 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_3 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+      if (fabs(dz3) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy3 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+      isol3 += trk.pt;
+    }
+    if (dR_4 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_4 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+      if (fabs(dz4) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy4 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+	isol4 += trk.pt;
+    } 
+   
+    //Calculaye phi isolations
+    double dxy_phi1, dz_phi1;
+    BsAnalysis::calculateDeltaPos(trk, phi1, dxy_phi1, dz_phi1);
+    
+    double dxy_phi2, dz_phi2;
+    BsAnalysis::calculateDeltaPos(trk, phi2, dxy_phi2, dz_phi2);
+
+    double dR_phi1 = trk_lv.DeltaR(phi1.v);
+    double dR_phi2 = trk_lv.DeltaR(phi2.v);
+
+    if (dR_phi1 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_phi1 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+      if (fabs(dz_phi1) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy_phi1 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+	isol_phi1 += trk.pt;
+    }
+  
+    if (dR_phi2 < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_phi2 > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+      if (fabs(dz_phi2) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy_phi2 < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+	isol_phi2 += trk.pt;
+    }
+ 
+   //Calculate Bs Isolation
+   double dxy_Bs, dz_Bs;
+   BsAnalysis::calculateDeltaPos(trk, bsinfo, dxy_Bs, dz_Bs);
+
+   double dR_Bs = trk_lv.DeltaR(bsinfo.bsv);
+
+  
+   if (dR_Bs < AnaUtil::cutValue(isoCutMap(), "isoCone") && dR_Bs > AnaUtil::cutValue(isoCutMap(), "isoInnerCone")){
+     if (fabs(dz_Bs) < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDz") && dxy_Bs < AnaUtil::cutValue(phiCutMap(), "maxTrkPairDxy"))
+       isol_Bs += trk.pt;
+   }
+ 
   }
   isol1 /= trk1.pt;
+  iso_vector.push_back(std::make_pair(isol1,trk1.pt));
   isol2 /= trk2.pt;
+  iso_vector.push_back(std::make_pair(isol2,trk2.pt));
   isol3 /= trk3.pt;
+  iso_vector.push_back(std::make_pair(isol3,trk3.pt));
   isol4 /= trk4.pt;
+  iso_vector.push_back(std::make_pair(isol4,trk4.pt));
 
-  isol1H_->Fill(isol1); 
-  isol2H_->Fill(isol2); 
-  isol3H_->Fill(isol3); 
-  isol4H_->Fill(isol4); 
+  isol_phi1 /= phi1.v.Pt();
+  iso_vector.push_back(std::make_pair(isol_phi1,phi1.v.Pt()));
+  isol_phi2 /= phi2.v.Pt();
+  iso_vector.push_back(std::make_pair(isol_phi2,phi2.v.Pt()));
+
+  isol_Bs /= bsinfo.bsv.Pt();
+  iso_vector.push_back(std::make_pair(isol_Bs,bsinfo.bsv.Pt()));
 }
-void BsAnalysis::fillKaonInfo(const std::vector<TLorentzVector>& kaonList) {
+void BsAnalysis::fillKaonInfo(const vector<TLorentzVector>& kaonList) {
   if (verbosity_ > 1) { 
-    std::cout << std::setw(10) << "No." 
-	      << std::setw(10) << "Pt" 
-	      << std::setw(10) << "Eta" 
-	      << std::setw(10) << "Phi" 
-	      << std::endl;
+    cout << setw(10) << "No." 
+      << setw(10) << "Pt" 
+      << setw(10) << "Eta" 
+      << setw(10) << "Phi" 
+      << endl;
     int i = 0;
     for (auto& v: kaonList) {
-      std::cout << std::setw(10) << i++ 
-		<< std::setw(10) << v.Pt()
-		<< std::setw(10) << v.Eta() 
-		<< std::setw(10) << v.Phi()
-		<< std::endl;
+      cout << setw(10) << i++ 
+	<< setw(10) << v.Pt()
+	<< setw(10) << v.Eta() 
+	<< setw(10) << v.Phi()
+	<< endl;
     }
   } 
   size_t ntrk = kaonList.size();
@@ -792,18 +1385,20 @@ void BsAnalysis::fillKaonInfo(const std::vector<TLorentzVector>& kaonList) {
     trk4EtaH_->Fill(kaonList[3].Eta());
     trk4PhiH_->Fill(kaonList[3].Phi());
   }
-   
+
+ 
+
   for ( size_t i = 0; i < kaonList.size(); ++i) {
-    const TLorentzVector& kaon1 = kaonList.at(i);
+    const TLorentzVector& kaon1 = kaonList[i];
     for (size_t j = i+1; j < kaonList.size(); ++j) {
-      const TLorentzVector& kaon2 = kaonList.at(j);
+      const TLorentzVector& kaon2 = kaonList[j];
       double dr = kaon1.DeltaR(kaon2);
       drKaonPairH_->Fill(dr);
     }
   }
 }
 void BsAnalysis::fillGenInfo() {
-  std::sort(genKaonList_.begin(), genKaonList_.end(), PtComparator<TTStudy::GenParticle>());
+  sort(genKaonList_.begin(), genKaonList_.end(), PtComparator<TTStudy::GenParticle>());
   if (genKaonList_.size()) {
     genKPt1H_->Fill(genKaonList_.at(0).pt);
     genKEta1H_->Fill(genKaonList_.at(0).eta);
@@ -840,8 +1435,8 @@ void BsAnalysis::fillGenInfo() {
       genPhiMH_->Fill(gen_phi.M());
     }
   }
-  
-  std::sort(genPhiCandList_.begin(), genPhiCandList_.end(), PtComparator<TTStudy::GenParticle>());
+
+  sort(genPhiCandList_.begin(), genPhiCandList_.end(), PtComparator<TTStudy::GenParticle>());
   if (genPhiCandList_.size()) {
     genPhiPt1H_->Fill(genPhiCandList_[0].pt);
     genPhiEta1H_->Fill(genPhiCandList_[0].eta);
@@ -857,24 +1452,53 @@ void BsAnalysis::fillGenInfo() {
     genKPt2H_->Fill(genParticleBr_->at(genPhiCandList_[1].daughterIndices.at(1)).pt);
   }
 }
-void BsAnalysis::checkConsistency(const std::vector<TTStudy::Track>* tracksBr, int ntrk) const {
+void BsAnalysis::checkConsistency(const vector<TTStudy::Track>* tracksBr, int ntrk) const {
   if (ntrk <= 4) return;
   printTrackProperties(tracksBr);
 
-  std::cout << "===== Reading GenParticles ========================================" << std::endl;
-  std::cout << "index       pT      eta      phi       vx       vy      vz      pdgID" << std::endl;
+  cout << "===== Reading GenParticles ========================================" << endl;
+  cout << "index       pT      eta      phi       vx       vy      vz      pdgID" << endl;
   for (size_t i = 0; i != genParticleBr_->size(); ++i) {
     const TTStudy::GenParticle& genp = genParticleBr_->at(i);
     if (genp.status == 1 && genp.pt > 1.95)
       printGenParticle(i);
   }
 }
+void BsAnalysis::checkDecayMode() {
+  for (size_t i = 0; i != genParticleBr_->size(); ++i) {
+    const TTStudy::GenParticle& genp = genParticleBr_->at(i);
+    if (abs(genp.pdgId) != 531) continue;
+    nDaughtersH_->Fill(genp.daughterIndices.size());
+    if (genp.daughterIndices.size() == 1 && abs(genParticleBr_->at(genp.daughterIndices.at(0)).pdgId) == 531) continue; 
+    BsDecayModesH_->Fill(0); 
+    if (genp.daughterIndices.size() == 2) {
+      const TTStudy::GenParticle& daughter1 = genParticleBr_->at(genp.daughterIndices.at(0)); 	
+      const TTStudy::GenParticle& daughter2 = genParticleBr_->at(genp.daughterIndices.at(1));
+      if (abs(daughter1.pdgId) == 333 && abs(daughter2.pdgId) == 333) BsDecayModesH_->Fill(1);
+      else if (abs(daughter1.pdgId) == 443 || abs(daughter2.pdgId) == 443) BsDecayModesH_->Fill(2);
+      else if (abs(daughter1.pdgId) == 13  && abs(daughter2.pdgId) == 13) BsDecayModesH_->Fill(3);
+      else if (abs(daughter1.pdgId) == 15  && abs(daughter2.pdgId) == 15) BsDecayModesH_->Fill(4);
+      else  BsDecayModesH_->Fill(5);	
+    }
+    else BsDecayModesH_->Fill(6);
+
+    for (size_t j = 0; j != genp.daughterIndices.size(); ++j) {
+      const TTStudy::GenParticle& daughter = genParticleBr_->at(genp.daughterIndices.at(j));
+      if (daughter.pdgId != 443) continue;
+      cout << " Daughter pdgId = " << daughter.pdgId << endl;
+      for (size_t k = 0; k != daughter.daughterIndices.size(); ++k) {
+	const TTStudy::GenParticle& grandDaughter = genParticleBr_->at(daughter.daughterIndices.at(k));
+	cout<< " grandDaughter pdgId = " << grandDaughter.pdgId << endl;
+      }
+    }
+  }
+}
 void BsAnalysis::checkMatchingPhi(int ntrk) const {
   if (verbosity_ > 1) 
-    std::cout << "# of Phi, detector level: " << phiCandList_.size() 
-	      << " Gen level:" << genPhiCandList_.size()
-	      << " #tracks: " << ntrk
-	      << std::endl;
+    cout << "# of Phi, detector level: " << phiCandList_.size() 
+      << " Gen level:" << genPhiCandList_.size()
+      << " #tracks: " << ntrk
+      << endl;
   for (size_t it = 0; it < phiCandList_.size(); ++it) {
     const TLorentzVector& trk_k1 = phiCandList_[it].at(0);
     const TLorentzVector& trk_k2 = phiCandList_[it].at(1);
@@ -889,42 +1513,41 @@ void BsAnalysis::checkMatchingPhi(int ntrk) const {
       if (dr < drmin) {drmin = dr; m_index = jt;}
     }
     if (verbosity_ > 1 && drmin < 0.4) {
-      std::cout << "MATCH phi candidate: " << it << ", gen phi: " << m_index 
-		<< " deltaR[" << it << "," << m_index << "] = " << drmin
-		<< std::endl;
+      cout << "MATCH phi candidate: " << it << ", gen phi: " << m_index 
+	<< " deltaR[" << it << "," << m_index << "] = " << drmin
+	<< endl;
     }
   }
 }
-void BsAnalysis::printTrackProperties(const std::vector<TTStudy::Track>* tracksBr) const {
-  std::cout << "===== Reading Tracks ========================================" << std::endl;
-  std::cout << "index       pT      eta      phi       vx       vy      vz" << std::endl;
-  std::cout << std::setprecision(3);
+void BsAnalysis::printTrackProperties(const vector<TTStudy::Track>* tracksBr) const {
+  cout << "===== Reading Tracks ========================================" << endl;
+  cout << "index       pT      eta      phi       vx       vy      vz" << endl;
+  cout << setprecision(3);
   for (size_t i = 0; i != tracksBr->size(); i++)
     printTrk(tracksBr, i);
 }
-void BsAnalysis::printTrk(const std::vector<TTStudy::Track>* tracksBr, size_t i) const {
+void BsAnalysis::printTrk(const vector<TTStudy::Track>* tracksBr, size_t i) const {
   const TTStudy::Track& trk = tracksBr->at(i);
-  std::cout << std::setw(5) << i 
-	    << std::setw(9) << trk.pt
-	    << std::setw(9) << trk.eta
-	    << std::setw(9) << trk.phi
-	    << std::setw(9) << trk.vertexX 
-	    << std::setw(9) << trk.vertexY
-	    << std::setw(9) << trk.vertexZ
-	    << std::endl;
+  if (fabs(trk.eta) < AnaUtil::cutValue(trkCutMap(), "maxTrkEta")){
+    if (trk.pt > AnaUtil::cutValue(trkCutMap(), "minTrkPt")){
+      cout << setw(5) << i 
+	<< setw(9) << trk.pt
+	<< setw(9) << trk.eta
+	<< setw(9) << trk.phi
+	<< setw(9) << trk.vertexX 
+	<< setw(9) << trk.vertexY
+	<< setw(9) << trk.vertexZ
+	<< endl;
+    }
+  }
 }
-void BsAnalysis::plotSignalProperties(const std::vector<TTStudy::Track>* tracksBr) {
-  std::vector<TTStudy::Track> list;
+void BsAnalysis::plotSignalProperties(const vector<TTStudy::Track>* tracksBr) {
+  vector<TTStudy::Track> list;
   int central = 0;
   int fwd = 0;
   for (size_t it = 0; it < tracksBr->size(); ++it) {
     const TTStudy::Track& trk = tracksBr->at(it);
     if (trk.pt < 2) continue;
-    /*allDXYPVH_->Fill(trk.dxyWrtPV);
-    allDZPVH_->Fill(trk.dzWrtPV);
-    allDXYH_->Fill(trk.d0);
-    allDZH_->Fill(trk.dz);
-    all2DH_->Fill(trk.dxyWrtPV,trk.dzWrtPV);*/ 
     TLorentzVector trk_v;
     getLV(tracksBr, it, trk_v);
     double min_dr = 999.9;
@@ -935,28 +1558,28 @@ void BsAnalysis::plotSignalProperties(const std::vector<TTStudy::Track>* tracksB
       gen_kaon_v.SetPtEtaPhiE(kaon.pt, kaon.eta, kaon.phi, kaon.energy);
       double dr = trk_v.DeltaR(gen_kaon_v);
       if (dr < min_dr) {
-        min_dr = dr;
-        m_index = j;
+	min_dr = dr;
+	m_index = j;
       }     
     }
     signalDrH_->Fill(min_dr);
     if (min_dr < 0.02) {
       signal_VZH_->Fill(trk.vertexZ);
-      double vertexXY = std::sqrt(std::pow(trk.vertexX, 2) + std::pow(trk.vertexY, 2));
+      double vertexXY = sqrt(pow(trk.vertexX, 2) + pow(trk.vertexY, 2));
       signal_VXYH_->Fill(vertexXY);
       signal_chiH_->Fill(trk.chiSquare);
       list.push_back(trk);
-      if (std::fabs(trk.eta) < 1.1) central++;
-      if (std::fabs(trk.eta) < 2.5 && std::fabs(trk.eta) > 1.1) fwd++;
+      if (fabs(trk.eta) < 1.1) central++;
+      if (fabs(trk.eta) < 2.5 && fabs(trk.eta) > 1.1) fwd++;
       TTStudy::GenParticle& kaon = genKaonList_.at(m_index);
-      double d_pt = std::fabs(trk.pt - kaon.pt);
+      double d_pt = fabs(trk.pt - kaon.pt);
       signalDPT_H->Fill(d_pt);
     }
   }
   signalNtrkH_->Fill(list.size());
   signalCentralH_->Fill(central);
   signalFwdH_->Fill(fwd);
-  std::sort(list.begin(), list.end(), PtComparator<TTStudy::Track>());
+  sort(list.begin(), list.end(), PtComparator<TTStudy::Track>());
   if (list.size() > 0) signalPt1H_->Fill(list[0].pt);
   if (list.size() > 1) signalPt2H_->Fill(list[1].pt);
   if (list.size() > 2) signalPt3H_->Fill(list[2].pt);
@@ -964,14 +1587,9 @@ void BsAnalysis::plotSignalProperties(const std::vector<TTStudy::Track>* tracksB
 
   for (size_t i = 0; i < list.size(); ++i) {
     const TTStudy::Track& trk1 = list[i];
-    /*signalDXYPVH_->Fill(trk1.dxyWrtPV);
-    signalDZPVH_->Fill(trk1.dzWrtPV);
-    signal2DH_->Fill(trk1.dxyWrtPV,trk1.dzWrtPV); 
-    signalDXYH_->Fill(trk1.d0);
-    signalDZH_->Fill(trk1.dz);*/
     TLorentzVector trkv1;
     trkv1.SetPtEtaPhiM(trk1.pt, trk1.eta, trk1.phi, ::kmass);
-    for(size_t j = i+1; j < list.size(); j++) {
+    for (size_t j = i+1; j < list.size(); j++) {
       const TTStudy::Track& trk2 = list[j];
       TLorentzVector trkv2;
       trkv2.SetPtEtaPhiM(trk2.pt, trk2.eta, trk2.phi, ::kmass);
@@ -980,11 +1598,11 @@ void BsAnalysis::plotSignalProperties(const std::vector<TTStudy::Track>* tracksB
     }
   }
 }
-int BsAnalysis::doTrkGenMatch(const std::vector<TLorentzVector>& kaonList) {
+int BsAnalysis::doTrkGenMatch(const vector<TLorentzVector>& kaonList) {
   if (verbosity_ > 1)
-    std::cout << "index       pT      eta      phi matched genindx      pdgID       dR      dpT     dEta     dPhi"
-	      << std::endl;
-            
+    cout << "index       pT      eta      phi matched genindx      pdgID       dR      dpT     dEta     dPhi"
+      << endl;
+
   int m_counter = 0;
   size_t itrk = 0;
   for (auto const& trk_kaon_v: kaonList) {
@@ -999,8 +1617,8 @@ int BsAnalysis::doTrkGenMatch(const std::vector<TLorentzVector>& kaonList) {
       gen_kaon_v.SetPtEtaPhiE(kaon.pt, kaon.eta, kaon.phi, kaon.energy);
       double dr = trk_kaon_v.DeltaR(gen_kaon_v);
       if (dr < min_dr) {
-        min_dr = dr;
-        m_index = j;
+	min_dr = dr;
+	m_index = j;
       }     
     }
     if (min_dr < 0.05) {
@@ -1009,30 +1627,30 @@ int BsAnalysis::doTrkGenMatch(const std::vector<TLorentzVector>& kaonList) {
       const TTStudy::GenParticle& kaon = genKaonList_.at(m_index);
       TLorentzVector gen_kaon_v;
       gen_kaon_v.SetPtEtaPhiE(kaon.pt, kaon.eta, kaon.phi, kaon.energy);
-      delta_pt  = std::fabs(trk_kaon_v.Pt() - kaon.pt);
-      delta_eta = std::fabs(trk_kaon_v.Eta() - kaon.eta);
-      delta_phi = std::fabs(trk_kaon_v.DeltaPhi(gen_kaon_v));
+      delta_pt  = fabs(trk_kaon_v.Pt() - kaon.pt);
+      delta_eta = fabs(trk_kaon_v.Eta() - kaon.eta);
+      delta_phi = fabs(trk_kaon_v.DeltaPhi(gen_kaon_v));
       gen_pdgID = kaon.pdgId;
     } 
     if (verbosity_ > 1)
-      std::cout << std::setprecision(3)
-		<< std::setw(5)  << itrk++
-		<< std::setw(9)  << trk_kaon_v.Pt()
-		<< std::setw(9)  << trk_kaon_v.Eta()
-		<< std::setw(9)  << trk_kaon_v.Phi()
-		<< std::setw(8)  << match
-		<< std::setw(8)  << m_index
-		<< std::setw(11) << gen_pdgID
-		<< std::setprecision(4)
-		<< std::setw(9)  << min_dr
-		<< std::setw(9)  << delta_pt
-		<< std::setw(9)  << delta_eta
-		<< std::setw(9)  << delta_phi
-		<< std::endl;           
+      cout << setprecision(3)
+	<< setw(5)  << itrk++
+	<< setw(9)  << trk_kaon_v.Pt()
+	<< setw(9)  << trk_kaon_v.Eta()
+	<< setw(9)  << trk_kaon_v.Phi()
+	<< setw(8)  << match
+	<< setw(8)  << m_index
+	<< setw(11) << gen_pdgID
+	<< setprecision(4)
+	<< setw(9)  << min_dr
+	<< setw(9)  << delta_pt
+	<< setw(9)  << delta_eta
+	<< setw(9)  << delta_phi
+	<< endl;           
   } 
   if (verbosity_ > 1) {
-    std::cout << std::setprecision(2);
-    std::cout << "Match Counter# " << m_counter << std::endl;
+    cout << setprecision(2);
+    cout << "Match Counter# " << m_counter << endl;
   }
   return m_counter;
 }
@@ -1056,19 +1674,17 @@ bool BsAnalysis::isGenKaonMatched(const TLorentzVector& trk_lv, double& pt_diff)
   if (min_dr < 0.05) match = true;
   return match;
 }
-
-
 void BsAnalysis::printGenParticle(size_t i) const {
   const TTStudy::GenParticle& p = genParticleBr_->at(i);
-  std::cout << std::setw(5) << i
-            << std::setw(9) << p.pt
-	    << std::setw(9) << p.eta
-	    << std::setw(9) << p.phi
-	    << std::setw(9) << p.vx
-	    << std::setw(9) << p.vy
-	    << std::setw(9) << p.vz
-	    << std::setw(11) << p.pdgId
-	    << std::endl;
+  cout << setw(5)  << i
+	    << setw(9)  << p.pt
+	    << setw(9)  << p.eta
+	    << setw(9)  << p.phi
+	    << setw(9)  << p.vx
+	    << setw(9)  << p.vy
+	    << setw(9)  << p.vz
+	    << setw(11) << p.pdgId
+	    << endl;
 }
 TLorentzVector BsAnalysis::phiLV(const TTStudy::Track& trki, const TTStudy::Track& trkj) {
   TLorentzVector lvtrki, lvtrkj;  
@@ -1088,33 +1704,41 @@ double BsAnalysis::calculateDeltaR(const TTStudy::GenParticle& gpi, const TTStud
   lvpj.SetPtEtaPhiE(gpj.pt, gpj.eta, gpj.phi, gpj.energy);
   return lvpi.DeltaR(lvpj);
 }
+
 void BsAnalysis::calculateDeltaPos(const TTStudy::Track& trki, const TTStudy::Track& trkj, double& dxy, double& dz) {
-  dxy = std::sqrt(std::pow(trki.vertexX - trkj.vertexX, 2) + std::pow(trki.vertexY - trkj.vertexY, 2));
+  dxy = sqrt(pow(trki.vertexX - trkj.vertexX, 2) + pow(trki.vertexY - trkj.vertexY, 2));
   dz  = trki.vertexZ - trkj.vertexZ;
 }
 void BsAnalysis::calculateDeltaPos(const PhiInfo& infoi, const PhiInfo& infoj, double& dxy, double& dz) {
-  dxy = std::sqrt(std::pow(infoi.vertexX - infoj.vertexX, 2) + std::pow(infoi.vertexY - infoj.vertexY, 2));
+  dxy = sqrt(pow(infoi.vertexX - infoj.vertexX, 2) + pow(infoi.vertexY - infoj.vertexY, 2));
   dz  = infoi.vertexZ - infoj.vertexZ;
 }
-bool BsAnalysis::genFilter(double minPt) const {
-  std::vector<TTStudy::GenParticle> list;
-  //std::cout<<" Event no = "<<eventBr_->event<<std::endl;
+void BsAnalysis::calculateDeltaPos(const TTStudy::Track& trki, const PhiInfo& infoj, double& dxy, double& dz) {
+  dxy = sqrt(pow(trki.vertexX - infoj.vertexX, 2) + pow(trki.vertexY - infoj.vertexY, 2));
+  dz  = trki.vertexZ - infoj.vertexZ;
+}
+void BsAnalysis::calculateDeltaPos(const TTStudy::Track& trki, const BsInfo& bsInfoj, double& dxy, double& dz) {
+  dxy = sqrt(pow(trki.vertexX - bsInfoj.vertexX, 2) + pow(trki.vertexY - bsInfoj.vertexY, 2));
+  dz  = trki.vertexZ - bsInfoj.vertexZ;
+}
+
+bool BsAnalysis::genFilter(double minPt, double maxEta) const {
+  vector<TTStudy::GenParticle> list;
   for (size_t it = 0; it < genParticleBr_->size(); ++it) {
-    //if (it == 188217) continue;
     const TTStudy::GenParticle& genp = genParticleBr_->at(it);
-    //std::cout<<" Particle no = "<<it<<" Particle Id = "<<genp.pdgId<<std::endl;
-    if (std::abs(genp.pdgId) != 333) continue;  // Phi 
+    if (abs(genp.pdgId) != 333) continue;  // Phi 
 
     const TTStudy::GenParticle& pgenp = genParticleBr_->at(genp.motherIndex);
-    if (std::abs(pgenp.pdgId) != 531) continue; // Bs
+    if (abs(pgenp.pdgId) != 531) continue; // Bs
 
     if (genp.daughterIndices.size() < 2) continue;
     const TTStudy::GenParticle& kaon1 = genParticleBr_->at(genp.daughterIndices.at(0));
     const TTStudy::GenParticle& kaon2 = genParticleBr_->at(genp.daughterIndices.at(1));
-    if (std::abs(kaon1.pdgId) != 321 || std::abs(kaon2.pdgId) != 321) continue;
+    if (abs(kaon1.pdgId) != 321 || abs(kaon2.pdgId) != 321) continue;
     genKPtCheckH_->Fill(kaon1.pt);
     genKPtCheckH_->Fill(kaon2.pt);
-    if( kaon1.pt < minPt || kaon2.pt < minPt) continue;
+    if (kaon1.pt < minPt || fabs(kaon1.eta) > maxEta) continue;
+    if (kaon2.pt < minPt || fabs(kaon2.eta) > maxEta) continue;
     list.push_back(genp);
   }
 
@@ -1124,30 +1748,30 @@ bool BsAnalysis::genFilter(double minPt) const {
 void BsAnalysis::readGenParticle() {
   for (size_t it = 0; it < genParticleBr_->size(); ++it) {
     const TTStudy::GenParticle& genp = genParticleBr_->at(it);
-    if (std::abs(genp.pdgId) != 333) continue;
+    if (abs(genp.pdgId) != 333) continue; // Phi
 
     const TTStudy::GenParticle& mot = genParticleBr_->at(genp.motherIndex);
-    if (std::abs(mot.pdgId) != 531) continue;
+    if (abs(mot.pdgId) != 531) continue; // Bs
     genPhiCandList_.push_back(genp); 
 
     if (genp.daughterIndices.size() < 2) continue;
     const TTStudy::GenParticle& kaon1 = genParticleBr_->at(genp.daughterIndices.at(0));
     const TTStudy::GenParticle& kaon2 = genParticleBr_->at(genp.daughterIndices.at(1));
-    if (std::abs(kaon1.pdgId) != 321 || std::abs(kaon2.pdgId) != 321) continue;
+    if (abs(kaon1.pdgId) != 321 || abs(kaon2.pdgId) != 321) continue; // K
     genKaonList_.push_back(kaon1);
     genKaonList_.push_back(kaon2);
   }
 }
-void BsAnalysis::plotGen(const std::vector<TTStudy::Track>* tracksBr) {
+void BsAnalysis::plotGen(const vector<TTStudy::Track>* tracksBr) {
   if (genPhiCandList_.size() > 1) {
     const TTStudy::GenParticle& phi1 = genPhiCandList_[0];
     TLorentzVector phi1_v;
     phi1_v.SetPtEtaPhiE(phi1.pt, phi1.eta, phi1.phi, phi1.energy);
-    
+
     const TTStudy::GenParticle& phi2 = genPhiCandList_[1];
     TLorentzVector phi2_v;
     phi2_v.SetPtEtaPhiE(phi2.pt, phi2.eta, phi2.phi, phi2.energy);
-    
+
     double d_rphi = phi1_v.DeltaR(phi2_v);
     genDrPhiPairH_->Fill(d_rphi); 
   }
@@ -1157,24 +1781,23 @@ void BsAnalysis::plotGen(const std::vector<TTStudy::Track>* tracksBr) {
       const TTStudy::GenParticle& phi2 = genPhiCandList_[jt];
       if (phi1.motherIndex != phi2.motherIndex) continue;
       const TTStudy::GenParticle& mot = genParticleBr_->at(phi1.motherIndex);
-      if (std::abs(mot.pdgId) != 531) continue;
+      if (abs(mot.pdgId) != 531) continue; // Bs
       genBsPtH_->Fill(mot.pt);
       genBsEtaH_->Fill(mot.eta);
       genBsPhiH_->Fill(mot.phi);
-
     }
     if (phi1.daughterIndices.size() < 2) continue;
     const TTStudy::GenParticle& kaon1 = genParticleBr_->at(phi1.daughterIndices.at(0));
     const TTStudy::GenParticle& kaon2 = genParticleBr_->at(phi1.daughterIndices.at(1));
-    if (std::abs(kaon1.pdgId) != 321 || std::abs(kaon2.pdgId) != 321) continue;
-    
+    if (abs(kaon1.pdgId) != 321 || abs(kaon2.pdgId) != 321) continue;
+
     TLorentzVector ka1_v;
     ka1_v.SetPtEtaPhiE(kaon1.pt, kaon1.eta, kaon1.phi, kaon1.energy);
     TLorentzVector ka2_v;
     ka2_v.SetPtEtaPhiE(kaon2.pt, kaon2.eta, kaon2.phi, kaon2.energy);
     double d_R = ka1_v.DeltaR(ka2_v);
     genDrKPairH_->Fill(d_R);
-    
+
     int match_count = 0;
     for (size_t jt = 0; jt < tracksBr->size(); ++jt) {
       const TTStudy::Track& trk = tracksBr->at(jt);
@@ -1192,29 +1815,53 @@ void BsAnalysis::plotGenVertex()
   bool bsfilled = false;
   for (size_t it = 0; it < genParticleBr_->size(); ++it) {
     const TTStudy::GenParticle& genp = genParticleBr_->at(it);
-    if (std::abs(genp.pdgId) != 333) continue;
-    
+    if (abs(genp.pdgId) != 333) continue;
+
     const TTStudy::GenParticle& moth = genParticleBr_->at(genp.motherIndex);
-    if (std::abs(moth.pdgId) != 531) continue;
-    double vxy = std::sqrt(std::pow(genp.vx,2) + std::pow(genp.vy,2));
-    double vz = genp.vz;
-    phiVXYH_->Fill(vxy);
-    phiVZH_->Fill(vz); 
+    //Checking of Bs decay mode 
+    if(moth.daughterIndices.size() < 2) continue;
+    const TTStudy::GenParticle& Bs_dau1 = genParticleBr_->at(moth.daughterIndices.at(0));
+    const TTStudy::GenParticle& Bs_dau2 = genParticleBr_->at(moth.daughterIndices.at(1));
+    if (abs(moth.pdgId) != 531 || abs(Bs_dau1.pdgId) != 333 || abs(Bs_dau2.pdgId) != 333) continue;
     
+    double vxy = sqrt(pow(genp.vx,2) + pow(genp.vy,2));
+    double vz = genp.vz;
+    double v = sqrt(pow(genp.vx,2) + pow(genp.vy,2) + pow(genp.vz,2));
+    phiVXYH_->Fill(vxy);
+    phiVZH_->Fill(vz);
+    phiVH_->Fill(v);
+    phiV3DH_->Fill(abs(genp.vx),abs(genp.vy),abs(genp.vz)); 
+
     if (!bsfilled) {
       bsfilled = true;
-      vxy = std::sqrt(std::pow(moth.vx,2) + std::pow(moth.vy,2));
+      vxy = sqrt(pow(moth.vx, 2) + pow(moth.vy, 2));
       vz = moth.vz;
+      v = sqrt(pow(moth.vx,2) + pow(moth.vy,2) + pow(moth.vz,2));
       BsVXYH_->Fill(vxy);
-      BsVZH_->Fill(vz); 
+      BsVZH_->Fill(vz);
+      BsVH_->Fill(v);
+      BsV3DH_->Fill(abs(moth.vx),abs(moth.vy),abs(moth.vz));
     }
+   
+    for (size_t jt = 0; jt < genp.daughterIndices.size(); ++jt) {
+      const TTStudy::GenParticle& dau = genParticleBr_->at(genp.daughterIndices.at(jt)); 
+      if (abs(dau.pdgId) != 321) continue;
+      if (dau.pt < 2.0 || fabs(dau.eta) > 2.5) continue;
+      vxy = sqrt(pow(dau.vx, 2) + pow(dau.vy, 2));
+      vz = dau.vz;
+      v = sqrt(pow(dau.vx,2) + pow(dau.vy,2) + pow(dau.vz,2));
+      KaonVXYH_->Fill(vxy);
+      KaonVZH_->Fill(vz);
+      KaonVH_->Fill(v);
+      KaonV3DH_->Fill(abs(dau.vx),abs(dau.vy),abs(dau.vz));
+    } 
   }
 }
-void BsAnalysis::getLV(const std::vector<TTStudy::Track>* tracksBr, unsigned int indx, TLorentzVector& lv) const {
+void BsAnalysis::getLV(const vector<TTStudy::Track>* tracksBr, unsigned int indx, TLorentzVector& lv) const {
   const TTStudy::Track& trk = tracksBr->at(indx);
   lv.SetPtEtaPhiM(trk.pt, trk.eta, trk.phi, ::kmass);
 }
-void BsAnalysis::getTV(const std::vector<TTStudy::Track>* tracksBr, unsigned int indx, TVector3& v) const {
+void BsAnalysis::getTV(const vector<TTStudy::Track>* tracksBr, unsigned int indx, TVector3& v) const {
   const TTStudy::Track& trk = tracksBr->at(indx);
   v.SetPtEtaPhi(trk.pt, trk.eta, trk.phi);
 }
@@ -1227,9 +1874,9 @@ double BsAnalysis::genInvMass(const TTStudy::GenParticle& p1, const TTStudy::Gen
   return total.M()*1000;
 }
 void BsAnalysis::saveHistograms() {
-  outputFile_->cd();
-  outputFile_->Write();
-  outputFile_->Close();
+  histf_->cd();
+  histf_->Write();
+  histf_->Close();
 }
 void BsAnalysis::scaleHistogram(TH1F* th, double fac) {
   for (int i = 1; i < th->GetNbinsX()+1; ++i) {
@@ -1244,96 +1891,131 @@ double BsAnalysis::getPoissonError(double k, double N){
   return err;
 }	
 double BsAnalysis::getBinomailError(double k, double N){
-  double err = (1./N)*TMath::Sqrt(k*(1-k/N));
+  double err = (1./N) * TMath::Sqrt(k*(1-k/N));
   return err;
 }	
-void BsAnalysis::printResults(std::ostream& os) const {
+void BsAnalysis::printResults(ostream& os) const {
   using namespace std;
   os << "==> Results: " << endl;
+
+  vector<string> slist1 {
+    "Events processed",
+    "after GenFilter",
+    "w/ ntrk >= 4",
+    "w/ goodTrk >= 4",
+    "w/ goodTrkMatchedKaon >= 4",
+  };
+  histf_->cd();
+  histf_->cd("Main");
+  showEfficiency(evcount2H_, slist1, "Track Slection", os);
   
-  string slist[] = 
-    {
-      "Events processed",
-      "       after GenFilter",
-      "       w/ ntrk >= 4",
-      "       w/ >= 2 Phi",
-      "       w/ Phi distinct tracks",
-      "       w/ Phi dxy & dz2 cut",
-      "       w/ dR(Phi pair) cut",
-      "       w/ dR(Track pair) cut",
-      "       in Bs mass window",
-      "       final gen match"
-    };
-  outputFile_->cd();
-  TH1F *h = dynamic_cast<TH1F*>(gROOT->FindObject("evcount"));
-  if (h) {
-    os << setw(64) << "CutFlow"
-       << setw(10) << "Events"
-       << setw(10) << "AbsEff"
-       << setw(10) << "Error"
-       << setw(10) << "RelEff"
-       << setw(10) << "Error"
-       << endl;
-    os << setprecision(3);
-    int nbins = h->GetNbinsX();
-    if (!studyGen_) --nbins;
-    for (int i = 1; i <= nbins; ++i) {
-      os << setw(64) << slist[i-1]
-	 << setprecision(1) 
-	 << setw(10) << int(h->GetBinContent(i))
-	 << setprecision(5) 
-	 << setw(10) << ((h->GetBinContent(1)>0) ? h->GetBinContent(i)/h->GetBinContent(1) : 0.0)
-         << setprecision(3)
-         << setw(10) << getBinomailError(h->GetBinContent(i),h->GetBinContent(1))
-         << setprecision(5)
-	 << setw(10) << ( i == 1?1.0:(h->GetBinContent(i-1)>0) ? h->GetBinContent(i)/h->GetBinContent(i-1) : 0.0)
-         << setprecision(3)
-         << setw(10) << getBinomailError(h->GetBinContent(i),h->GetBinContent(i-1))
-	 << endl;
-    }
-    if (isSignal_) {
-      double k = double(h->GetBinContent(10));
-      double N = double(h->GetBinContent(2));
-      double eff = (k/N)*100;
-      double err_Poisson = getPoissonError(k,N) * 100;
-      double err_Binomial = getBinomailError(k,N) * 100;
-      os << "Efficiency for Outer Tracker" << endl;
-      os << "Efficiency = " << setprecision(2) << eff 
-	 << " Poisson Error = " << setprecision(2) << err_Poisson
-	 << " Binomial error = " << setprecision(2) << err_Binomial
-	 << endl;
-    }
-    else{
-      double k = double(h->GetBinContent(9));
-      double N = double(h->GetBinContent(1));
-      double rate = (k/N)*30000;
-      double err_Poisson = getPoissonError(k,N)*30000;
-      double err_Binomial = getBinomailError(k,N)*30000;
-      os << "Rate for Outer Tracker"<<endl;
-      os << "Rate in kHz = " << setprecision(2) << rate
-	 << " Poisson Error = " << setprecision(2) << err_Poisson 
-	 << " Binomial error = " << setprecision(2) << err_Binomial
-	 << endl;
-    } 
+  vector<string> slist {
+    "Events processed",
+    "after GenFilter",
+    "w/ ntrk >= 4",
+    "w/ goodTrk >= 4",
+    "w/ >= 2 Phi",
+    "w/ Phi distinct tracks",
+    "w/ Phi dxy & dz2 cut",
+    "w/ dR(Phi pair) cut",
+    "w/ dR(Track pair) cut",
+    "in Bs mass window",
+    "with Bs pt > 12 Gev",
+    //"with trk Pt Sum > 12 Gev",
+    "isolation cut on 4 th track",
+    "final gen match"
+  };
+  histf_->cd();
+  histf_->cd("Main");
+  showEfficiency(evcountH_, slist, "L1", os);
+
+  if (checkL1Offline_) {
+    vector<string> slist_offline {
+      "Events selected at L1",
+      "w/ ntrk >= 4",
+      "w/ >= 2 Phi",
+      "w/ Phi distinct tracks",
+      "w/ Phi dxy & dz2 cut",
+      "w/ dR(Phi pair) cut",
+      "w/ dR(Track pair) cut",
+      "in Bs mass window",
+      "isolation cut on 4 th track",
+      "final gen match"
+  };
+    histf_->cd();
+    histf_->cd("Offline");
+    showEfficiency(evcountOfflineH_, slist_offline, "Offline", os);
   }
+}
+bool BsAnalysis::showEfficiency(TH1D* h, 
+				const vector<string>& slist, 
+				const string& header, 
+				ostream& os) const
+{
+  os << ">>> " << header << " Efficiency" << endl;
+  os << setw(64) << "CutFlow"
+     << setw(10) << "Events"
+     << setw(10) << "AbsEff"
+     << setw(10) << "Error"
+     << setw(10) << "RelEff"
+     << setw(10) << "Error"
+     << endl;
+  os << fixed << setprecision(3);
+  int nbins = h->GetNbinsX();
+  if (!studyGen_) --nbins;
+  double cont = h->GetBinContent(1);
+  for (int i = 1; i <= nbins; ++i) {
+    double conti = h->GetBinContent(i);
+    double contj = h->GetBinContent(i-1);
+    os << setw(64) << slist[i-1]
+       << setprecision(1) 
+       << setw(10) << conti
+       << setprecision(5) 
+       << setw(10) << ((cont > 0) ? conti/cont : 0.0)
+       << setprecision(3)
+       << setw(10) << getBinomailError(conti, cont)
+       << setprecision(5)
+       << setw(10) << (i == 1 ? 1.0 : (contj > 0) ? conti/contj : 0.0)
+       << setprecision(3)
+       << setw(10) << getBinomailError(conti, contj)
+       << endl;
+  }
+  if (isSignal_) {
+    double k = h->GetBinContent(h->GetNbinsX());
+    double N = h->GetBinContent(2);
+    double eff = (k/N)*100;
+    double err_Poisson = getPoissonError(k,N) * 100;
+    double err_Binomial = getBinomailError(k,N) * 100;
+    os << "Efficiency for Outer Tracker" << endl;
+    os << "Efficiency = " << setprecision(2) << eff 
+       << " Poisson Error = " << setprecision(2) << err_Poisson
+       << " Binomial error = " << setprecision(2) << err_Binomial
+       << endl;
+  }
+  else {
+    double k = h->GetBinContent(h->GetNbinsX()-1);
+    double N = h->GetBinContent(1);
+    double rate = (k/N) * scaleFactor_;
+    double err_Poisson = getPoissonError(k,N) * scaleFactor_;
+    double err_Binomial = getBinomailError(k,N) * scaleFactor_;
+    os << "Rate for Outer Tracker" << endl;
+    os << "Rate in kHz = " << setprecision(2) << rate
+       << " Poisson Error = " << setprecision(2) << err_Poisson 
+       << " Binomial error = " << setprecision(2) << err_Binomial
+       << endl;
+  }
+  return true;
 }
 bool BsAnalysis::readJob(const string& jobFile, int& nFiles)
 {
   static const int BUF_SIZE = 256;
 
   // Open the file containing the datacards
-  std::ifstream fin(jobFile.c_str(), ios::in);    
+  ifstream fin(jobFile.c_str(), ios::in);    
   if (!fin) {
     cerr << "Input File: " << jobFile << " could not be opened!" << endl;
     return false;
   }
-
-  // note that you must use a pointer (reference!) to the cut map
-  // in order to avoid scope related issues
-  map<string, map<string, double>* > hmap;
-  hmap.insert(pair<string, map<string, double>* >("trkSelCuts", &trkSelCutMap_));
-  hmap.insert(pair<string, map<string, double>* >("phiSelCuts", &phiSelCutMap_));
-  hmap.insert(pair<string, map<string, double>* >("bsSelCuts", &bsSelCutMap_));
   
   char buf[BUF_SIZE];
   vector<string> tokens;
@@ -1357,23 +2039,29 @@ bool BsAnalysis::readJob(const string& jobFile, int& nFiles)
       isSignal_ = (value == "signal" || value == "Signal") ? true : false;
     }
     else if (key == "studyGen") 
-      studyGen_ = (std::stoi(value.c_str()) > 0) ? true : false;
+      studyGen_ = (stoi(value) > 0) ? true : false;
     else if (key == "studyOffline") 
-      studyOffline_ = (std::stoi(value.c_str()) > 0) ? true : false;
+      studyOffline_ = (stoi(value) > 0) ? true : false;
+    else if (key == "checkL1Offline") 
+      checkL1Offline_ = (stoi(value) > 0) ? true : false;
+    else if (key == "applyIso") 
+      applyIso_ = (stoi(value) > 0) ? true : false;
     else if (key == "dumpGenInfo") 
-      dumpGenInfo_ = (std::stoi(value.c_str()) > 0) ? true : false;
+      dumpGenInfo_ = (stoi(value) > 0) ? true : false;
     else if (key == "histFile") 
       histFile_ = value;
     else if (key == "logFile")
       logFile_ = value;
     else if (key == "maxEvent") 
-      maxEvt_ = std::stoi(value.c_str());
+      maxEvt_ = stoi(value);
     else if (key == "verbosity") 
-      verbosity_ = std::stoi(value.c_str());
+      verbosity_ = stoi(value);
+    else if (key == "applyTrackQuality")
+      applyTrkQuality_ = (stoi(value) > 0) ? true : false;
     else if (key == "inputFile") 
       AnaUtil::buildList(tokens, fileList_);
     else
-      AnaUtil::storeCuts(tokens, hmap);
+      AnaUtil::storeCuts(tokens, hmap_);
 
     tokens.clear();
   }
@@ -1394,25 +2082,31 @@ bool BsAnalysis::readJob(const string& jobFile, int& nFiles)
     cerr << ">>> WARN. Input Root file list is empty! exiting ..." << endl;
     return false;
   }
-
+  printJob();
   return true;
 }
-void BsAnalysis::printJob(std::ostream& os) const
+void BsAnalysis::printJob(ostream& os) const
 {
-  os << "  datatype = " << dataType_ << endl
-     << "   logFile = " << logFile_ << endl 
-     << "  histFile = " << histFile_ << endl
-     << " verbosity = " << verbosity_ << endl
-     << "  maxEvent = " << maxEvt_ << endl;
+  os << "       datatype = " << dataType_ << endl
+     << "        logFile = " << logFile_ << endl 
+     << "       histFile = " << histFile_ << endl
+     << "      verbosity = " << verbosity_ << endl
+     << "       maxEvent = " << maxEvt_ << endl
+     << "applyTrkQuality = " << boolalpha << applyTrkQuality_ << endl
+     << "       studyGen = " << boolalpha << studyGen_ << endl
+     << "   studyOffline = " << boolalpha << studyOffline_ << endl
+     << " checkL1Offline = " << boolalpha << checkL1Offline_ << endl
+     << "       applyIso = " << boolalpha << applyIso_ << endl
+     << "    dumpGenInfo = " << boolalpha << dumpGenInfo_ << endl;
 
   // InputFiles
   if (chain_) {
-    TObjArray *fileElements = chain_->GetListOfFiles();
+    TObjArray* fileElements = chain_->GetListOfFiles();
     os << ">>> INFO. nFiles: " << fileElements->GetEntries() 
        << ", Files to analyse:" 
        << endl;
     TIter next(fileElements);
-    TChainElement *chEl = 0;
+    TChainElement* chEl = 0;
     while (( chEl = dynamic_cast<TChainElement*>(next()) ))
       os << chEl->GetTitle() 
          << endl;
@@ -1420,12 +2114,7 @@ void BsAnalysis::printJob(std::ostream& os) const
   else
     AnaUtil::showList(fileList_, ">>> INFO. inputFiles", os);
 
-  // Cuts
-  map<string, map<string, double> > hmap;
-  hmap.insert(pair<string, map<string, double> >("trkSelCuts", trkSelCutMap_));
-  hmap.insert(pair<string, map<string, double> >("phiSelCuts", phiSelCutMap_));
-  hmap.insert(pair<string, map<string, double> >("bsSelCuts", bsSelCutMap_));
-  AnaUtil::showCuts(hmap, os);
+  AnaUtil::showCuts(hmap_, os);
 }
 int BsAnalysis::setInputFile(const string& fname) 
 {
@@ -1444,8 +2133,16 @@ int main(int argc, char *argv[]) {
   }     
   string jobFile(argv[1]);
 
+  gROOT->SetBatch(kTRUE);
+  
+  // Create analysis object 
+  cout << "=== Start of Analysis === " << endl;
+
   // Create  analysis object 
   BsAnalysis ana;
+  ana.count0 = 0;
+  ana.count1 = 0;
+  ana.count2 = 0;
 
   // Read job input
   int nFiles = 0;
@@ -1471,8 +2168,13 @@ int main(int argc, char *argv[]) {
   }
   ana.eventLoop();
   ana.endJob();
+  ana.closeFiles();
+  cout << "=== End of Analysis === " << endl;
+
   timer.Stop();
   cout << "Realtime/CpuTime = " << timer.RealTime() << "/" << timer.CpuTime() << endl;
-  
+  cout << "Count0 = "<< ana.count0 << endl;
+  cout << "Count1 = "<< ana.count1 << endl;
+  cout << "Count2 = "<< ana.count2 << endl;
   return 0;
 }

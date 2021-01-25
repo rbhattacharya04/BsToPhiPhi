@@ -13,7 +13,7 @@ void bindstat(TH1F* h, double x1ndc, double y1ndc, double x2ndc, double y2ndc, i
 }
 void plot( TFile* fbkg, TFile* fsig, const char* histo_name, const char* xtit, const char* ytit="Events") {
   //gROOT->LoadMacro("set_style.C");
-  set_style();
+  //set_style();
   
   TCanvas *c1 = new TCanvas("c1", "c1",4,28,800,700);
   gStyle->SetOptFit(1);
@@ -134,8 +134,10 @@ void plot( TFile* fbkg, TFile* fsig, const char* histo_name, const char* xtit, c
    leg->SetFillColor(0);
    leg->SetFillStyle(1001); */
 
-  leg->AddEntry(h1, "OLD_TDR (200 PU)","f");
-  leg->AddEntry(h2, "NEW_TDR (200 PU)","l");
+  leg->AddEntry(h1, "L1 bkg","f");
+  leg->AddEntry(h2, "L1 Signal","l");
   //leg->AddEntry("bsmassOld", "TP 0 Pile Up events","f");
   leg->Draw();
+  std::string save_name = "Plots_03_04_2019/"+(std::string)histo_name+".C";
+  c1->SaveAs(save_name.c_str());
 }

@@ -18,9 +18,6 @@ namespace TTStudy {
     int event;
     int run;
     int nPileUp;
-    float genParticleEt;
-    float genParticleEta;
-    float genParticlePhi;
     float beamSpotX0;
     float beamSpotY0;
     float beamSpotZ0;
@@ -76,30 +73,6 @@ namespace TTStudy {
     
     ClassDef(Tracklet, 1)
   };
-  class Electron : public TObject {
-    
-  public:
-    Electron(); 
-    ~Electron(){}
-    
-    float e;
-    float et;
-    float phi;
-    float eta;
-    float x;
-    float y;
-    float z;
-    float r;
-    float vx;
-    float vy;
-    float vz;
-    int   simTkIndx;
-    float bStrength;
-    
-    std::vector<Tracklet> matchedTracklets;
-
-    ClassDef(Electron, 1)
-  };
   
   class SimTrack : public TObject {
     
@@ -145,23 +118,12 @@ namespace TTStudy {
     float chiSquare_p4;
     float chiSquareRed_p4;
     
+    int   pdgId;
+    int   vertexId;
     float ptFromStub;
     int   nStub;
     int   nStub_PS;
     int   nStub_SS;
-    int   pdgId;
-    int   vertexId;
-    bool  matchedSimTrack;
-
-    float d0;
-    float z0;    
-    float d0Err;
-    float z0Err;
-
-    float d0PV;
-    float z0PV;
-    float d0ErrPV;
-    float z0ErrPV;
 
     ClassDef(Track, 1)
   };
@@ -206,16 +168,34 @@ namespace TTStudy {
     int   nTk;
     ClassDef(L1Jet, 1)
   };
-  class L1Muon : public TObject {
+  
+  class L1Object : public TObject {
     
   public:
-    L1Muon();
-    ~L1Muon() {}
-    
+    L1Object();
+    ~L1Object() {}
+   
+    float e;
+    float et;
     float pt;
     float eta;
     float phi;
-      int isMip; 
+    unsigned int label;    
+    int hwQual;
+    std::vector<int> wpFlags;  
+    ClassDef(L1Object, 1)
+  };
+  class L1TkObject : public TObject {
+    
+  public:
+    L1TkObject();
+    ~L1TkObject() {}
+   
+    float e;
+    float et;
+    float pt;
+    float eta;
+    float phi;
     float isolation;
     float pt_tk;
     float eta_tk;
@@ -231,8 +211,11 @@ namespace TTStudy {
     float z0;    
     float d0Err;
     float z0Err;
+    
+    unsigned int label;    
+    int hwQual;
 
-    ClassDef(L1Muon, 1)
+    ClassDef(L1TkObject, 3)
   };
 }
 #endif
