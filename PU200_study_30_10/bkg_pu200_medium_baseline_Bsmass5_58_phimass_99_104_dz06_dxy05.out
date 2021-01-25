@@ -1,0 +1,224 @@
+       datatype = Bkg
+        logFile = PU200_study_30_10/bkg_pu200_medium_baseline_Bsmass5_58_phimass_99_104_dz06_dxy05.out
+       histFile = PU200_study_30_10/bkg_pu200_medium_baseline_Bsmass5_58_phimass_99_104_dz06_dxy05.root
+      verbosity = 0
+       maxEvent = -1
+applyTrkQuality = true
+       studyGen = false
+   studyOffline = false
+ checkL1Offline = false
+       applyIso = false
+    dumpGenInfo = false
+>>> INFO. nFiles: 165, Files to analyse:
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_5.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_28.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_40.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_46.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_22.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_167.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_37.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_109.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_23.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_110.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_82.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_53.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_55.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_137.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_127.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_148.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_13.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_151.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_115.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_85.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_86.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_30.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_59.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_73.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_126.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_161.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_96.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_163.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_64.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_123.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_149.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_6.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_72.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_103.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_146.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_78.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_95.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_114.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_20.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_143.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_94.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_136.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_139.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_79.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_9.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_42.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_108.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_10.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_27.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_120.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_33.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_54.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_18.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_47.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_48.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_71.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_118.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_63.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_11.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_61.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_147.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_34.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_39.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_105.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_31.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_164.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_131.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_158.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_130.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_145.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_74.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_88.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_69.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_62.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_135.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_102.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_19.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_1.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_84.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_160.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_89.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_25.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_112.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_142.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_14.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_111.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_121.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_92.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_12.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_93.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_122.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_106.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_67.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_44.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_152.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_125.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_101.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_87.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_16.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_7.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_43.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_35.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_100.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_8.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_133.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_154.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_50.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_68.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_144.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_159.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_128.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_119.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_104.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_65.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_117.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_155.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_36.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_107.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_17.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_3.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_4.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_21.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_156.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_41.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_77.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_91.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_29.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_75.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_83.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_141.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_140.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_80.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_32.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_58.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_56.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_157.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_138.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_97.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_134.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_81.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_116.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_60.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_162.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_99.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_76.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_132.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_57.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_66.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_38.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_124.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_70.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_165.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_98.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_52.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_129.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_166.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_150.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_90.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_113.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_49.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_15.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_51.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_26.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_45.root
+/eos/user/s/subiran/L1TTDR/NeutrinoGun/L1/PU200/TTAnalysis_Rate_PU200_2.root
+>>> bsSelCuts
+        massHigh:    5.80
+         massLow:    5.00
+    maxPhiPairDr:    1.00
+   maxPhiPairDxy:    0.50
+    maxPhiPairDz:    0.60
+     maxPhiTrkDr:    0.12
+    minPhiPairDr:    0.20
+>>> isoCuts
+         isoCone:    0.40
+    isoInnerCone:    0.00
+          maxIso:    0.80
+>>> phiSelCuts
+        massHigh:    1.04
+         massLow:    0.99
+   maxTrkPairDxy:    0.50
+    maxTrkPairDz:    0.60
+>>> trkSelCuts
+      maxTrkChi2:   20.00
+       maxTrkEta:    2.50
+    minTrkLayers:    4.00
+  minTrkPSLayers:    2.00
+        minTrkPt:    2.00
+==> Results: 
+>>> Track Slection Efficiency
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed  494000.0   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter  494000.0   1.00000     0.000   1.00000     0.000
+                                                    w/ ntrk >= 4  494000.0   1.00000     0.000   1.00000     0.000
+                                                 w/ goodTrk >= 4  494000.0   1.00000     0.000   1.00000     0.000
+Rate for Outer Tracker
+Rate in kHz = 30000.00 Poisson Error = 60.36 Binomial error = 0.00
+>>> L1 Efficiency
+                                                         CutFlow    Events    AbsEff     Error    RelEff     Error
+                                                Events processed  494000.0   1.00000     0.000   1.00000      -nan
+                                                 after GenFilter  494000.0   1.00000     0.000   1.00000     0.000
+                                                    w/ ntrk >= 4  494000.0   1.00000     0.000   1.00000     0.000
+                                                 w/ goodTrk >= 4  494000.0   1.00000     0.000   1.00000     0.000
+                                                     w/ >= 2 Phi  199304.0   0.40345     0.001   0.40345     0.001
+                                          w/ Phi distinct tracks  191974.0   0.38861     0.001   0.96322     0.000
+                                            w/ Phi dxy & dz2 cut   54831.0   0.11099     0.000   0.28562     0.001
+                                             w/ dR(Phi pair) cut    8093.0   0.01638     0.000   0.14760     0.002
+                                           w/ dR(Track pair) cut    6465.0   0.01309     0.000   0.79884     0.004
+                                               in Bs mass window     934.0   0.00189     0.000   0.14447     0.004
+                                     isolation cut on 4 th track     934.0   0.00189     0.000   1.00000     0.000
+Rate for Outer Tracker
+Rate in kHz = 56.72 Poisson Error = 1.86 Binomial error = 1.85
